@@ -1,0 +1,12 @@
+{
+  "name": "missao-redacao",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev/server.mjs",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.6"
+  }
+}

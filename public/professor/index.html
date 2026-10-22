@@ -1,0 +1,1380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="color-scheme" content="light dark">
+<title>Painel do professor · Missão Redação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Kalam:wght@400;700&display=swap">
+<style>
+/* Painel do professor. Mesmos tokens do jogo (public/index.html). */
+:root{
+  --paper:#EEF3F9; --sheet:#FFFFFF; --ink:#16213A; --ink-soft:#4B5875;
+  --rule:#D2DCEB; --line:#CBD8EC; --margin:#D9434F;
+  --pen:#2343C2; --pen-ink:#FFFFFF; --star:#C98A00;
+  --marca:#FFE14D; --on-marca:#16213A;
+  --ok:#17804F; --ok-bg:#E2F4EA; --warn:#B4400D; --warn-bg:#FCEADC;
+  --hl0:#DFE6F2; --hl1:#FFE14D; --hl2:#FFC2D2; --hl3:#B6EBC5; --hl4:#B8DBFF; --hl5:#FFD19E; --hl-ink:#16213A;
+  --scrim:rgb(14 21 36 / .55);
+  --shadow:0 1px 2px rgb(22 33 58 / .06), 0 8px 24px rgb(22 33 58 / .08);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",Verdana,"Segoe UI",system-ui,sans-serif;
+  --f-hand:"Kalam","Segoe Print","Comic Sans MS",cursive;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1524; --sheet:#162037; --ink:#E6EBF5; --ink-soft:#A7B2C9;
+    --rule:#2C3858; --line:#2A3A5C; --margin:#EF6E77;
+    --pen:#94ABFF; --pen-ink:#0E1524; --star:#F2C94C;
+    --marca:#5E4D06; --on-marca:#FFF3C4;
+    --ok:#62D394; --ok-bg:#12321F; --warn:#FFA06C; --warn-bg:#3B2416;
+    --hl0:#26314C; --hl1:#5E4D06; --hl2:#672640; --hl3:#1D5233; --hl4:#1D446E; --hl5:#6A3D10; --hl-ink:#F3F6FC;
+    --scrim:rgb(0 0 0 / .6);
+    --shadow:0 1px 2px rgb(0 0 0 / .35), 0 8px 24px rgb(0 0 0 / .3);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1524; --sheet:#162037; --ink:#E6EBF5; --ink-soft:#A7B2C9;
+  --rule:#2C3858; --line:#2A3A5C; --margin:#EF6E77;
+  --pen:#94ABFF; --pen-ink:#0E1524; --star:#F2C94C;
+  --marca:#5E4D06; --on-marca:#FFF3C4;
+  --ok:#62D394; --ok-bg:#12321F; --warn:#FFA06C; --warn-bg:#3B2416;
+  --hl0:#26314C; --hl1:#5E4D06; --hl2:#672640; --hl3:#1D5233; --hl4:#1D446E; --hl5:#6A3D10; --hl-ink:#F3F6FC;
+  --scrim:rgb(0 0 0 / .6);
+  --shadow:0 1px 2px rgb(0 0 0 / .35), 0 8px 24px rgb(0 0 0 / .3);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{background:var(--paper);margin:0}
+body{color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.5;min-height:100vh;min-height:100dvh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+button,input,select,textarea{font:inherit;color:inherit}
+p{margin:0}
+[hidden]{display:none!important}
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;width:100%}
+.narrow{max-width:560px}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:-.015em;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,7.2vw,2.8rem);line-height:1.02}
+h2{font-size:clamp(1.3rem,4.4vw,1.6rem);line-height:1.15}
+h3,.h3{font-size:1.15rem;line-height:1.25}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.tip{color:var(--ink-soft);max-width:62ch}
+.fine{font-size:.9rem;color:var(--ink-soft)}
+.lbl{font-family:var(--f-hand);font-weight:700;font-size:1.1rem;color:var(--margin);line-height:1.2}
+.stack{display:flex;flex-direction:column;gap:14px;min-width:0}
+.tight{gap:8px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grow{flex:1}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:-1px;padding:0;border:0}
+:focus-visible{outline:3px solid var(--pen);outline-offset:2px}
+[tabindex="-1"]:focus{outline:none}
+.mark{background-image:linear-gradient(var(--marca),var(--marca));background-repeat:no-repeat;background-size:100% 100%;color:var(--on-marca);border-radius:.16em;padding:0 .14em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.mark.anim{animation:swipe .8s .15s cubic-bezier(.2,.7,.2,1) both}
+@keyframes swipe{from{background-size:0% 100%}to{background-size:100% 100%}}
+.quebra{overflow-wrap:anywhere}
+
+/* topo */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:var(--sheet);border-bottom:1px solid var(--rule)}
+.top-in{display:flex;align-items:center;gap:8px;min-height:60px;padding-block:6px}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:800;font-size:1.05rem;letter-spacing:-.01em;background:none;border:0;color:var(--ink);padding:6px 4px 6px 0;cursor:pointer;min-height:44px;min-width:0;border-radius:8px}
+.brand svg{color:var(--pen);flex:none}
+.papel{font-family:var(--f-body);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--marca);color:var(--on-marca);border-radius:999px;padding:3px 9px;line-height:1.3}
+.top-acoes{display:flex;gap:8px;align-items:center}
+.tbtn{display:inline-flex;align-items:center;gap:6px;font-size:.92rem;font-weight:700;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:6px 14px;min-height:44px;cursor:pointer;white-space:nowrap}
+.tbtn svg{flex:none}
+@media (max-width:600px){.brand .nome-app{display:none}}
+@media (max-width:430px){.tbtn svg{display:none}.tbtn{padding-inline:12px}}
+
+main{padding-top:24px;padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+.view{display:flex;flex-direction:column;gap:20px}
+
+/* botões e campos */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;border-radius:999px;padding:.55em 1.2em;min-height:48px;border:2px solid var(--ink);background:var(--sheet);color:var(--ink);cursor:pointer;text-decoration:none;line-height:1.2;text-align:center}
+.btn.primary{background:var(--pen);border-color:var(--pen);color:var(--pen-ink)}
+.btn.ghost{border-color:transparent;background:transparent;padding-inline:.4em}
+.btn.danger{border-color:var(--warn);color:var(--warn);background:transparent}
+.btn.danger.cheio{background:var(--warn);color:var(--sheet)}
+.btn.sm{min-height:44px;font-size:.95rem;padding:.45em 1em}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn svg{flex:none}
+.voltar{align-self:flex-start;margin-left:-.4em}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;min-width:0}
+.field{display:flex;flex-direction:column;gap:6px;font-weight:700;min-width:0}
+.in{font:inherit;font-weight:400;color:var(--ink);background:var(--sheet);border:2px solid var(--rule);border-radius:12px;padding:10px 14px;min-height:50px;width:100%;-webkit-appearance:none;appearance:none}
+.in:focus{border-color:var(--pen);outline:none}
+.in:focus-visible{outline:3px solid var(--pen);outline-offset:1px}
+textarea.in{line-height:1.5;resize:vertical}
+.marcar{display:inline-flex;align-items:center;gap:10px;font-weight:400;color:var(--ink-soft);cursor:pointer;min-height:44px;align-self:flex-start}
+.marcar input{width:22px;height:22px;accent-color:var(--pen);margin:0}
+.msg{border-radius:12px;padding:10px 14px;font-weight:700;line-height:1.4}
+.msg.erro{background:var(--warn-bg);color:var(--warn)}
+.msg.ok{background:var(--ok-bg);color:var(--ok)}
+.msg.info{background:var(--hl0);color:var(--ink)}
+.msg b{font-weight:800}
+.msg.longa{font-weight:400}
+.msg.longa b{font-weight:700}
+
+/* entrada */
+.entrada{min-height:calc(100dvh - 200px);display:flex;align-items:center;justify-content:center}
+.entrada .card{width:100%;max-width:460px;padding:24px 22px;gap:16px}
+.entrada form{display:flex;flex-direction:column;gap:14px}
+.entrada .btn.primary{width:100%}
+
+/* cabeçalho da lista */
+.cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 20px}
+.cab-acao{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.status{font-size:.88rem;color:var(--ink-soft)}
+.status.erro{color:var(--warn);font-weight:700}
+.girar svg{animation:girar 1s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+
+/* resumo */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:12px 14px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat b{font-family:var(--f-display);font-weight:800;font-size:clamp(1.7rem,6.4vw,2.4rem);line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:.86rem;font-weight:700;color:var(--ink-soft);line-height:1.25}
+.stat.ok b{color:var(--ok)}
+.stat .medidor{height:6px;border-radius:3px;background:var(--rule);overflow:hidden;margin-top:4px}
+.stat .medidor i{display:block;height:100%;background:var(--ok);border-radius:3px}
+.escopo{font-size:.9rem;color:var(--ink-soft);margin-bottom:-8px}
+
+/* filtros */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;font-weight:700;color:var(--ink);background:var(--sheet);border:2px solid var(--rule);border-radius:999px;padding:6px 14px;min-height:44px;cursor:pointer;max-width:100%}
+.chip .n{font-weight:400;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--pen);border-color:var(--pen);color:var(--pen-ink)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.85}
+.chip .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.busca{position:relative;display:block}
+.busca svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-soft);pointer-events:none}
+.busca .in{padding-left:44px}
+.busca .in::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.limpar{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--ink-soft);border-radius:999px;min-width:40px;min-height:40px;display:grid;place-items:center;cursor:pointer}
+.acoes-lista{display:flex;flex-wrap:wrap;gap:10px}
+.acoes-lista .btn{flex:1 1 auto}
+@media (min-width:640px){.acoes-lista .btn{flex:0 0 auto}}
+.lista-cab{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
+.contagem{font-weight:700}
+.ordem{display:flex;align-items:center;gap:8px;font-size:.92rem;color:var(--ink-soft);font-weight:700}
+.sel{position:relative;display:inline-block}
+.sel select{min-height:44px;padding:6px 38px 6px 12px;border-radius:999px;font-size:.95rem;font-weight:700;width:auto;cursor:pointer}
+.sel svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink-soft)}
+
+/* barra de progresso (7 fases) */
+.barra{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;width:100%;min-width:84px}
+.barra i{height:7px;border-radius:4px;background:var(--rule)}
+.barra i.on{background:var(--pen)}
+.barra.ok i.on{background:var(--ok)}
+
+/* etiquetas */
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:.76rem;font-weight:700;letter-spacing:.02em;border-radius:999px;padding:2px 9px;white-space:nowrap;line-height:1.5}
+.tag svg{flex:none}
+.tag.ok{color:var(--ok);background:var(--ok-bg)}
+.tag.warn{color:var(--warn);background:var(--warn-bg)}
+.tag.info{color:var(--ink);background:var(--hl0)}
+
+/* lista no celular: cartões */
+.cartoes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ca{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;width:100%;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow);color:var(--ink);cursor:pointer}
+.ca-nome{font-weight:700;font-size:1.05rem;line-height:1.3;overflow-wrap:anywhere}
+.ca-fases{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ca-fases.ok{color:var(--ok)}
+.ca-fases svg{color:var(--ink-soft)}
+.ca .barra,.ca-meta,.ca .tags{grid-column:1 / -1}
+.ca-meta{font-size:.88rem;color:var(--ink-soft);overflow-wrap:anywhere}
+
+/* lista no computador/iPad: tabela */
+.tabela-wrap{overflow-x:auto;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch}
+.tabela{width:100%;border-collapse:collapse;font-size:.98rem;min-width:680px}
+.tabela th{text-align:left;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;padding:14px 16px 10px;border-bottom:2px solid var(--ink);white-space:nowrap}
+.tabela td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.tabela tbody tr:last-child td{border-bottom:0}
+.tabela tbody tr{cursor:pointer}
+.tabela .num{text-align:right;font-variant-numeric:tabular-nums}
+.tabela .c-nome{min-width:220px}
+.tabela .c-nome .tags{margin-top:4px}
+.nome-btn{background:none;border:0;padding:2px 0;font-weight:700;color:var(--ink);text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--rule);text-decoration-thickness:2px;text-underline-offset:4px;overflow-wrap:anywhere;border-radius:4px}
+.prog-cel{display:flex;align-items:center;gap:10px;min-width:150px}
+.prog-cel .barra{width:104px;flex:none}
+.prog-cel b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.prog-cel b.ok{color:var(--ok)}
+.quando{white-space:nowrap}
+
+.vazio-box{display:flex;flex-direction:column;gap:10px;align-items:flex-start;text-align:left}
+.carregando{color:var(--ink-soft);font-weight:700;display:flex;align-items:center;gap:10px}
+.pulso{width:10px;height:10px;border-radius:50%;background:var(--pen);animation:pulso 1s ease-in-out infinite alternate}
+@keyframes pulso{from{opacity:.25}to{opacity:1}}
+
+/* detalhe do aluno */
+.det-cab{display:flex;flex-direction:column;gap:8px}
+.det{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:960px){
+  .det{grid-template-columns:minmax(0,1fr) 340px;align-items:start}
+  .so-celular{display:none!important}
+}
+.resumo-curto{font-size:.95rem;color:var(--ink-soft)}
+.resumo-curto b{color:var(--ink);font-variant-numeric:tabular-nums}
+.pular{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.92rem;color:var(--pen);background:none;border:0;padding:8px 0;min-height:44px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.fatos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}
+.fato{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:10px 12px;min-width:0;display:flex;flex-direction:column;gap:2px}
+.fato.largo{grid-column:1 / -1}
+.fato dt{font-size:.74rem;font-weight:700;color:var(--ink-soft);letter-spacing:.07em;text-transform:uppercase}
+.fato dd{margin:0;font-weight:700;font-size:1.05rem;overflow-wrap:anywhere;line-height:1.35}
+.fato dd small{display:block;font-weight:400;font-size:.86rem;color:var(--ink-soft)}
+.fato .barra{margin-top:6px}
+
+.folha{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow);padding-block:14px 22px;overflow:hidden;min-width:0}
+.folha-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:0 16px 10px 50px;border-bottom:2px solid var(--ink);margin-bottom:6px}
+.folha-h .t{font-family:var(--f-display);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
+.folha-h .n{font-size:.92rem;color:var(--ink-soft);overflow-wrap:anywhere}
+.folha-c{padding:0 16px 0 50px;font-size:1.05rem;line-height:2rem;background-image:linear-gradient(90deg,transparent 36px,var(--margin) 36px,var(--margin) 38px,transparent 38px),repeating-linear-gradient(180deg,transparent 0 calc(2rem - 1px),var(--line) calc(2rem - 1px) 2rem)}
+.folha-c .lbl{display:block;line-height:2rem;font-size:1rem}
+.folha-c p{text-indent:2em;white-space:pre-wrap;overflow-wrap:anywhere}
+.folha-c p.vazio{text-indent:0;color:var(--ink-soft);font-style:italic}
+.copybox{display:flex;flex-direction:column;gap:10px}
+.copybox textarea{min-height:12rem}
+
+.acoes-aluno{gap:14px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 76px)}
+.acoes-aluno hr{border:0;border-top:1px solid var(--rule);margin:2px 0;width:100%}
+.acao{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.confirma{border:2px solid var(--pen);background:var(--paper);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;width:100%}
+.confirma.perigo{border-color:var(--warn);background:var(--warn-bg)}
+.confirma p{line-height:1.45}
+
+/* link do jogo */
+.link-jogo{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.link-jogo .url{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92rem;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:6px 10px;overflow-wrap:anywhere;flex:1 1 220px;min-width:0}
+
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 74px);transform:translate(-50%,-8px);z-index:30;background:var(--ink);color:var(--paper);font-weight:700;border-radius:999px;padding:10px 18px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* realce ao passar o mouse: só onde existe mouse (no toque ele "gruda") */
+@media (hover:hover){
+  .tbtn:hover{border-color:var(--pen)}
+  .btn:hover:not(:disabled){border-color:var(--pen);color:var(--pen)}
+  .btn.primary:hover:not(:disabled){color:var(--pen-ink);filter:brightness(1.08)}
+  .btn.ghost:hover:not(:disabled){border-color:transparent;text-decoration:underline;text-underline-offset:4px}
+  .btn.danger:hover:not(:disabled){color:var(--warn);background:var(--warn-bg);border-color:var(--warn)}
+  .btn.danger.cheio:hover:not(:disabled){background:var(--warn);color:var(--sheet);filter:brightness(1.08)}
+  .chip:hover{border-color:var(--pen)}
+  .limpar:hover{color:var(--ink);background:var(--paper)}
+  .ca:hover{border-color:var(--pen)}
+  .tabela tbody tr:hover{background:var(--paper)}
+  .nome-btn:hover{text-decoration-color:var(--pen)}
+}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap gutter">
+    <div class="top-in">
+      <button class="brand" type="button" data-act="inicio" aria-label="Missão Redação, painel do professor: ir para a lista de alunos">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 20l1.2-4.8L15.6 4.8a2.1 2.1 0 0 1 3 3L8.2 18.2 4 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13.6 6.8l3 3" stroke="currentColor" stroke-width="2"/></svg>
+        <span class="nome-app">Missão Redação</span>
+        <span class="papel">Professor</span>
+      </button>
+      <span class="grow"></span>
+      <div class="top-acoes" id="top-acoes" hidden>
+        <button class="tbtn" type="button" data-act="senha">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 12l8.5-8.5M16.5 6.5l2.5 2.5M14.5 8.5l2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Trocar senha</span>
+        </button>
+        <button class="tbtn" type="button" data-act="sair">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 16l-4-4 4-4M6 12h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Entrada -->
+  <section class="view entrada wrap gutter" id="v-login" hidden aria-labelledby="login-titulo">
+    <div class="card">
+      <p class="eyebrow">Missão Redação</p>
+      <h1 id="login-titulo" tabindex="-1">Painel do <span class="mark anim">professor</span></h1>
+      <p class="tip">Veja o progresso e as redações dos seus alunos.</p>
+      <p class="msg" id="login-msg" role="status" hidden></p>
+      <form id="f-login" novalidate>
+        <input class="sr" type="text" name="username" autocomplete="username" value="professor" tabindex="-1" aria-hidden="true" readonly>
+        <label class="field" for="senha">Senha do professor
+          <input class="in" id="senha" name="password" type="password" autocomplete="current-password" maxlength="200" required>
+        </label>
+        <label class="marcar"><input type="checkbox" data-mostrar="senha"> Mostrar a senha</label>
+        <p class="msg erro" id="login-erro" role="alert" hidden></p>
+        <button class="btn primary" type="submit" id="b-entrar">Entrar</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Lista -->
+  <section class="view wrap gutter" id="v-lista" hidden aria-labelledby="lista-titulo">
+    <div class="cab">
+      <div class="stack tight">
+        <p class="eyebrow">Painel do professor</p>
+        <h1 id="lista-titulo" tabindex="-1">Seus alunos</h1>
+      </div>
+      <div class="cab-acao">
+        <button class="btn sm" type="button" data-act="atualizar" id="b-atualizar">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Atualizar</span>
+        </button>
+        <p class="status" id="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <p class="escopo" id="escopo"></p>
+    <div class="stats" id="stats"></div>
+
+    <div class="card">
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por turma"></div>
+      <label class="busca" for="busca">
+        <span class="sr">Buscar aluno pelo nome</span>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <input class="in" id="busca" type="search" placeholder="Buscar aluno pelo nome" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+        <button class="limpar" type="button" data-act="limpar-busca" id="b-limpar" aria-label="Limpar a busca" hidden>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+      </label>
+      <div class="acoes-lista">
+        <button class="btn sm" type="button" data-act="csv" id="b-csv">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Baixar planilha (CSV)</span>
+        </button>
+        <button class="btn sm" type="button" data-act="copiar-todas" id="b-copiar-todas">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span>Copiar redações da turma</span>
+        </button>
+      </div>
+      <p class="fine" id="export-status" role="status"></p>
+      <div class="copybox" id="copybox-todas" hidden>
+        <label class="tip" for="copy-todas">Não deu para copiar sozinho. Selecione todo o texto abaixo e copie:</label>
+        <textarea class="in" id="copy-todas" rows="8" readonly></textarea>
+        <div class="row">
+          <button class="btn sm" type="button" data-act="copiar-caixa">Tentar copiar de novo</button>
+          <button class="btn ghost sm" type="button" data-act="fechar-caixa">Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lista-cab">
+      <p class="contagem" id="contagem" aria-live="polite"></p>
+      <label class="ordem" for="ordem">Ordem
+        <span class="sel">
+          <select class="in" id="ordem">
+            <option value="turma">Turma e nome</option>
+            <option value="progresso">Menos fases primeiro</option>
+            <option value="atividade">Atividade mais recente</option>
+          </select>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </label>
+    </div>
+    <div id="lista"></div>
+
+    <section class="card link-jogo" aria-labelledby="link-titulo">
+      <div class="stack tight grow" style="flex-basis:100%">
+        <h2 class="h3" id="link-titulo">Link do jogo para os alunos</h2>
+        <p class="fine">Mande este link para a turma (por exemplo, no Google Sala de Aula).</p>
+      </div>
+      <span class="url" id="url-jogo"></span>
+      <button class="btn sm" type="button" data-act="copiar-link">Copiar link</button>
+    </section>
+  </section>
+
+  <!-- Detalhe do aluno -->
+  <section class="view wrap gutter" id="v-aluno" hidden aria-labelledby="aluno-titulo">
+    <button class="btn ghost voltar" type="button" data-act="voltar">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Voltar para a lista</span>
+    </button>
+    <div id="aluno-conteudo" class="stack" style="gap:20px"></div>
+  </section>
+
+  <!-- Trocar senha -->
+  <section class="view wrap gutter narrow" id="v-senha" hidden aria-labelledby="senha-titulo">
+    <button class="btn ghost voltar" type="button" data-act="voltar">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Voltar</span>
+    </button>
+    <div class="card" style="gap:16px">
+      <div class="stack tight">
+        <p class="eyebrow">Sua senha</p>
+        <h1 id="senha-titulo" tabindex="-1">Trocar a senha</h1>
+      </div>
+      <p class="tip">Depois de trocar, a senha antiga para de funcionar. Os outros aparelhos onde você entrou vão pedir a senha nova.</p>
+      <form id="f-senha" class="stack" novalidate>
+        <input class="sr" type="text" name="username" autocomplete="username" value="professor" tabindex="-1" aria-hidden="true" readonly>
+        <label class="field" for="s-atual">Senha atual
+          <input class="in" id="s-atual" type="password" autocomplete="current-password" maxlength="200" required>
+        </label>
+        <label class="field" for="s-nova">Senha nova
+          <input class="in" id="s-nova" type="password" autocomplete="new-password" maxlength="60" required aria-describedby="s-nova-dica">
+          <span class="fine" id="s-nova-dica" style="font-weight:400">De 6 a 60 caracteres.</span>
+        </label>
+        <label class="field" for="s-nova2">Repita a senha nova
+          <input class="in" id="s-nova2" type="password" autocomplete="new-password" maxlength="60" required>
+        </label>
+        <label class="marcar"><input type="checkbox" data-mostrar="s-atual s-nova s-nova2"> Mostrar as senhas</label>
+        <p class="msg erro" id="senha-erro" role="alert" hidden></p>
+        <div class="row"><button class="btn primary" type="submit" id="b-salvar-senha">Salvar a senha nova</button></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- constantes ---------- */
+var LS_TOKEN = 'mr3:prof';
+var LS_TURMA = 'mr3:prof:turma';
+var LS_ORDEM = 'mr3:prof:ordem';
+var MSG_REDE = 'Sem internet. Confira a conexão e tente de novo.';
+var MSG_SESSAO = 'Sua entrada expirou. Entre de novo com a senha do professor.';
+var PARA_NOME = ['Introdução', '1º argumento', '2º argumento', 'Conclusão'];
+var N_FASES = 7;
+var INTERVALO = 30000;
+var ID_RE = /^[a-z0-9-]+\/[a-z0-9-]+$/;
+
+var ICON = {
+  checkSm: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chev: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+  key: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 12l8.5-8.5M16.5 6.5l2.5 2.5M14.5 8.5l2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+
+/* ---------- utilidades ---------- */
+function $(s, el){ return (el || document).querySelector(s); }
+var ESC = {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;', '`':'&#96;'};
+function esc(v){ return String(v == null ? '' : v).replace(/[&<>"'`]/g, function(c){ return ESC[c]; }); }
+var coll = new Intl.Collator('pt-BR', {sensitivity: 'base', numeric: true});
+function norm(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); }
+function pl(n, um, varios){ return n === 1 ? um : varios; }
+function dois(n){ return (n < 10 ? '0' : '') + n; }
+function cssId(id){ return (window.CSS && CSS.escape) ? CSS.escape(id) : String(id).replace(/["\\]/g, '\\$&'); }
+
+var ls = {
+  get: function(k){ try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set: function(k, v){ try { localStorage.setItem(k, v); } catch (e) {} },
+  del: function(k){ try { localStorage.removeItem(k); } catch (e) {} }
+};
+
+function hhmm(d){ return dois(d.getHours()) + ':' + dois(d.getMinutes()); }
+function ddmmaaaa(d){ return dois(d.getDate()) + '/' + dois(d.getMonth() + 1) + '/' + d.getFullYear(); }
+function inicioDia(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(); }
+function dataHora(ts){ if (!ts) return ''; var d = new Date(ts); return ddmmaaaa(d) + ' às ' + hhmm(d); }
+function dataHoraCsv(ts){ if (!ts) return ''; var d = new Date(ts); return ddmmaaaa(d) + ' ' + hhmm(d); }
+function relativo(ts){
+  if (!ts) return 'sem registro';
+  var agora = new Date(), d = new Date(ts);
+  var min = Math.floor((agora.getTime() - ts) / 60000);
+  if (min < 1) return 'agora mesmo';
+  if (min < 60) return 'há ' + min + ' min';
+  var dias = Math.round((inicioDia(agora) - inicioDia(d)) / 86400000);
+  if (dias <= 0){ var h = Math.floor(min / 60); return 'há ' + h + ' ' + pl(h, 'hora', 'horas'); }
+  if (dias === 1) return 'ontem, ' + hhmm(d);
+  if (dias < 7) return 'há ' + dias + ' dias';
+  return ddmmaaaa(d);
+}
+function textoNivel(v){
+  if (typeof v === 'string' && v.trim()) return v.trim();
+  if (typeof v === 'number' && v > 0) return 'Nível ' + v;
+  return '';
+}
+function textoEtapa(v){
+  if (typeof v === 'string' && v.trim()) return v.trim();
+  if (typeof v === 'number' && v > 0) return 'Passo ' + v;
+  return '';
+}
+function nomeTurma(rot){ return /^\s*turma\b/i.test(rot) ? rot : 'Turma ' + rot; }
+
+/* ---------- estado ---------- */
+var token = ls.get(LS_TOKEN) || '';
+var alunos = [];
+var carregado = false;
+var atualizadoAs = 0;
+var erroLista = '';
+var filtroTurma = ls.get(LS_TURMA) || '';
+var busca = '';
+var ordem = ls.get(LS_ORDEM) || 'turma';
+if (['turma', 'progresso', 'atividade'].indexOf(ordem) < 0) ordem = 'turma';
+var rotulos = new Map();     // turmaKey -> rótulo exibido
+var detalhes = new Map();    // id -> {atualizadoEm, paras}
+var view = '';
+var alunoAberto = '';
+var alunoDados = null;
+var ultimoAberto = '';
+var scrollLista = 0;
+var seqAluno = 0;
+var carregando = null;
+var exportando = false;
+var avisoManual = false;
+var mqTabela = window.matchMedia ? window.matchMedia('(min-width: 760px)') : null;
+
+/* ---------- API ---------- */
+function ErroApi(status, codigo, msg, dados){
+  this.name = 'ErroApi'; this.status = status; this.codigo = codigo; this.message = msg; this.dados = dados || {};
+}
+ErroApi.prototype = Object.create(Error.prototype);
+
+function api(caminho, opcoes){
+  opcoes = opcoes || {};
+  var metodo = opcoes.metodo || 'GET';
+  var auth = opcoes.auth !== false;
+  var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+  var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 20000) : 0;
+  var headers = {'accept': 'application/json'};
+  if (opcoes.corpo !== undefined) headers['content-type'] = 'application/json';
+  if (auth) headers['authorization'] = 'Bearer ' + token;
+  var res;
+  return fetch('/api' + caminho, {
+    method: metodo, headers: headers, cache: 'no-store', credentials: 'same-origin',
+    body: opcoes.corpo === undefined ? undefined : JSON.stringify(opcoes.corpo),
+    signal: ctrl ? ctrl.signal : undefined
+  }).then(function(r){
+    res = r;
+    return r.json().catch(function(){ return null; });
+  }, function(){
+    throw new ErroApi(0, 'rede', MSG_REDE);
+  }).then(function(dados){
+    clearTimeout(timer);
+    if (res.ok && dados && dados.ok === true) return dados;
+    if (auth && res.status === 401){
+      sessaoExpirou();
+      throw new ErroApi(401, 'sessao', MSG_SESSAO, dados);
+    }
+    var codigo = (dados && dados.erro) || (res.status >= 500 ? 'interno' : 'erro');
+    var msg = (dados && typeof dados.msg === 'string' && dados.msg) ||
+      (res.status >= 500 ? 'Deu um erro no servidor. Tente de novo daqui a pouco.' : 'Não deu certo. Tente de novo.');
+    throw new ErroApi(res.status, codigo, msg, dados);
+  }, function(e){
+    clearTimeout(timer);
+    throw e instanceof ErroApi ? e : new ErroApi(0, 'rede', MSG_REDE);
+  });
+}
+
+function limparAluno(x){
+  x = x || {};
+  function n(v){ return typeof v === 'number' && isFinite(v) ? v : 0; }
+  return {
+    id: String(x.id || ''),
+    nome: String(x.nome || '(sem nome)'),
+    turma: String(x.turma || ''),
+    turmaKey: String(x.turmaKey || ''),
+    fases: Math.max(0, Math.floor(n(x.fases))),
+    xp: Math.max(0, Math.round(n(x.xp))),
+    nivel: x.nivel,
+    linhas: Math.max(0, Math.round(n(x.linhas))),
+    etapa: x.etapa,
+    concluiu: !!x.concluiu,
+    temRedacao: !!x.temRedacao,
+    semSenha: !!x.semSenha,
+    bloqueado: !!x.bloqueado,
+    criadoEm: n(x.criadoEm) || null,
+    atualizadoEm: n(x.atualizadoEm) || null,
+    paras: Array.isArray(x.paras) ? [0, 1, 2, 3].map(function(i){ return typeof x.paras[i] === 'string' ? x.paras[i] : ''; }) : null
+  };
+}
+
+/* ---------- navegação ---------- */
+function mostrarView(v){
+  if (view === 'lista' && v !== 'lista') scrollLista = window.scrollY || 0;
+  view = v;
+  ['login', 'lista', 'aluno', 'senha'].forEach(function(n){ $('#v-' + n).hidden = n !== v; });
+  $('#top-acoes').hidden = v === 'login';
+}
+function lerHash(){
+  var h = (location.hash || '').replace(/^#/, '');
+  if (h === 'senha') return {v: 'senha'};
+  if (h.indexOf('aluno=') === 0){
+    try {
+      var id = decodeURIComponent(h.slice(6));
+      if (ID_RE.test(id)) return {v: 'aluno', id: id};
+    } catch (e) {}
+  }
+  return {v: 'lista'};
+}
+function rota(){
+  if (!token) return mostrarLogin();
+  var r = lerHash();
+  if (r.v === 'aluno') return mostrarAluno(r.id);
+  if (r.v === 'senha') return mostrarSenha();
+  return mostrarLista();
+}
+function navegar(hash){
+  history.pushState({mr: 1}, '', hash ? '#' + hash : location.pathname + location.search);
+  rota();
+}
+function voltar(){
+  if (history.state && history.state.mr) { history.back(); return; }
+  history.replaceState(null, '', location.pathname + location.search);
+  rota();
+}
+window.addEventListener('popstate', function(){ rota(); });
+
+function focarTitulo(sel){
+  var h = $(sel);
+  if (h) { try { h.focus({preventScroll: true}); } catch (e) { h.focus(); } }
+}
+
+/* ---------- entrada / saída ---------- */
+function mostrarLogin(msg, tipo){
+  mostrarView('login');
+  document.title = 'Painel do professor · Missão Redação';
+  var m = $('#login-msg');
+  if (msg) { m.textContent = msg; m.className = 'msg ' + (tipo || 'info'); m.hidden = false; }
+  else m.hidden = true;
+  $('#login-erro').hidden = true;
+  window.scrollTo(0, 0);
+  setTimeout(function(){ var s = $('#senha'); if (s && view === 'login') s.focus(); }, 0);
+}
+function limparSessao(){
+  token = ''; ls.del(LS_TOKEN);
+  alunos = []; carregado = false; atualizadoAs = 0; erroLista = '';
+  detalhes.clear(); alunoDados = null; alunoAberto = ''; ultimoAberto = '';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+}
+function sessaoExpirou(){
+  if (!token) return;
+  limparSessao();
+  mostrarLogin(MSG_SESSAO, 'erro');
+}
+function sair(){
+  limparSessao();
+  mostrarLogin('Você saiu. Até a próxima!', 'ok');
+}
+
+$('#f-login').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  var campo = $('#senha'), erro = $('#login-erro'), botao = $('#b-entrar');
+  var senha = campo.value;
+  erro.hidden = true;
+  $('#login-msg').hidden = true;
+  if (!senha.trim()) { erro.textContent = 'Escreva a senha.'; erro.hidden = false; campo.focus(); return; }
+  botao.disabled = true; botao.textContent = 'Entrando…';
+  api('/professor/entrar', {metodo: 'POST', corpo: {senha: senha}, auth: false}).then(function(r){
+    token = String(r.token || '');
+    ls.set(LS_TOKEN, token);
+    campo.value = '';
+    rota();
+  }, function(e){
+    erro.textContent = e.message;
+    erro.hidden = false;
+    campo.focus(); campo.select();
+  }).then(function(){ botao.disabled = false; botao.textContent = 'Entrar'; });
+});
+
+/* mostrar/esconder senha */
+document.addEventListener('change', function(ev){
+  var t = ev.target;
+  if (t && t.matches && t.matches('[data-mostrar]')) {
+    t.getAttribute('data-mostrar').split(' ').forEach(function(id){
+      var c = document.getElementById(id); if (c) c.type = t.checked ? 'text' : 'password';
+    });
+  }
+});
+
+/* ---------- lista ---------- */
+function calcularTurmas(){
+  var m = new Map();
+  alunos.forEach(function(a){
+    var t = m.get(a.turmaKey);
+    if (!t) { t = {key: a.turmaKey, n: 0, nomes: new Map()}; m.set(a.turmaKey, t); }
+    t.n++;
+    t.nomes.set(a.turma, (t.nomes.get(a.turma) || 0) + 1);
+  });
+  var lista = [];
+  m.forEach(function(t){
+    var melhor = '', qt = -1;
+    t.nomes.forEach(function(q, nome){ if (q > qt) { qt = q; melhor = nome; } });
+    lista.push({key: t.key, n: t.n, nome: melhor || t.key});
+  });
+  rotulos = new Map(lista.map(function(t){ return [t.key, t.nome]; }));
+  return lista;
+}
+function rotulo(a){ return rotulos.get(a.turmaKey) || a.turma; }
+function daTurma(){ return filtroTurma ? alunos.filter(function(a){ return a.turmaKey === filtroTurma; }) : alunos; }
+function filtrados(){
+  var termos = norm(busca).split(' ').filter(Boolean);
+  var l = daTurma().filter(function(a){
+    if (!termos.length) return true;
+    var n = norm(a.nome);
+    return termos.every(function(t){ return n.indexOf(t) >= 0; });
+  });
+  if (ordem === 'progresso') {
+    l = l.slice().sort(function(a, b){ return a.fases - b.fases || a.xp - b.xp || coll.compare(a.nome, b.nome); });
+  } else if (ordem === 'atividade') {
+    l = l.slice().sort(function(a, b){ return (b.atualizadoEm || 0) - (a.atualizadoEm || 0) || coll.compare(a.nome, b.nome); });
+  }
+  return l;
+}
+function barra(f, concluiu){
+  var s = '';
+  for (var i = 0; i < N_FASES; i++) s += '<i class="' + (i < f ? 'on' : '') + '"></i>';
+  return '<span class="barra' + (concluiu ? ' ok' : '') + '" aria-hidden="true">' + s + '</span>';
+}
+function etiquetas(a){
+  var t = [];
+  if (a.concluiu) t.push('<span class="tag ok">' + ICON.checkSm + 'Concluiu</span>');
+  if (a.bloqueado) t.push('<span class="tag warn">Bloqueado</span>');
+  if (a.semSenha) t.push('<span class="tag info">Sem senha</span>');
+  return t.join('');
+}
+function cartao(a){
+  var f = Math.min(a.fases, N_FASES), tg = etiquetas(a);
+  return '<li><button type="button" class="ca" data-id="' + esc(a.id) + '">' +
+    '<span class="ca-nome">' + esc(a.nome) + '</span>' +
+    '<span class="ca-fases' + (a.concluiu ? ' ok' : '') + '">' + f + '/' + N_FASES + '<span class="sr"> fases</span>' + ICON.chev + '</span>' +
+    barra(f, a.concluiu) +
+    '<span class="ca-meta">' + esc(rotulo(a)) + ' · ' + a.linhas + ' ' + pl(a.linhas, 'linha', 'linhas') + ' · ' +
+      '<span title="' + esc(dataHora(a.atualizadoEm)) + '">' + esc(relativo(a.atualizadoEm)) + '</span></span>' +
+    (tg ? '<span class="tags">' + tg + '</span>' : '') +
+  '</button></li>';
+}
+function linhaTabela(a){
+  var f = Math.min(a.fases, N_FASES), tg = etiquetas(a);
+  return '<tr data-id="' + esc(a.id) + '">' +
+    '<td class="c-nome"><button type="button" class="nome-btn" data-id="' + esc(a.id) + '">' + esc(a.nome) + '</button>' +
+      (tg ? '<span class="tags">' + tg + '</span>' : '') + '</td>' +
+    '<td class="quebra">' + esc(rotulo(a)) + '</td>' +
+    '<td><span class="prog-cel">' + barra(f, a.concluiu) + '<b class="' + (a.concluiu ? 'ok' : '') + '">' + f + '/' + N_FASES + '<span class="sr"> fases</span></b></span></td>' +
+    '<td class="num">' + a.linhas + '</td>' +
+    '<td class="quando"><span title="' + esc(dataHora(a.atualizadoEm)) + '">' + esc(relativo(a.atualizadoEm)) + '</span></td>' +
+  '</tr>';
+}
+
+function renderStatus(){
+  var s = $('#status');
+  if (!s) return;
+  if (carregado && erroLista) {
+    s.className = 'status erro';
+    s.textContent = erroLista === MSG_REDE
+      ? 'Sem internet. Mostrando a lista de ' + hhmm(new Date(atualizadoAs)) + '.'
+      : 'Não deu para atualizar. Mostrando a lista de ' + hhmm(new Date(atualizadoAs)) + '.';
+  } else if (carregado) {
+    s.className = 'status';
+    s.textContent = (avisoManual ? 'Lista atualizada às ' : 'Atualizado às ') + hhmm(new Date(atualizadoAs)) + '. Atualiza sozinho a cada 30 segundos.';
+  } else {
+    s.className = 'status';
+    s.textContent = '';
+  }
+}
+
+function renderLista(){
+  var turmas = calcularTurmas();
+  if (carregado && filtroTurma && !rotulos.has(filtroTurma)) { filtroTurma = ''; ls.del(LS_TURMA); }
+
+  var focoTurma = null, focoId = null, at = document.activeElement;
+  if (at && at.closest) {
+    if (at.closest('#chips') && at.hasAttribute('data-turma')) focoTurma = at.getAttribute('data-turma');
+    var item = at.closest('#lista [data-id]');
+    if (item) focoId = item.getAttribute('data-id');
+  }
+
+  /* chips */
+  var chips = '<button type="button" class="chip" data-turma="" aria-pressed="' + (!filtroTurma) + '"><span class="t">Todas</span><span class="n">' + alunos.length + '</span></button>';
+  turmas.forEach(function(t){
+    chips += '<button type="button" class="chip" data-turma="' + esc(t.key) + '" aria-pressed="' + (filtroTurma === t.key) + '"><span class="t">' + esc(t.nome) + '</span><span class="n">' + t.n + '</span></button>';
+  });
+  $('#chips').innerHTML = carregado ? chips : '';
+
+  /* resumo */
+  var base = daTurma();
+  var total = base.length;
+  var concl = base.filter(function(a){ return a.concluiu; }).length;
+  var pct = total ? Math.round(concl * 100 / total) : 0;
+  $('#escopo').textContent = carregado ? (filtroTurma ? nomeTurma(rotulos.get(filtroTurma) || filtroTurma) : 'Todas as turmas') : '';
+  $('#stats').innerHTML = carregado ?
+    '<div class="stat"><b>' + total + '</b><span>' + pl(total, 'aluno', 'alunos') + '</span></div>' +
+    '<div class="stat ok"><b>' + concl + '</b><span>' + pl(concl, 'concluiu', 'concluíram') + '</span>' +
+      '<span class="medidor" role="img" aria-label="' + pct + '% da turma concluiu"><i style="width:' + pct + '%"></i></span></div>' +
+    '<div class="stat"><b>' + (total - concl) + '</b><span>em andamento</span></div>'
+    : '';
+
+  /* lista */
+  var l = filtrados();
+  var el = $('#lista');
+  if (!carregado && erroLista) {
+    el.innerHTML = '<div class="card vazio-box"><p class="msg erro">' + esc(erroLista) + '</p>' +
+      '<button class="btn sm" type="button" data-act="atualizar">Tentar de novo</button></div>';
+  } else if (!carregado) {
+    el.innerHTML = '<div class="card"><p class="carregando"><span class="pulso" aria-hidden="true"></span>Carregando os alunos…</p></div>';
+  } else if (!alunos.length) {
+    el.innerHTML = '<div class="card vazio-box"><h2 class="h3">Nenhum aluno entrou ainda.</h2>' +
+      '<p class="tip">Mande o link do jogo para a turma. Quando o aluno entrar com nome, turma e senha, ele aparece aqui.</p></div>';
+  } else if (!l.length) {
+    el.innerHTML = '<div class="card vazio-box"><h2 class="h3">Nenhum aluno encontrado.</h2>' +
+      '<p class="tip">Confira o nome digitado na busca' + (filtroTurma ? ' ou escolha outra turma' : '') + '.</p>' +
+      '<button class="btn sm" type="button" data-act="limpar-busca">Limpar a busca</button></div>';
+  } else if (mqTabela && mqTabela.matches) {
+    el.innerHTML = '<div class="tabela-wrap"><table class="tabela"><caption class="sr">Alunos e progresso</caption>' +
+      '<thead><tr><th scope="col">Nome</th><th scope="col">Turma</th><th scope="col">Progresso</th><th scope="col" class="num">Linhas</th><th scope="col">Última atividade</th></tr></thead>' +
+      '<tbody>' + l.map(linhaTabela).join('') + '</tbody></table></div>';
+  } else {
+    el.innerHTML = '<ul class="cartoes" aria-label="Alunos">' + l.map(cartao).join('') + '</ul>';
+  }
+
+  var n = l.length;
+  $('#contagem').textContent = !carregado ? '' :
+    (busca.trim() ? n + ' de ' + total + ' ' + pl(total, 'aluno', 'alunos') : n + ' ' + pl(n, 'aluno', 'alunos'));
+  $('#b-limpar').hidden = !busca;
+  $('#b-csv').disabled = !carregado || !n || exportando;
+  $('#b-copiar-todas').disabled = !carregado || !n || exportando;
+  $('#ordem').value = ordem;
+  renderStatus();
+
+  if (focoTurma !== null) { var c = $('#chips [data-turma="' + cssId(focoTurma) + '"]'); if (c) c.focus({preventScroll: true}); }
+  if (focoId) { var b = $('#lista button[data-id="' + cssId(focoId) + '"]'); if (b) b.focus({preventScroll: true}); }
+}
+
+function carregarLista(opcoes){
+  opcoes = opcoes || {};
+  if (carregando) return carregando;
+  var botao = $('#b-atualizar');
+  botao.classList.add('girar');
+  botao.setAttribute('aria-busy', 'true');
+  carregando = api('/professor/alunos').then(function(r){
+    alunos = (Array.isArray(r.alunos) ? r.alunos : []).map(limparAluno).filter(function(a){ return ID_RE.test(a.id); });
+    var ids = new Set(alunos.map(function(a){ return a.id; }));
+    detalhes.forEach(function(_, id){ if (!ids.has(id)) detalhes.delete(id); });
+    carregado = true; atualizadoAs = Date.now(); erroLista = '';
+    avisoManual = !!opcoes.manual;
+  }, function(e){
+    if (e.codigo === 'sessao') return;
+    erroLista = e.message || MSG_REDE;
+    if (opcoes.manual) toast(erroLista);
+  }).then(function(){
+    carregando = null;
+    botao.classList.remove('girar');
+    botao.removeAttribute('aria-busy');
+    if (!token) return;
+    if (view === 'lista') renderLista(); else renderStatus();
+  });
+  return carregando;
+}
+
+function mostrarLista(){
+  var anterior = view;
+  mostrarView('lista');
+  document.title = 'Painel do professor · Missão Redação';
+  renderLista();
+  if (anterior === 'aluno' || anterior === 'senha') {
+    window.scrollTo(0, scrollLista);
+    var b = ultimoAberto && $('#lista button[data-id="' + cssId(ultimoAberto) + '"]');
+    if (b) { try { b.focus({preventScroll: true}); } catch (e) { b.focus(); } }
+    else focarTitulo('#lista-titulo');
+  } else {
+    window.scrollTo(0, 0);
+    if (anterior === 'login') focarTitulo('#lista-titulo');
+  }
+  if (!carregado || Date.now() - atualizadoAs >= INTERVALO) carregarLista();
+}
+
+function abrirAluno(id){
+  ultimoAberto = id;
+  navegar('aluno=' + encodeURIComponent(id));
+}
+
+/* filtros */
+$('#busca').addEventListener('input', function(ev){ busca = ev.target.value; renderLista(); });
+$('#busca').addEventListener('keydown', function(ev){
+  if (ev.key === 'Escape' && busca) { ev.preventDefault(); busca = ''; ev.target.value = ''; renderLista(); }
+});
+$('#ordem').addEventListener('change', function(ev){ ordem = ev.target.value; ls.set(LS_ORDEM, ordem); renderLista(); });
+if (mqTabela) {
+  var aoMudar = function(){ if (view === 'lista') renderLista(); };
+  if (mqTabela.addEventListener) mqTabela.addEventListener('change', aoMudar); else if (mqTabela.addListener) mqTabela.addListener(aoMudar);
+}
+
+/* ---------- detalhe do aluno ---------- */
+function paragrafosHTML(a, carregandoTexto){
+  if (carregandoTexto) return '<p class="vazio">Carregando a redação…</p>';
+  return PARA_NOME.map(function(nome, i){
+    var p = String((a.paras && a.paras[i]) || '').trim();
+    return '<span class="lbl">' + nome + '</span>' +
+      (p ? '<p>' + esc(p) + '</p>' : '<p class="vazio">Ainda não escreveu este parágrafo.</p>');
+  }).join('');
+}
+function renderAluno(a, opcoes){
+  opcoes = opcoes || {};
+  var el = $('#aluno-conteudo');
+  if (!a) {
+    el.innerHTML = '<div class="card"><p class="carregando"><span class="pulso" aria-hidden="true"></span>Carregando o aluno…</p></div>';
+    return;
+  }
+  var f = Math.min(a.fases, N_FASES);
+  var rot = rotulo(a);
+  var nivel = textoNivel(a.nivel), etapa = textoEtapa(a.etapa);
+  var tg = etiquetas(a);
+  var tem = a.paras && a.paras.some(function(p){ return String(p || '').trim(); });
+
+  var avisos = '';
+  if (a.bloqueado) avisos += '<p class="msg erro longa"><b>Bloqueado.</b> Errou a senha muitas vezes e pode tentar de novo em até 15 minutos. Para liberar agora, apague a senha do aluno.</p>';
+  if (a.semSenha) avisos += '<p class="msg info longa"><b>Sem senha.</b> Na próxima vez que entrar, o aluno cria uma senha nova de 4 números. O progresso e a redação continuam salvos.</p>';
+
+  el.innerHTML =
+    '<div class="det-cab">' +
+      '<p class="eyebrow">' + esc(nomeTurma(rot)) + '</p>' +
+      '<h1 id="aluno-titulo" class="quebra" tabindex="-1">' + esc(a.nome) + '</h1>' +
+      (tg ? '<div class="tags">' + tg + '</div>' : '') +
+      '<p class="resumo-curto so-celular"><b>' + f + '/' + N_FASES + '</b> fases · <b>' + a.xp + '</b> XP · <b>' + a.linhas + '</b> ' +
+        pl(a.linhas, 'linha', 'linhas') + ' · ' + esc(relativo(a.atualizadoEm)) + '</p>' +
+      '<button class="pular so-celular" type="button" data-act="ir-acoes">' + ICON.key + '<span>Senha e cadastro do aluno</span></button>' +
+    '</div>' +
+    '<div class="det">' +
+      '<div class="stack" style="gap:16px">' +
+        '<article class="folha" aria-label="Redação de ' + esc(a.nome) + '">' +
+          '<div class="folha-h"><span class="t">Redação · ENEM treineiro</span><span class="n">' + esc(a.nome) + ' · ' + esc(rot) + '</span></div>' +
+          '<div class="folha-c">' + paragrafosHTML(a, opcoes.carregando) + '</div>' +
+        '</article>' +
+        '<div class="row"><button class="btn primary" type="button" data-act="copiar-redacao"' + (tem && !opcoes.carregando ? '' : ' disabled') + '>' + ICON.copy + '<span>Copiar redação</span></button>' +
+          (!tem && !opcoes.carregando ? '<span class="fine">Ainda não há texto para copiar.</span>' : '') + '</div>' +
+        '<div class="copybox" id="copybox-aluno" hidden>' +
+          '<label class="tip" for="copy-aluno">Não deu para copiar sozinho. Selecione todo o texto abaixo e copie:</label>' +
+          '<textarea class="in" id="copy-aluno" rows="8" readonly></textarea>' +
+          '<div class="row"><button class="btn sm" type="button" data-act="copiar-caixa">Tentar copiar de novo</button>' +
+          '<button class="btn ghost sm" type="button" data-act="fechar-caixa">Fechar</button></div>' +
+        '</div>' +
+      '</div>' +
+      '<aside class="det-lado stack" aria-label="Dados do aluno">' +
+        '<dl class="fatos">' +
+          '<div class="fato largo"><dt>Fases</dt><dd>' + f + ' de ' + N_FASES + (a.concluiu ? ' · concluiu' : '') + barra(f, a.concluiu) + '</dd></div>' +
+          '<div class="fato"><dt>XP</dt><dd>' + a.xp + '</dd></div>' +
+          '<div class="fato"><dt>Linhas</dt><dd>' + a.linhas + '</dd></div>' +
+          (nivel ? '<div class="fato largo"><dt>Nível</dt><dd>' + esc(nivel) + '</dd></div>' : '') +
+          (etapa ? '<div class="fato largo"><dt>Onde parou</dt><dd>' + esc(etapa) + '</dd></div>' : '') +
+          '<div class="fato largo"><dt>Última atividade</dt><dd>' + esc(relativo(a.atualizadoEm)) + (a.atualizadoEm ? '<small>' + esc(dataHora(a.atualizadoEm)) + '</small>' : '') + '</dd></div>' +
+          (a.criadoEm ? '<div class="fato largo"><dt>Primeira entrada</dt><dd>' + esc(dataHora(a.criadoEm)) + '</dd></div>' : '') +
+        '</dl>' +
+        avisos +
+        '<section class="card acoes-aluno" aria-labelledby="acoes-t">' +
+          '<h2 class="h3" id="acoes-t" tabindex="-1">Senha e cadastro</h2>' +
+          '<div class="acao">' +
+            '<p class="fine">Esqueceu a senha ou ficou bloqueado? Apague a senha. O aluno cria uma nova ao entrar, e o progresso continua salvo.</p>' +
+            '<button class="btn sm" type="button" data-act="pedir-redefinir"' + (opcoes.carregando ? ' disabled' : '') + '>' + ICON.key + '<span>Apagar senha do aluno</span></button>' +
+            '<div class="confirma" id="conf-redefinir" role="group" aria-labelledby="conf-redefinir-t" hidden>' +
+              '<p id="conf-redefinir-t" tabindex="-1"><b>Apagar a senha de ' + esc(a.nome) + '?</b> O aluno entra com o mesmo nome e turma e cria uma senha nova de 4 números. O progresso e a redação continuam salvos.</p>' +
+              '<div class="row"><button class="btn primary sm" type="button" data-act="redefinir">Sim, apagar a senha</button>' +
+              '<button class="btn sm" type="button" data-act="cancelar">Cancelar</button></div>' +
+            '</div>' +
+            '<p class="msg ok longa" id="ok-redefinir" role="status" hidden></p>' +
+          '</div>' +
+          '<hr>' +
+          '<div class="acao">' +
+            '<p class="fine">Excluir apaga o aluno, o progresso e a redação para sempre.</p>' +
+            '<button class="btn danger sm" type="button" data-act="pedir-excluir"' + (opcoes.carregando ? ' disabled' : '') + '>' + ICON.trash + '<span>Excluir aluno</span></button>' +
+            '<div class="confirma perigo" id="conf-excluir" role="group" aria-labelledby="conf-excluir-t" hidden>' +
+              '<p id="conf-excluir-t" tabindex="-1"><b>Excluir ' + esc(a.nome) + ' para sempre?</b> O progresso e a redação vão sumir e não dá para desfazer. Se o aluno entrar de novo, ele começa do zero.</p>' +
+              '<div class="row"><button class="btn danger cheio sm" type="button" data-act="excluir">Sim, excluir para sempre</button>' +
+              '<button class="btn sm" type="button" data-act="cancelar">Cancelar</button></div>' +
+            '</div>' +
+          '</div>' +
+          '<p class="msg erro" id="erro-aluno" role="alert" hidden></p>' +
+        '</section>' +
+      '</aside>' +
+    '</div>';
+  document.title = a.nome + ' · Painel do professor';
+}
+function renderAlunoErro(msg, sumiu){
+  $('#aluno-conteudo').innerHTML = '<div class="card vazio-box">' +
+    '<h1 id="aluno-titulo" class="h3" tabindex="-1">' + (sumiu ? 'Este aluno não existe mais.' : 'Não deu para abrir o aluno.') + '</h1>' +
+    '<p class="tip">' + esc(sumiu ? 'Ele pode ter sido excluído. Volte para a lista e atualize.' : msg) + '</p>' +
+    '<div class="row"><button class="btn sm" type="button" data-act="voltar">Voltar para a lista</button>' +
+    (sumiu ? '' : '<button class="btn sm" type="button" data-act="tentar-aluno">Tentar de novo</button>') + '</div></div>';
+}
+function detalheOcupado(){
+  var c1 = $('#conf-redefinir'), c2 = $('#conf-excluir'), cb = $('#copybox-aluno');
+  return (c1 && !c1.hidden) || (c2 && !c2.hidden) || (cb && !cb.hidden) || !!$('#aluno-conteudo [aria-busy="true"]');
+}
+function carregarAluno(id, opcoes){
+  opcoes = opcoes || {};
+  var seq = ++seqAluno;
+  return api('/professor/aluno?id=' + encodeURIComponent(id)).then(function(r){
+    if (seq !== seqAluno || view !== 'aluno' || alunoAberto !== id) return;
+    var a = limparAluno(r.aluno);
+    detalhes.set(a.id, {atualizadoEm: a.atualizadoEm, paras: a.paras});
+    var mudou = JSON.stringify(a) !== JSON.stringify(alunoDados);
+    var i = alunos.findIndex(function(x){ return x.id === a.id; });
+    if (i >= 0) { var s = Object.assign({}, a); s.paras = null; alunos[i] = s; }
+    if (opcoes.silencioso && (!mudou || detalheOcupado())) return;
+    alunoDados = a;
+    var at = document.activeElement;
+    var foco = at && at.getAttribute && at.getAttribute('data-act');
+    var noTitulo = !at || at === document.body || at.id === 'aluno-titulo';
+    renderAluno(a);
+    if (opcoes.silencioso) {
+      if (foco) { var b = $('#aluno-conteudo [data-act="' + cssId(foco) + '"]'); if (b) b.focus({preventScroll: true}); }
+    } else if (opcoes.focar || noTitulo) focarTitulo('#aluno-titulo');
+  }, function(e){
+    if (e.codigo === 'sessao' || seq !== seqAluno || view !== 'aluno' || alunoAberto !== id) return;
+    if (opcoes.silencioso && e.status !== 404) return;
+    if (e.status === 404) {
+      alunos = alunos.filter(function(x){ return x.id !== id; });
+      detalhes.delete(id);
+    }
+    alunoDados = null;
+    renderAlunoErro(e.message, e.status === 404);
+    focarTitulo('#aluno-titulo');
+  });
+}
+function mostrarAluno(id){
+  var mesmo = view === 'aluno' && alunoAberto === id && alunoDados;
+  mostrarView('aluno');
+  if (mesmo) return;
+  alunoAberto = id;
+  ultimoAberto = id;
+  alunoDados = null;
+  window.scrollTo(0, 0);
+  var resumo = alunos.find(function(a){ return a.id === id; });
+  if (resumo) {
+    renderAluno(Object.assign({}, resumo, {paras: null}), {carregando: true});
+    focarTitulo('#aluno-titulo');
+  } else renderAluno(null);
+  carregarAluno(id, {focar: !resumo});
+  if (!carregado) carregarLista();
+}
+
+function mostrarErroAluno(msg){
+  var e = $('#erro-aluno');
+  if (e) { e.textContent = msg; e.hidden = false; }
+}
+function ocupar(botao, texto){
+  botao.disabled = true;
+  botao.setAttribute('aria-busy', 'true');
+  var span = botao.querySelector('span') || botao;
+  var antes = span.textContent;
+  span.textContent = texto;
+  return function(){ botao.disabled = false; botao.removeAttribute('aria-busy'); span.textContent = antes; };
+}
+
+function redefinirSenha(botao){
+  var a = alunoDados; if (!a) return;
+  var soltar = ocupar(botao, 'Apagando…');
+  $('#erro-aluno').hidden = true;
+  api('/professor/redefinir', {metodo: 'POST', corpo: {id: a.id}}).then(function(){
+    if (alunoDados !== a) return;
+    a.semSenha = true; a.bloqueado = false;
+    var i = alunos.findIndex(function(x){ return x.id === a.id; });
+    if (i >= 0) { alunos[i].semSenha = true; alunos[i].bloqueado = false; }
+    renderAluno(a);
+    var ok = $('#ok-redefinir');
+    ok.innerHTML = 'Pronto! A senha de <b>' + esc(a.nome) + '</b> foi apagada. Na próxima vez, o aluno entra com o mesmo nome e turma e cria uma senha nova.';
+    ok.hidden = false;
+    var b = $('[data-act="pedir-redefinir"]'); if (b) b.focus({preventScroll: true});
+    toast('Senha apagada.');
+  }, function(e){
+    if (e.codigo === 'sessao') return;
+    soltar();
+    if (e.status === 404) { renderAlunoErro('', true); return; }
+    mostrarErroAluno(e.message);
+  });
+}
+function excluirAluno(botao){
+  var a = alunoDados; if (!a) return;
+  var soltar = ocupar(botao, 'Excluindo…');
+  $('#erro-aluno').hidden = true;
+  api('/professor/apagar', {metodo: 'POST', corpo: {id: a.id}}).then(function(){
+    alunos = alunos.filter(function(x){ return x.id !== a.id; });
+    detalhes.delete(a.id);
+    alunoDados = null; alunoAberto = ''; ultimoAberto = '';
+    toast(a.nome + ' foi excluído.');
+    voltar();
+  }, function(e){
+    if (e.codigo === 'sessao') return;
+    soltar();
+    mostrarErroAluno(e.message);
+  });
+}
+
+function abrirConfirma(sel){
+  var c = $(sel);
+  c.hidden = false;
+  focarTitulo(sel + '-t');
+  try { c.scrollIntoView({block: 'nearest'}); } catch (e) { c.scrollIntoView(false); }
+}
+
+/* ---------- copiar ---------- */
+function copiarExec(ta){
+  try { ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length); return document.execCommand('copy'); }
+  catch (e) { return false; }
+}
+function copiar(texto, caixa, msgOk){
+  function falhou(){
+    var ta = caixa.querySelector('textarea');
+    caixa.hidden = false;
+    ta.value = texto;
+    ta.scrollTop = 0;
+    if (copiarExec(ta)) { caixa.hidden = true; toast(msgOk); return; }
+    ta.focus(); ta.select();
+    toast('Selecione o texto e copie.');
+  }
+  try {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) return Promise.resolve(falhou());
+    return navigator.clipboard.writeText(texto).then(function(){ caixa.hidden = true; toast(msgOk); }, falhou);
+  } catch (e) { return Promise.resolve(falhou()); }
+}
+function copiarDaCaixa(caixa){
+  var ta = caixa.querySelector('textarea');
+  var texto = ta.value;
+  var ok = function(){ toast('Texto copiado!'); };
+  var manual = function(){ if (copiarExec(ta)) ok(); else { ta.focus(); ta.select(); toast('Selecione o texto e copie.'); } };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(ok, manual);
+    else manual();
+  } catch (e) { manual(); }
+}
+function juntarParas(paras){
+  return (paras || []).map(function(p){ return String(p || '').trim(); }).filter(Boolean).join('\n\n');
+}
+function textoRedacao(a){
+  var corpo = juntarParas(a.paras);
+  return 'Nome: ' + a.nome + '\nTurma: ' + rotulo(a) + '\n\n' + (corpo || '(Ainda sem redação.)');
+}
+
+/* ---------- planilha e redações da turma ---------- */
+function parasDe(a){
+  if (!a.temRedacao) return ['', '', '', ''];
+  var d = detalhes.get(a.id);
+  return d && d.paras ? d.paras : ['', '', '', ''];
+}
+function buscarRedacoes(lista, aoAvancar){
+  var falta = lista.filter(function(a){
+    if (!a.temRedacao) return false;
+    var d = detalhes.get(a.id);
+    return !d || !d.paras || d.atualizadoEm !== a.atualizadoEm;
+  });
+  if (!falta.length) return Promise.resolve();
+  var feitos = 0, i = 0, total = falta.length;
+  aoAvancar(0, total);
+  function proximo(){
+    if (i >= falta.length) return Promise.resolve();
+    var a = falta[i++];
+    return api('/professor/aluno?id=' + encodeURIComponent(a.id)).then(function(r){
+      var x = limparAluno(r.aluno);
+      detalhes.set(x.id, {atualizadoEm: a.atualizadoEm, paras: x.paras});
+    }, function(e){
+      if (e.status === 404) { detalhes.set(a.id, {atualizadoEm: a.atualizadoEm, paras: ['', '', '', '']}); return; }
+      throw e;
+    }).then(function(){ feitos++; aoAvancar(feitos, total); return proximo(); });
+  }
+  var trab = [];
+  for (var k = 0; k < Math.min(4, falta.length); k++) trab.push(proximo());
+  return Promise.all(trab);
+}
+function celulaCsv(v){
+  var s = v == null ? '' : String(v);
+  s = s.replace(/\r\n?/g, '\n');
+  /* evita fórmula ao abrir no Excel/Planilhas */
+  if (/^[=+\-@\t\r]/.test(s) || /^\s+[=+\-@]/.test(s)) s = "'" + s;
+  return '"' + s.replace(/"/g, '""') + '"';
+}
+function gerarCsv(lista){
+  var linhas = [['Nome', 'Turma', 'Fases', 'XP', 'Linhas', 'Última atividade', 'Redação']];
+  lista.forEach(function(a){
+    linhas.push([a.nome, rotulo(a), Math.min(a.fases, N_FASES), a.xp, a.linhas, dataHoraCsv(a.atualizadoEm), juntarParas(parasDe(a))]);
+  });
+  return '\uFEFF' + linhas.map(function(l){ return l.map(celulaCsv).join(';'); }).join('\r\n') + '\r\n';
+}
+function textoTodas(lista){
+  var com = [], sem = [];
+  lista.forEach(function(a){ (juntarParas(parasDe(a)) ? com : sem).push(a); });
+  var titulo = 'Redações · ' + (filtroTurma ? nomeTurma(rotulos.get(filtroTurma) || filtroTurma) : 'Todas as turmas');
+  var partes = [titulo];
+  com.forEach(function(a){
+    partes.push('------------------------------',
+      a.nome + ' · ' + rotulo(a) + ' · ' + Math.min(a.fases, N_FASES) + '/' + N_FASES + ' fases',
+      '', juntarParas(parasDe(a)), '');
+  });
+  if (sem.length) partes.push('------------------------------', 'Ainda sem redação: ' + sem.map(function(a){ return a.nome; }).join(', ') + '.');
+  return {texto: partes.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n', com: com.length};
+}
+function hojeArquivo(){ var d = new Date(); return d.getFullYear() + '-' + dois(d.getMonth() + 1) + '-' + dois(d.getDate()); }
+function baixar(nome, texto, tipo){
+  var blob = new Blob([texto], {type: tipo});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = nome; a.rel = 'noopener'; a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){ a.remove(); URL.revokeObjectURL(url); }, 60000);
+}
+function exportar(tipo){
+  if (exportando || !carregado) return;
+  var lista = filtrados();
+  if (!lista.length) return;
+  exportando = true;
+  $('#b-csv').disabled = true; $('#b-copiar-todas').disabled = true;
+  var st = $('#export-status');
+  st.textContent = '';
+  if (tipo === 'copiar') $('#copybox-todas').hidden = true;
+  buscarRedacoes(lista, function(f, t){ st.textContent = 'Buscando as redações… ' + f + ' de ' + t; }).then(function(){
+    st.textContent = '';
+    if (tipo === 'csv') {
+      var arq = 'missao-redacao-' + (filtroTurma || 'todas') + (busca.trim() ? '-busca' : '') + '-' + hojeArquivo() + '.csv';
+      baixar(arq, gerarCsv(lista), 'text/csv;charset=utf-8');
+      toast('Planilha baixada: ' + lista.length + ' ' + pl(lista.length, 'aluno', 'alunos') + '.');
+      return;
+    }
+    var r = textoTodas(lista);
+    if (!r.com) { st.textContent = 'Nenhum aluno desta lista escreveu a redação ainda.'; return; }
+    return copiar(r.texto, $('#copybox-todas'), r.com + ' ' + pl(r.com, 'redação copiada', 'redações copiadas') + '! Agora é só colar.');
+  }, function(e){
+    st.textContent = e.codigo === 'sessao' ? '' : e.message;
+  }).then(function(){
+    exportando = false;
+    if (view === 'lista' && token) renderLista();
+  });
+}
+
+/* ---------- trocar senha ---------- */
+function mostrarSenha(){
+  mostrarView('senha');
+  document.title = 'Trocar a senha · Painel do professor';
+  $('#senha-erro').hidden = true;
+  window.scrollTo(0, 0);
+  focarTitulo('#senha-titulo');
+}
+$('#f-senha').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  var atual = $('#s-atual'), nova = $('#s-nova'), nova2 = $('#s-nova2'), erro = $('#senha-erro'), botao = $('#b-salvar-senha');
+  erro.hidden = true;
+  function falha(msg, campo){ erro.textContent = msg; erro.hidden = false; if (campo) campo.focus(); }
+  var n = nova.value.trim();
+  var tam = Array.from(n).length;
+  if (!atual.value.trim()) return falha('Escreva a senha atual.', atual);
+  if (tam < 6 || tam > 60) return falha('A senha nova precisa ter de 6 a 60 caracteres.', nova);
+  if (nova.value !== nova2.value) return falha('As duas senhas novas não são iguais. Escreva de novo.', nova2);
+  botao.disabled = true; botao.textContent = 'Salvando…';
+  api('/professor/senha', {metodo: 'POST', corpo: {atual: atual.value, nova: nova.value}}).then(function(r){
+    token = String(r.token || '');
+    ls.set(LS_TOKEN, token);
+    atual.value = ''; nova.value = ''; nova2.value = '';
+    var m = $('#f-senha [data-mostrar]'); if (m && m.checked) { m.checked = false; m.dispatchEvent(new Event('change', {bubbles: true})); }
+    toast('Senha trocada! Da próxima vez, use a senha nova.');
+    voltar();
+  }, function(e){
+    if (e.codigo === 'sessao') return;
+    falha(e.message, e.codigo === 'senha' ? atual : e.codigo === 'nova' ? nova : null);
+    if (e.codigo === 'senha') atual.select();
+  }).then(function(){ botao.disabled = false; botao.textContent = 'Salvar a senha nova'; });
+});
+
+/* ---------- toast ---------- */
+var toastT = 0;
+function toast(msg){
+  var t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove('show'); }, 3400);
+}
+
+/* ---------- cliques ---------- */
+document.addEventListener('click', function(ev){
+  var alvo = ev.target.closest ? ev.target : ev.target.parentElement;
+  if (!alvo) return;
+  var chip = alvo.closest('[data-turma]');
+  if (chip && chip.closest('#chips')) {
+    filtroTurma = chip.getAttribute('data-turma') || '';
+    if (filtroTurma) ls.set(LS_TURMA, filtroTurma); else ls.del(LS_TURMA);
+    $('#export-status').textContent = '';
+    renderLista();
+    return;
+  }
+  var item = alvo.closest('#lista [data-id]');
+  if (item) {
+    var sel = window.getSelection && String(window.getSelection());
+    if (sel && item.tagName === 'TR' && !alvo.closest('button')) return; /* deixa selecionar texto da tabela */
+    abrirAluno(item.getAttribute('data-id'));
+    return;
+  }
+  var b = alvo.closest('[data-act]');
+  if (!b || b.disabled) return;
+  var act = b.getAttribute('data-act');
+  switch (act) {
+    case 'inicio': if (token) { if (view === 'lista') { window.scrollTo(0, 0); focarTitulo('#lista-titulo'); } else navegar(''); } break;
+    case 'sair': sair(); break;
+    case 'senha': if (view !== 'senha') navegar('senha'); break;
+    case 'voltar': voltar(); break;
+    case 'atualizar': carregarLista({manual: true}); break;
+    case 'limpar-busca': busca = ''; $('#busca').value = ''; renderLista(); $('#busca').focus(); break;
+    case 'csv': exportar('csv'); break;
+    case 'copiar-todas': exportar('copiar'); break;
+    case 'copiar-link': copiar(location.origin + '/', $('#copybox-todas'), 'Link copiado!'); break;
+    case 'copiar-redacao': if (alunoDados) copiar(textoRedacao(alunoDados), $('#copybox-aluno'), 'Redação copiada!'); break;
+    case 'copiar-caixa': copiarDaCaixa(b.closest('.copybox')); break;
+    case 'fechar-caixa': b.closest('.copybox').hidden = true; break;
+    case 'ir-acoes': {
+      var card = $('.acoes-aluno');
+      if (card) { card.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'}); focarTitulo('#acoes-t'); }
+      break;
+    }
+    case 'tentar-aluno': if (alunoAberto) { renderAluno(null); carregarAluno(alunoAberto, {focar: true}); } break;
+    case 'pedir-redefinir':
+      $('#conf-excluir').hidden = true; $('#ok-redefinir').hidden = true;
+      abrirConfirma('#conf-redefinir'); break;
+    case 'pedir-excluir':
+      $('#conf-redefinir').hidden = true;
+      abrirConfirma('#conf-excluir'); break;
+    case 'cancelar': {
+      var c = b.closest('.confirma'); c.hidden = true;
+      var volta = $(c.id === 'conf-excluir' ? '[data-act="pedir-excluir"]' : '[data-act="pedir-redefinir"]');
+      if (volta) volta.focus();
+      break;
+    }
+    case 'redefinir': redefinirSenha(b); break;
+    case 'excluir': excluirAluno(b); break;
+  }
+});
+document.addEventListener('keydown', function(ev){
+  if (ev.key !== 'Escape') return;
+  var c = ev.target.closest && ev.target.closest('.confirma');
+  if (c && !c.hidden) {
+    c.hidden = true;
+    var volta = $(c.id === 'conf-excluir' ? '[data-act="pedir-excluir"]' : '[data-act="pedir-redefinir"]');
+    if (volta) volta.focus();
+  }
+});
+
+/* ---------- atualização automática ---------- */
+function atualizarTudo(){
+  if (!token || view === 'login' || view === 'senha') return;
+  carregarLista();
+  if (view === 'aluno' && alunoAberto && alunoDados) carregarAluno(alunoAberto, {silencioso: true});
+}
+setInterval(function(){
+  if (document.visibilityState === 'visible') atualizarTudo();
+  else if (view === 'lista') renderStatus();
+}, INTERVALO);
+document.addEventListener('visibilitychange', function(){
+  if (document.visibilityState === 'visible' && Date.now() - atualizadoAs >= INTERVALO) atualizarTudo();
+});
+window.addEventListener('online', atualizarTudo);
+
+/* ---------- início ---------- */
+$('#url-jogo').textContent = location.origin + '/';
+rota();
+})();
+</script>
+</body>
+</html>
