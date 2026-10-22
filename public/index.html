@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#EEF3F9">
+<meta name="author" content="Professor Guilherme Camozzato Teixeira">
+<meta name="copyright" content="© 2026 Professor Guilherme Camozzato Teixeira">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Crect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%232343C2%22/%3E%3Cpath d=%22M6 18l.9-3.6L15 6.3a1.6 1.6 0 0 1 2.3 2.3L9.2 16.7 6 18z%22 fill=%22none%22 stroke=%22%23FFE14D%22 stroke-width=%221.8%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E">
 <title>Missão Redação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,7 +94,7 @@ h3{font-size:1.18rem;line-height:1.25}
 .prog i{height:6px;border-radius:3px;background:var(--rule)}
 .prog i.on{background:var(--pen)}
 .prog i.now{background:var(--star)}
-@media (max-width:400px){.brand span{display:none}}
+@media (max-width:400px){.brand span:not(.logo){display:none}}
 
 main{padding-top:22px;padding-bottom:calc(var(--barh,0px) + 40px)}
 .screen{display:flex;flex-direction:column;gap:22px}
@@ -179,6 +181,12 @@ main{padding-top:22px;padding-bottom:calc(var(--barh,0px) + 40px)}
 .seg button.on{background:var(--ink);color:var(--paper)}
 .texto{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);font-size:1.05rem;line-height:1.75;min-width:0}
 .texto .fonte{font-size:.8rem;line-height:1.4;color:var(--ink-soft);overflow-wrap:anywhere}
+.texto p.verso{text-indent:0;margin:0 0 14px;line-height:1.7}
+.texto blockquote{margin:0 0 14px;padding-left:14px;border-left:3px solid var(--rule)}
+.texto .dados{list-style:none;padding:0;margin:0 0 14px;display:grid;gap:10px}
+.texto .dados li{border:2px solid var(--rule);border-radius:var(--r);padding:12px 14px;line-height:1.45}
+.texto .dados b{display:block;font-family:var(--f-display);font-weight:800;font-size:1.8rem;line-height:1.1;color:var(--pen)}
+.texto .dados small{display:block;margin-top:4px;font-size:.78rem;color:var(--ink-soft)}
 .texto .fonte a{color:inherit}
 .gloss{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--pen);border-radius:4px}
 .gloss.on{background:var(--marca);color:var(--on-marca)}
@@ -288,11 +296,43 @@ main{padding-top:22px;padding-bottom:calc(var(--barh,0px) + 40px)}
 .sync.wait i{background:var(--star)}
 .sync.off{color:var(--warn)}
 .sync.off i{background:var(--warn)}
-.pin{letter-spacing:.45em;font-variant-numeric:tabular-nums;font-size:1.35rem;max-width:11ch}
+.pin{letter-spacing:.35em;font-variant-numeric:tabular-nums;font-size:1.35rem;max-width:15ch}
 .erro{font-weight:700;color:var(--warn);background:var(--warn-bg);border-radius:10px;padding:10px 12px}
 .lembrete{background:var(--marca);color:var(--on-marca);border-radius:12px;padding:12px 14px}
 .opt.usado{opacity:.55}
 .aviso-c{font-size:.95rem;color:var(--warn);font-weight:700}
+.series{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.serie{font-weight:700;padding:10px 8px;min-height:52px;border:2px solid var(--rule);border-radius:12px;background:var(--sheet);color:var(--ink);cursor:pointer}
+.serie:hover{border-color:var(--pen)}
+.serie.sel{background:var(--marca);color:var(--on-marca);border-color:var(--on-marca)}
+.nome-up{text-transform:uppercase}
+/* autoria */
+.logo{display:inline-block;flex:none;background-color:currentColor;-webkit-mask:url("/logo.svg") center / contain no-repeat;mask:url("/logo.svg") center / contain no-repeat}
+.brand .logo{width:30px;height:30px;color:var(--ink)}
+.autor{display:flex;align-items:center;gap:12px;color:var(--ink)}
+.autor .logo{width:72px;height:72px}
+.autor small{display:block;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+.autor b{display:block;font-family:var(--f-display);font-weight:800;font-size:1.05rem;line-height:1.2}
+.rodape{display:flex;align-items:center;justify-content:center;gap:10px;border-top:1px solid var(--rule);margin-top:28px;padding-top:16px;color:var(--ink-soft);font-size:.82rem;line-height:1.4;text-align:left}
+.rodape .logo{width:30px;height:30px;color:var(--ink-soft)}
+
+/* atividades */
+.ativs{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:600px){.ativs{grid-template-columns:1fr 1fr}}
+.ativ{display:flex;flex-direction:column;gap:6px;text-align:left;color:var(--ink);background:var(--sheet);border:2px solid var(--rule);border-radius:var(--r);padding:16px;cursor:pointer;min-width:0}
+.ativ:hover{border-color:var(--pen)}
+.ativ-st{font-weight:700;font-size:.92rem;color:var(--pen)}
+.ativ.ok .ativ-st{color:var(--ok)}
+.ativ-serie{grid-column:1/-1;margin:6px 0 -4px}
+.minibar{display:block;height:8px;border-radius:4px;background:var(--rule);overflow:hidden}
+.minibar i{display:block;height:100%;background:var(--pen)}
+.ativ.ok .minibar i{background:var(--ok)}
+.obra p.verso, .paragrafo.verso{text-indent:0;white-space:pre-line}
+.folha textarea.verso{text-indent:0}
+.folha textarea.verso ~ textarea.verso{padding-top:2rem} /* uma linha em branco entre as estrofes */
+.titulo-in{display:block;width:calc(100% - 66px);margin:4px 16px 8px 50px;font:inherit;font-family:var(--f-display);font-weight:800;font-size:1.15rem;text-align:center;color:var(--ink);background:transparent;border:0;border-bottom:2px dashed var(--rule);padding:6px 4px}
+.titulo-in:focus{outline:none;border-bottom-color:var(--pen)}
+.titulo-in[readonly]{border-bottom-color:transparent}
 
 /* cores de marca-texto: por último, para valerem sobre os componentes */
 .hl0{background:var(--hl0);color:var(--hl-ink)}
@@ -315,7 +355,7 @@ img{max-width:100%}
   <div class="col gutter">
     <div class="top-in">
       <button class="brand" data-act="home" aria-label="Ir para a trilha">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 20l1.2-4.8L15.6 4.8a2.1 2.1 0 0 1 3 3L8.2 18.2 4 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13.6 6.8l3 3" stroke="currentColor" stroke-width="2"/></svg>
+        <span class="logo" aria-hidden="true"></span>
         <span>Missão Redação</span>
       </button>
       <span class="grow"></span>
@@ -335,6 +375,7 @@ img{max-width:100%}
 
 <main class="col gutter">
   <div class="screen" id="screen"></div>
+  <footer class="rodape"><span class="logo" aria-hidden="true"></span><span>© 2026 Professor Guilherme Camozzato Teixeira.<br>Todos os direitos reservados.</span></footer>
 </main>
 
 <nav class="bar" id="bar" hidden>
@@ -354,14 +395,19 @@ img{max-width:100%}
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="/atividades/leitores.js"></script>
+<script src="/atividades/cronica-olhar.js"></script>
+<script src="/atividades/poema-carpe-diem.js"></script>
+<script src="/atividades/justica-climatica.js"></script>
+<script src="/atividades/inseguranca-alimentar.js"></script>
 <script>
 (function(){
 'use strict';
 
-const TEMA = 'Os desafios para a formação de leitores no Brasil';
 const SK = 'mr3:sessao';
 const cacheKey = id => 'mr3:estado:' + id;
-const LEVELS = [[0,'Leitor iniciante'],[60,'Leitor curioso'],[130,'Pensador crítico'],[200,'Argumentador'],[280,'Redator ENEM']];
+const NIVEIS_PADRAO = [[0,'Leitor iniciante'],[60,'Leitor curioso'],[130,'Pensador crítico'],[200,'Argumentador'],[280,'Redator ENEM']];
+let LEVELS = NIVEIS_PADRAO;
 
 const ICON = {
   speak:'<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
@@ -374,174 +420,49 @@ const ICON = {
   copy:'<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" fill="none" stroke="currentColor" stroke-width="2"/></svg>'
 };
 
-/* ---------- conteúdo ---------- */
-const REP = {
-  lobato:{tipo:'Frase famosa',titulo:'Monteiro Lobato',resumo:'Escritor brasileiro, autor do Sítio do Picapau Amarelo.',frase:'O escritor Monteiro Lobato afirmou que “um país se faz com homens e livros”.'},
-  freire:{tipo:'Frase famosa',titulo:'Paulo Freire',resumo:'Educador brasileiro conhecido no mundo todo.',frase:'O educador Paulo Freire afirmou que “a leitura do mundo precede a leitura da palavra”.'},
-  cf:{tipo:'Lei',titulo:'Constituição Federal de 1988',resumo:'O artigo 205 diz que a educação é direito de todos.',frase:'A Constituição Federal de 1988 garante que a educação é direito de todos e dever do Estado e da família.'},
-  r53:{tipo:'Dado do texto de apoio',titulo:'53% não são leitores',resumo:'Pesquisa Retratos da Leitura no Brasil.',frase:'Segundo a pesquisa Retratos da Leitura no Brasil, 53% dos brasileiros não são leitores.'},
-  queda:{tipo:'Dado do texto de apoio',titulo:'Leitores em queda',resumo:'Eram 55% da população em 2007. Hoje são 47%.',frase:'De acordo com a pesquisa Retratos da Leitura no Brasil, os leitores eram 55% da população em 2007 e hoje são apenas 47%.'},
-  funcional:{tipo:'Conceito da Unesco',titulo:'Analfabetismo funcional',resumo:'A pessoa reconhece letras, mas não entende textos simples.',frase:'Segundo a Unesco, o analfabeto funcional até reconhece letras e números, mas não consegue interpretar textos simples.'},
-  lei:{tipo:'Lei',titulo:'Lei nº 12.244/2010',resumo:'Toda escola do país deve ter biblioteca.',frase:'A Lei nº 12.244, de 2010, determina que todas as escolas do país tenham biblioteca.'}
-};
-const REP_ORDER = ['lobato','freire','cf','r53','queda','funcional','lei'];
-
-const CAUSAS = [
-  {id:'redes',nome:'Celular e redes sociais',desc:'Vídeos curtos e notificações o tempo todo tiram a concentração. Aí, ler um livro inteiro parece difícil.',
-   tese:'ao uso exagerado das redes sociais',por:'pelo uso exagerado das redes sociais',nom:'o uso exagerado das redes sociais',
-   topico:['o uso exagerado das redes sociais atrapalha a formação de leitores.','o celular tem afastado muitos jovens dos livros.','as redes sociais disputam com os livros a atenção dos jovens.'],
-   explica:['os vídeos curtos acostumam o cérebro a respostas rápidas, e a leitura exige calma e concentração.','as notificações do celular interrompem a leitura o tempo todo.','muitos jovens passam horas nas redes sociais e não sobra tempo para ler.'],
-   prova:[['r53','Segundo a pesquisa Retratos da Leitura no Brasil, os brasileiros estão com menos capacidade de concentração e de compreensão.'],
-          ['queda','Prova disso é que os leitores eram 55% da população em 2007 e hoje são apenas 47%, segundo a pesquisa Retratos da Leitura no Brasil.'],
-          ['funcional','Segundo a Unesco, o analfabeto funcional até reconhece letras, mas não consegue interpretar textos simples, e esse problema está crescendo no país.'],
-          ['lobato','O escritor Monteiro Lobato afirmou que “um país se faz com homens e livros”, mas hoje muitos jovens trocam os livros pelas telas.']],
-   fecha:['muitos jovens trocam os livros pela tela e perdem o hábito de ler.','a leitura fica cada vez mais distante do dia a dia dos estudantes.','cresce o número de pessoas que leem, mas não entendem o que leram.']},
-  {id:'acesso',nome:'Poucas bibliotecas e livros caros',desc:'Muitos bairros não têm biblioteca pública, e um livro novo custa caro para muitas famílias.',
-   tese:'à falta de acesso aos livros',por:'pela falta de acesso aos livros',nom:'a falta de acesso aos livros',
-   topico:['a falta de acesso aos livros é um grande obstáculo.','muitos brasileiros não têm livros por perto.','o preço dos livros e a falta de bibliotecas afastam muita gente da leitura.'],
-   explica:['muitos bairros não têm bibliotecas públicas.','um livro novo custa caro para grande parte das famílias.','muitas escolas não têm biblioteca ou têm poucos livros.'],
-   prova:[['lei','A Lei nº 12.244, de 2010, determina que todas as escolas do país tenham biblioteca, mas muitas escolas brasileiras ainda não têm uma.'],
-          ['cf','A Constituição Federal de 1988 garante que a educação é direito de todos, mas muitos brasileiros ainda não têm acesso a livros.'],
-          ['r53','Segundo a pesquisa Retratos da Leitura no Brasil, 53% dos brasileiros não são leitores.'],
-          ['queda','Segundo a pesquisa Retratos da Leitura no Brasil, os leitores eram 55% da população em 2007 e hoje são apenas 47%.']],
-   fecha:['quem não tem dinheiro nem biblioteca por perto fica longe da leitura.','a leitura vira um privilégio de quem pode pagar.','muitas crianças crescem sem nunca ter um livro em casa.']},
-  {id:'familia',nome:'Falta de exemplo em casa',desc:'Quando a criança não vê ninguém lendo em casa, fica mais difícil aprender a gostar de ler.',
-   tese:'à falta de incentivo à leitura dentro de casa',por:'pela falta de incentivo à leitura dentro de casa',nom:'a falta de incentivo à leitura dentro de casa',
-   topico:['a falta de incentivo dentro de casa dificulta a formação de leitores.','muitas crianças não veem ninguém lendo em casa.','a família tem um papel importante, mas nem sempre incentiva a leitura.'],
-   explica:['as crianças aprendem pelo exemplo: se os adultos não leem, elas também não criam esse hábito.','muitos pais trabalham o dia todo e não têm tempo para ler com os filhos.','muitos adultos também não tiveram o costume de ler quando eram jovens.'],
-   prova:[['r53','Segundo a pesquisa Retratos da Leitura no Brasil, 53% dos brasileiros não são leitores, ou seja, em muitas casas ninguém tem o costume de ler.'],
-          ['lobato','O escritor Monteiro Lobato afirmou que “um país se faz com homens e livros”, mas muitas famílias ainda vivem longe dos livros.'],
-          ['cf','A Constituição Federal de 1988 diz que a educação é dever do Estado e da família, por isso a família também precisa incentivar a leitura.'],
-          ['freire','O educador Paulo Freire afirmou que “a leitura do mundo precede a leitura da palavra”, e essa leitura do mundo começa dentro de casa.']],
-   fecha:['a falta de leitura passa de pais para filhos.','muitas crianças chegam à escola sem nenhum interesse pelos livros.','o hábito de ler não nasce dentro de casa.']},
-  {id:'escola',nome:'Leitura só por obrigação',desc:'Quando o aluno só lê para fazer prova, ele vê a leitura como castigo, e não como prazer.',
-   tese:'à leitura vista apenas como obrigação escolar',por:'pela leitura vista apenas como obrigação escolar',nom:'a leitura vista apenas como obrigação escolar',
-   topico:['a leitura tratada apenas como obrigação afasta os jovens dos livros.','muitos alunos só leem quando são obrigados.','a escola nem sempre consegue mostrar que ler pode ser prazeroso.'],
-   explica:['os alunos leem só para fazer prova, sem poder escolher livros de que gostam.','muitos livros escolhidos não têm ligação com a vida dos estudantes.','a leitura vira uma tarefa chata, e não um momento de prazer.'],
-   prova:[['freire','O educador Paulo Freire afirmou que “a leitura do mundo precede a leitura da palavra”, ou seja, a leitura precisa ter sentido na vida do estudante.'],
-          ['queda','Segundo a pesquisa Retratos da Leitura no Brasil, os leitores eram 55% da população em 2007 e hoje são apenas 47%.'],
-          ['cf','A Constituição Federal de 1988 diz que a educação deve buscar o pleno desenvolvimento da pessoa, e isso inclui o gosto pela leitura.'],
-          ['funcional','Segundo a Unesco, o analfabeto funcional até reconhece letras, mas não consegue interpretar textos simples, e a escola precisa enfrentar esse problema.']],
-   fecha:['muitos estudantes terminam a escola sem gostar de ler.','os jovens passam a ver o livro como um castigo.','a escola perde a chance de formar leitores para a vida toda.']},
-  {id:'desigualdade',nome:'Desigualdade social',desc:'Quem precisa trabalhar cedo ou vive com pouco dinheiro tem menos tempo e menos acesso aos livros.',
-   tese:'à desigualdade social',por:'pela desigualdade social',nom:'a desigualdade social',
-   topico:['a desigualdade social impede que todos tenham as mesmas chances de ler.','a pobreza afasta muitos brasileiros dos livros.','nem todos os brasileiros têm as mesmas oportunidades de se tornar leitores.'],
-   explica:['muitos jovens precisam trabalhar cedo para ajudar a família e não têm tempo para ler.','quem vive com pouco dinheiro precisa gastar com comida e contas, e não com livros.','as regiões mais pobres costumam ter menos bibliotecas e menos livros nas escolas.'],
-   prova:[['cf','A Constituição Federal de 1988 garante que a educação é direito de todos, mas essa garantia ainda não chega igualmente a todos os brasileiros.'],
-          ['funcional','Segundo a Unesco, o analfabeto funcional até reconhece letras e números, mas não consegue interpretar textos simples, o que afeta a cidadania.'],
-          ['r53','Segundo a pesquisa Retratos da Leitura no Brasil, 53% dos brasileiros não são leitores.'],
-          ['lei','A Lei nº 12.244, de 2010, determina que todas as escolas do país tenham biblioteca, mas essa garantia ainda não chega a todos os estudantes.']],
-   fecha:['a leitura acaba virando um privilégio de poucos.','a desigualdade continua passando de uma geração para outra.','muitos brasileiros perdem oportunidades de estudo e de trabalho.']}
+/* ---------- atividades: o conteúdo vem de /atividades/*.js ---------- */
+const ATIV = {};
+(window.ATIVIDADES || []).forEach(a => { if(a && a.id && Array.isArray(a.fases)) ATIV[a.id] = a; });
+const DISSERT_PARTES = [
+  {nome:'Seu 1º parágrafo', curto:'1º parágrafo', campo:'Introdução', blocos:['ABERT','intro_ponte','intro_tese']},
+  {nome:'Seu 2º parágrafo', curto:'2º parágrafo', campo:'1º argumento', blocos:['d1_topico','d1_explica','d1_prova','d1_fecha']},
+  {nome:'Seu 3º parágrafo', curto:'3º parágrafo', campo:'2º argumento', blocos:['d2_topico','d2_explica','d2_prova','d2_fecha']},
+  {nome:'Seu 4º parágrafo', curto:'4º parágrafo', campo:'Conclusão', blocos:['c_retomada','PROP','c_detalhe']}
 ];
-
-/* abertura: a frase famosa/lei pede ideia contrária; o dado pede explicação */
-const ABERTURAS = [{id:'lobato',tipo:'contraste'},{id:'cf',tipo:'contraste'},{id:'r53',tipo:'dado'},{id:'freire',tipo:'contraste'}];
-const PONTE = {
-  contraste:['o Brasil ainda está longe dessa realidade, já que muitas pessoas não têm o hábito de ler.','essa ideia ainda não é realidade no Brasil, pois mais da metade da população não é leitora.','muitos brasileiros ainda vivem longe dos livros e da leitura.'],
-  dado:['formar leitores ainda é um grande desafio no país.','a leitura ainda não faz parte da vida de muitos brasileiros.','o Brasil precisa dar mais atenção à formação de leitores.']
-};
-
-/* palavras de ligação: as certas (ok) e as pegadinhas, com a dica de cada uma */
-const CON = {
-  d1:[{t:'Portanto,',d:'“Portanto” serve para concluir. Aqui você está começando o 1º argumento.'},{t:'Em primeiro lugar,',ok:1},{t:'Além disso,',d:'“Além disso” junta uma ideia nova. Guarde para o 2º argumento.'},{t:'Primeiramente,',ok:1}],
-  d2:[{t:'Além disso,',ok:1},{t:'Em primeiro lugar,',d:'Este já é o 2º argumento. “Em primeiro lugar” foi no 1º.'},{t:'Somado a isso,',ok:1},{t:'Portanto,',d:'“Portanto” serve para concluir. Ainda não é a hora.'}],
-  explica:[{t:'Em suma,',d:'“Em suma” resume tudo no final. Aqui você precisa explicar a causa.'},{t:'Isso acontece porque',ok:1},{t:'Isso ocorre, pois',ok:1}],
-  fecha:[{t:'Dessa forma,',ok:1},{t:'Em primeiro lugar,',d:'“Em primeiro lugar” começa um argumento. Aqui você está fechando o parágrafo.'},{t:'Assim,',ok:1},{t:'Como consequência,',ok:1}],
-  contraste:[{t:'Além disso,',d:'“Além disso” junta uma ideia parecida. Aqui a ideia é contrária: a frase mostra como deveria ser, e o Brasil ainda não é assim.'},{t:'No entanto,',ok:1},{t:'Entretanto,',ok:1},{t:'Porém,',ok:1}],
-  dado:[{t:'No entanto,',d:'“No entanto” mostra uma ideia contrária. Aqui você quer explicar o que o dado mostra.'},{t:'Esse dado mostra que',ok:1},{t:'Isso revela que',ok:1}],
-  tese:[{t:'Por exemplo,',d:'“Por exemplo” apresenta um exemplo. Aqui você vai dar a sua opinião.'},{t:'Nesse contexto,',ok:1},{t:'Diante disso,',ok:1}],
-  retomada:[{t:'Portanto,',ok:1},{t:'Além disso,',d:'“Além disso” junta mais um argumento. Agora é hora de concluir.'},{t:'Diante disso,',ok:1},{t:'Em suma,',ok:1}]
-};
-
-const AGENTES = [
-  {t:'o Ministério da Educação',v:'deve'},
-  {t:'o Governo Federal, junto com as prefeituras,',v:'deve'},
-  {t:'as escolas',v:'devem'},
-  {t:'a mídia (TV, rádio e internet)',v:'deve'},
-  {t:'as famílias, com o apoio das escolas,',v:'devem'}
-];
-const ACOES = [
-  {t:'criar clubes de leitura nas escolas',det:['Esses clubes poderiam acontecer uma vez por semana, com livros escolhidos pelos próprios alunos.','Nesses clubes, os alunos poderiam conversar sobre os livros e indicar leituras aos colegas.']},
-  {t:'construir e ampliar bibliotecas públicas nos bairros',det:['Essas bibliotecas poderiam abrir também à noite e nos fins de semana, para atender quem trabalha.','Esses espaços poderiam oferecer atividades para as crianças, como a contação de histórias.']},
-  {t:'fazer campanhas de incentivo à leitura',det:['Essas campanhas poderiam mostrar jovens contando, nas redes sociais, quais livros mudaram a vida deles.','As campanhas poderiam passar na TV e na internet, com uma linguagem próxima dos jovens.']},
-  {t:'distribuir livros gratuitos para os estudantes',det:['Cada estudante poderia receber alguns livros por ano e trocá-los com os colegas em feiras na escola.','Os livros poderiam ser escolhidos pelos próprios alunos, de acordo com o gosto de cada um.']},
-  {t:'criar bibliotecas digitais gratuitas',det:['Os livros poderiam ser lidos no próprio celular, sem custo, por qualquer pessoa.','Essas bibliotecas poderiam ter livros em áudio, para ajudar quem tem dificuldade de leitura.']}
-];
-const DET_GERAL = ['Essas ações poderiam acontecer toda semana, com a participação de toda a comunidade.','Dessa maneira, mais pessoas teriam contato com os livros desde a infância.'];
-const MEIOS = ['por meio de verbas públicas','por meio de parcerias com escritores e influenciadores digitais','por meio de aulas em que os alunos escolhem o que vão ler','por meio de aplicativos de leitura gratuitos','por meio de rodas de leitura abertas à comunidade'];
-const FINS = ['a fim de que os jovens criem o hábito de ler','com o objetivo de diminuir o analfabetismo funcional','para que a leitura deixe de ser um privilégio de poucos','para formar cidadãos mais críticos'];
-
-const QUIZ = {
-  tipo:{p:'Que tipo de texto você vai escrever?',ops:['Uma história com personagens','Uma carta para um amigo','Um texto que defende uma opinião com argumentos','Um poema com rimas'],c:2,
-    ok:'Isso! Dissertativo-argumentativo é um texto que defende uma opinião e prova com argumentos.',
-    dicas:{0:'História com personagens é narração. Aqui você precisa defender uma opinião.',1:'Carta não é o texto pedido. Volte e releia o cartão “O que escrever”.',3:'Poema não. O texto precisa defender uma opinião com argumentos.'}},
-  tema:{p:'Qual destes assuntos está dentro do tema da redação?',ops:['A importância do esporte na escola','Por que muitos brasileiros não têm o hábito de ler','A história do livro no mundo','A violência nas escolas'],c:1,
-    ok:'Isso! O tema fala dos problemas que impedem os brasileiros de se tornarem leitores.',
-    dicas:{0:'Esse assunto foge do tema. No ENEM, fugir do tema dá nota zero!',2:'Fala de livros, mas não dos leitores no Brasil. Isso é passar perto do tema sem entrar nele (tangenciar), e perde muitos pontos.',3:'Esse assunto foge do tema. No ENEM, fugir do tema dá nota zero!'}},
-  final:{p:'O que precisa aparecer no último parágrafo?',ops:['Uma solução para o problema','Uma piada para animar quem lê','Seu nome e sua assinatura','Uma pergunta sem resposta'],c:0,
-    ok:'Isso! Essa solução se chama proposta de intervenção e precisa respeitar os direitos humanos.',
-    dicas:{1:'Piada não combina com um texto formal.',2:'Cuidado! No ENEM, redação com nome ou assinatura vale zero.',3:'O final precisa resolver o problema, não deixar dúvidas.'}},
-  naoleitores:{p:'Segundo o texto, quantos brasileiros NÃO são leitores?',ops:['8%','47%','53%','55%'],c:2,
-    ok:'Isso! Mais da metade da população: 53%.',
-    dicas:{0:'8 é a diferença entre 2007 e hoje (55 − 47).',1:'47% é quem LÊ. A pergunta quer saber quem NÃO lê.',3:'55% eram os leitores em 2007.'}},
-  queda:{p:'De 2007 até hoje, o número de leitores no Brasil…',ops:['aumentou','diminuiu','ficou igual'],c:1,
-    ok:'Isso! Caiu de 55% para 47% da população.',dica:'Compare os números: em 2007 eram 55%. Hoje são 47%.'},
-  funcional:{p:'O que é analfabetismo funcional?',ops:['Não conhecer nenhuma letra','Conhecer letras e números, mas não conseguir entender textos simples','Ler muitos livros por ano','Ter a letra difícil de entender'],c:1,
-    ok:'Isso! A pessoa até lê as palavras, mas não entende o que leu.',dica:'Releia o último parágrafo do texto. A Unesco explica o que é.'},
-  conectivo:{p:'Você vai começar o 2º argumento. Qual expressão mostra que você vai ACRESCENTAR uma ideia?',ops:['Portanto','Além disso','Mas','Porque'],c:1,
-    ok:'Isso! “Além disso” junta uma ideia nova à anterior.',
-    dicas:{0:'“Portanto” serve para concluir. Guarde para o último parágrafo.',2:'“Mas” mostra uma ideia contrária.',3:'“Porque” explica uma causa.'}},
-  dh:{p:'Qual destas soluções NÃO pode aparecer na redação, porque desrespeita os direitos humanos?',ops:['Criar bibliotecas nos bairros','Prender os pais que não leem para os filhos','Fazer clubes de leitura nas escolas','Distribuir livros de graça'],c:1,
-    ok:'Isso! Prender ou castigar pessoas desrespeita os direitos humanos. A solução deve ajudar, não punir.',dica:'Essa solução ajuda as pessoas. Procure a que castiga alguém.'},
-  portanto:{p:'Qual palavra é boa para começar a conclusão?',ops:['Em primeiro lugar','Além disso','Portanto','Porque'],c:2,
-    ok:'Isso! “Portanto” mostra que você está concluindo.',
-    dicas:{0:'“Em primeiro lugar” abre o 1º argumento.',1:'“Além disso” junta mais um argumento.',3:'“Porque” explica uma causa.'}}
-};
-
-const GLOSS = {
-  declinio:['Declínio','queda, diminuição.'],
-  habito:['Hábito','costume; algo que a pessoa faz sempre.'],
-  naoleitores:['Não leitores','pessoas que não leram nenhum livro nos últimos 3 meses.'],
-  pontos:['Pontos percentuais','a diferença entre duas porcentagens. De 55% para 47%, a queda é de 8 pontos.'],
-  concentracao:['Concentração','conseguir prestar atenção em uma coisa só por um tempo.'],
-  compreensao:['Compreensão','entender o sentido do que leu.'],
-  funcional:['Analfabetismo funcional','quando a pessoa reconhece letras e números, mas não entende textos simples.'],
-  unesco:['Unesco','órgão da ONU que cuida da educação, da ciência e da cultura no mundo.'],
-  interpretar:['Interpretar','entender e explicar o sentido de um texto.'],
-  cotidiano:['Cotidiano','o dia a dia.'],
-  cidadania:['Cidadania','viver em sociedade, com direitos e deveres.']
-};
-
-const FASES = [
-  {id:'missao',titulo:'Entender a missão',sub:'O que a prova pede',unlock:['lobato','freire','cf'],
-   steps:[{t:'proposta'},{t:'info',k:'missao'},{t:'quiz',q:'tipo'},{t:'quiz',q:'tema'},{t:'quiz',q:'final'},{t:'reward'}]},
-  {id:'texto',titulo:'Ler o texto de apoio',sub:'Pegar dados para usar',unlock:['r53','queda','funcional'],
-   steps:[{t:'read'},{t:'quiz',q:'naoleitores'},{t:'quiz',q:'queda'},{t:'quiz',q:'funcional'},{t:'reward'}]},
-  {id:'causas',titulo:'Escolher os argumentos',sub:'Os 2 motivos do problema',unlock:['lei'],
-   steps:[{t:'info',k:'causas'},{t:'causas'},{t:'reward'}]},
-  {id:'intro',titulo:'Introdução',sub:'1º parágrafo',para:0,
-   steps:[{t:'info',k:'intro'},{t:'abertura'},{t:'monte',id:'intro_ponte'},{t:'monte',id:'intro_tese'},{t:'review',p:0},{t:'reward'}]},
-  {id:'d1',titulo:'1º argumento',sub:'2º parágrafo',para:1,
-   steps:[{t:'info',k:'desenv'},{t:'monte',id:'d1_topico'},{t:'monte',id:'d1_explica'},{t:'monte',id:'d1_prova'},{t:'monte',id:'d1_fecha'},{t:'review',p:1},{t:'reward'}]},
-  {id:'d2',titulo:'2º argumento',sub:'3º parágrafo',para:2,
-   steps:[{t:'monte',id:'d2_topico'},{t:'monte',id:'d2_explica'},{t:'monte',id:'d2_prova'},{t:'monte',id:'d2_fecha'},{t:'review',p:2},{t:'reward'}]},
-  {id:'concl',titulo:'Conclusão',sub:'4º parágrafo e solução',para:3,
-   steps:[{t:'info',k:'concl'},{t:'quiz',q:'dh'},{t:'monte',id:'c_retomada'},{t:'proposal'},{t:'monte',id:'c_detalhe'},{t:'review',p:3},{t:'reward'}]}
-];
-
-const PARA_BLOCKS = [['ABERT','intro_ponte','intro_tese'],['d1_topico','d1_explica','d1_prova','d1_fecha'],['d2_topico','d2_explica','d2_prova','d2_fecha'],['c_retomada','PROP','c_detalhe']];
-const PARA_OF = {}; PARA_BLOCKS.forEach((a,i)=>a.forEach(b=>{PARA_OF[b]=i;}));
-const ORD = ['1º','2º','3º','4º'];
-const PARA_NOME = ['Introdução','1º argumento','2º argumento','Conclusão'];
-
+let C = null;   // atividade aberta
+let TEMA = '', REP = {}, REP_ORDER = [], CAUSAS = [], ABERTURAS = [], PONTE = {}, CON = {}, AGENTES = [], ACOES = [], DET_GERAL = [], MEIOS = [], FINS = [], QUIZ = {}, GLOSS = {}, FASES = [];
+let PARTES = [], PARA_BLOCKS = [], PARA_OF = {}, PARA_NOME = [];
+function aplicar(a){
+  C = a || null;
+  const v = (k, d) => (a && a[k] != null) ? a[k] : d;
+  TEMA = v('tema', ''); REP = v('rep', {}); REP_ORDER = v('repOrdem', Object.keys(REP)); CAUSAS = v('causas', []); ABERTURAS = v('aberturas', []);
+  PONTE = v('ponte', {}); CON = v('con', {}); AGENTES = v('agentes', []); ACOES = v('acoes', []); DET_GERAL = v('detGeral', []);
+  MEIOS = v('meios', []); FINS = v('fins', []); QUIZ = v('quiz', {}); GLOSS = v('gloss', {}); FASES = v('fases', []);
+  LEVELS = v('niveis', NIVEIS_PADRAO);
+  PARTES = v('partes', a && a.tipo === 'dissertativo' ? DISSERT_PARTES : []);
+  PARA_BLOCKS = PARTES.map(p => p.blocos); PARA_OF = {};
+  PARA_BLOCKS.forEach((bl, i) => bl.forEach(b => { if(typeof b === 'string') PARA_OF[b] = i; }));
+  PARA_NOME = PARTES.map(p => p.campo || p.nome);
+}
+const ehDissert = () => !!(C && C.tipo === 'dissertativo');
+const ehVerso = () => !!(C && C.juntar === 'verso');
+function OB(){
+  const f = !C || C.obraGenero !== 'm', o = C ? C.obra : 'texto';
+  return {sua: (f ? 'Sua ' : 'Seu ') + o, minha: (f ? 'minha ' : 'meu ') + o, pronta: f ? 'pronta' : 'pronto', o};
+}
+const ORD = ['1º','2º','3º','4º','5º','6º','7º','8º'];
+const ORDF = ['1ª','2ª','3ª','4ª','5ª','6ª','7ª','8ª'];
 const CONECTIVOS = ['em primeiro lugar','primeiramente','além disso','somado a isso','outro desafio','no entanto','entretanto','porém','dessa forma','desse modo','dessa maneira','assim,','como consequência','por isso','portanto','diante disso','em suma','nesse contexto','ou seja','pois','porque','já que','visto que','sendo assim'];
+// a expressão aparece como palavra inteira? ("pois" não conta dentro de "depois")
+const temExpr = (txt, c) => new RegExp('(^|[^\\p{L}])' + c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[^\\p{L}])', 'u').test(txt);
 const ABREV = /\b(vc|vcs|pq|tb|tbm|blz|mt|mto|mta|msm|hj|kk+|q)\b/gi;
-const REPRX = /retratos da leitura|constitui[cç][aã]o|lobato|freire|unesco|12\.244|\d+(,\d+)?\s?%/i;
 const REVS = [['maiuscula','Toda frase começa com letra maiúscula e termina com ponto.'],['acento','Conferi os acentos e a escrita das palavras.'],['repete','Não repeti a mesma palavra muitas vezes seguidas.']];
+const REVS_VERSO = [['maiuscula','Todo verso começa com letra maiúscula.'],['acento','Conferi os acentos e a escrita das palavras.'],['repete','Não repeti a mesma palavra muitas vezes no poema.']];
+const revs = () => (C && Array.isArray(C.revs)) ? C.revs : ehVerso() ? REVS_VERSO : REVS;
 
 /* ---------- estado ---------- */
-const DEFAULT = {v:3,started:true,nome:'',turma:'',xp:0,edited:{},ganho:{},causasTmp:null,awarded:{},done:{},step:{},screen:'home',quiz:{},rep:{},causas:[],abertura:null,m:{},
-  prop:{agente:null,acao:null,meio:null,fim:null,c_agente:'',c_acao:'',c_meio:'',c_fim:''},paras:['','','',''],easy:false,lvl:{},rev:{}};
+const DEFAULT = {v:3,started:true,nome:'',turma:'',xp:0,edited:{},ganho:{},causasTmp:null,awarded:{},done:{},step:{},screen:'home',quiz:{},rep:{},causas:[],abertura:null,m:{},esco:{},
+  prop:{agente:null,acao:null,meio:null,fim:null,c_agente:'',c_acao:'',c_meio:'',c_fim:''},paras:[],tituloTexto:'',tituloEd:null,easy:false,lvl:{},rev:{}};
 const clone = o => JSON.parse(JSON.stringify(o));
 function merge(b){
   const s = clone(DEFAULT);
@@ -551,10 +472,22 @@ function merge(b){
     if(s[k] && typeof s[k] === 'object' && !Array.isArray(s[k])) s[k] = Object.assign(s[k], b[k]);
     else s[k] = b[k];
   }
-  if(!Array.isArray(s.paras) || s.paras.length !== 4) s.paras = ['','','',''];
+  if(!Array.isArray(s.paras)) s.paras = [];
   if(!Array.isArray(s.causas)) s.causas = [];
   return s;
 }
+// Estado geral do aluno: uma "S" por atividade, guardadas em G.ativ.
+const GDEF = {v:4, atual:null, ativ:{}};
+function mergeG(b){
+  const g = clone(GDEF);
+  if(!b || typeof b !== 'object') return g;
+  if(b.v === 4){
+    if(b.ativ && typeof b.ativ === 'object') g.ativ = b.ativ;
+    g.atual = (typeof b.atual === 'string' && ATIV[b.atual]) ? b.atual : null;
+  } else if(b.done || b.v === 3) g.ativ.leitores = b; // progresso antigo (só tinha uma atividade)
+  return g;
+}
+
 /* ---------- sessão, cache no aparelho e salvamento na nuvem ---------- */
 const lsGet = k => { try{ const r = localStorage.getItem(k); return r ? JSON.parse(r) : null; }catch(e){ return null; } };
 const lsSet = (k, v) => { try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
@@ -563,16 +496,24 @@ const lsDel = k => { try{ localStorage.removeItem(k); }catch(e){} };
 let SESS = lsGet(SK);
 if(!SESS || !SESS.token || !SESS.id) SESS = null;
 const cache0 = SESS ? lsGet(cacheKey(SESS.id)) : null;
-let S = merge(cache0 && cache0.S);
-if(SESS){ S.nome = SESS.nome; S.turma = SESS.turma; }
+let G = mergeG(cache0 && (cache0.G || cache0.S));
+let S = merge(null);
+function carregarAtual(){
+  if(G.atual && ATIV[G.atual]){ aplicar(ATIV[G.atual]); S = merge(G.ativ[G.atual]); }
+  else { G.atual = null; aplicar(null); S = merge(null); }
+  if(SESS){ S.nome = SESS.nome; S.turma = SESS.turma; }
+}
+function guardarAtual(){ if(G.atual){ const c = clone(S); c.causasTmp = null; G.ativ[G.atual] = c; } }
+carregarAtual();
 let cacheMeta = {pendente: !!(cache0 && cache0.pendente), servidorEm: (cache0 && cache0.servidorEm) || 0};
 let lastSent = '';            // estado (JSON) que o servidor já confirmou
 let syncT = null, inflight = false, syncState = 'ok';
-let LF = {nome:'', turma:''}; // formulário de entrada
+let LF = {nome:'', turma:''}; // formulário de entrada (turma = chave da série)
+let TURMAS = null, turmasErro = false, turmasCarregando = false;
 let loginMsg = '', avisoSenha = '', sairAviso = false;
 
-function snapshot(){ const c = clone(S); c.causasTmp = null; return c; }
-function persistLocal(){ if(SESS) lsSet(cacheKey(SESS.id), {S: snapshot(), pendente: cacheMeta.pendente, servidorEm: cacheMeta.servidorEm}); }
+function snapshot(){ guardarAtual(); return clone(G); }
+function persistLocal(){ if(SESS) lsSet(cacheKey(SESS.id), {G: snapshot(), pendente: cacheMeta.pendente, servidorEm: cacheMeta.servidorEm}); }
 function save(){
   if(!SESS) return;
   if(JSON.stringify(snapshot()) !== lastSent) cacheMeta.pendente = true;
@@ -590,10 +531,24 @@ async function api(path, body){
     j.status = r.status; return j;
   }catch(e){ return {ok:false, erro:'rede', msg:'Sem internet. Confira a conexão e tente de novo.'}; }
 }
-function etapaAtual(){ const fi = curFase(); return S.screen === 'folha' ? 'Folha de redação' : fi >= 0 ? `Fase ${fi+1} · ${FASES[fi].titulo}` : 'Trilha'; }
+function etapaAtual(){
+  if(!C) return 'Escolhendo a atividade';
+  const fi = curFase(), pre = `${C.rotulo} · `;
+  return pre + (S.screen === 'folha' ? (C.folhaTitulo || 'Folha') : fi >= 0 ? `Fase ${fi+1} · ${FASES[fi].titulo}` : 'Trilha');
+}
+function resumoTexto(id, s){
+  const a = ATIV[id], fs = a ? a.fases : [], tot = fs.length, f = fs.filter(x => s && s.done && s.done[x.id]).length;
+  return {rotulo: a ? a.rotulo : '', genero: a ? a.genero : '', tema: a ? a.tema : id, serie: a ? String(a.serie) : '',
+    titulo: (s && s.tituloTexto) || '', partes: ((s && s.paras) || []).map(p => String(p || '')),
+    nomesPartes: a ? (a.partes || (a.tipo === 'dissertativo' ? DISSERT_PARTES : [])).map(p => p.campo || p.nome) : [],
+    verso: !!(a && a.juntar === 'verso'), fases: f, total: tot, concluiu: tot > 0 && f >= tot, xp: (s && s.xp) || 0};
+}
 function payload(){
-  return {token: SESS.token, estado: snapshot(), paras: S.paras.map(p => p || ''),
-    resumo: {fases: FASES.filter(f => S.done[f.id]).length, xp: S.xp, nivel: levelName(S.xp), linhas: estLines(), etapa: etapaAtual()}};
+  const est = snapshot(), textos = {};
+  Object.keys(est.ativ || {}).forEach(id => { if(ATIV[id]) textos[id] = resumoTexto(id, est.ativ[id]); });
+  const cur = G.atual && textos[G.atual];
+  return {token: SESS.token, estado: est, textos, paras: cur ? cur.partes : [],
+    resumo: {fases: cur ? cur.fases : 0, xp: S.xp, nivel: levelName(S.xp), linhas: estLines(), etapa: etapaAtual()}};
 }
 async function syncNow(){
   clearTimeout(syncT);
@@ -641,34 +596,37 @@ async function refreshFromServer(){
   else setSync(cacheMeta.pendente ? 'off' : undefined);
 }
 function adoptState(estado, t){
-  const scr = S.screen;
-  S = merge(estado); S.nome = SESS.nome; S.turma = SESS.turma;
+  const scr = S.screen, atual = G.atual;
+  G = mergeG(estado);
+  if(atual && ATIV[atual]) G.atual = atual;
+  carregarAtual();
   if(scr === 'home') S.screen = 'home';
   lastSent = JSON.stringify(snapshot());
   cacheMeta = {pendente:false, servidorEm: t};
   persistLocal(); render();
 }
 function sessaoExpirou(msg){
-  if(SESS){ persistLocal(); LF = {nome: SESS.nome, turma: SESS.turma}; }
+  if(SESS){ persistLocal(); LF = {nome: SESS.nome, turma: String(SESS.id).split('/')[0]}; }
   SESS = null; lsDel(SK);
-  loginMsg = msg || 'Entre de novo com seu nome, turma e senha.';
-  S = merge(null); go();
+  loginMsg = msg || 'Entre de novo com a sua série, o seu nome e a sua senha.';
+  G = mergeG(null); carregarAtual(); go();
 }
 async function entrar(){
-  const nome = (($('#in-nome') || {}).value || '').trim(), turma = (($('#in-turma') || {}).value || '').trim(), pin = (($('#in-pin') || {}).value || '').trim();
-  LF = {nome, turma};
+  const nome = (($('#in-nome') || {}).value || '').trim(), pin = (($('#in-pin') || {}).value || '').trim();
+  LF.nome = nome;
+  if(!LF.turma) return loginErro('Escolha a sua série.');
   const palavras = nome.split(/\s+/).filter(w => /[A-Za-zÀ-ÿ]/.test(w));
   if(palavras.length < 2) return loginErro('Escreva seu nome e sobrenome.');
-  if(!turma) return loginErro('Escreva a sua turma. Exemplo: 2º B.');
-  if(!/^\d{4}$/.test(pin)) return loginErro('A senha tem que ter 4 números.');
+  if(!/^\d{6}$/.test(pin)) return loginErro('A senha tem que ter 6 números.');
   const b = $('#btn-entrar'); if(b){ b.disabled = true; b.textContent = 'Entrando…'; }
-  const r = await api('/api/entrar', {nome, turma, pin});
+  const r = await api('/api/entrar', {turma: LF.turma, nome, pin});
   if(!r.ok) return loginErro(r.msg || 'Não deu para entrar. Tente de novo.');
-  SESS = {token: r.token, id: r.aluno.id, nome: r.aluno.nome, turma: r.aluno.turma};
+  SESS = {token: r.token, id: r.aluno.id, nome: r.aluno.nome, turma: r.aluno.turma, coringa: r.aluno.coringa === true};
   lsSet(SK, SESS);
   const c = lsGet(cacheKey(SESS.id));
-  if(c && c.pendente && c.S){ S = merge(c.S); cacheMeta = {pendente:true, servidorEm: r.atualizadoEm || 0}; lastSent = ''; }
-  else { S = merge(r.estado || null); cacheMeta = {pendente:false, servidorEm: r.atualizadoEm || 0}; S.nome = SESS.nome; S.turma = SESS.turma; lastSent = JSON.stringify(snapshot()); }
+  // depois de entrar, o aluno sempre escolhe a atividade (a caixa de atividades)
+  if(c && c.pendente && (c.G || c.S)){ G = mergeG(c.G || c.S); G.atual = null; carregarAtual(); cacheMeta = {pendente:true, servidorEm: r.atualizadoEm || 0}; lastSent = ''; }
+  else { G = mergeG(r.estado || null); G.atual = null; carregarAtual(); cacheMeta = {pendente:false, servidorEm: r.atualizadoEm || 0}; lastSent = JSON.stringify(snapshot()); }
   S.nome = SESS.nome; S.turma = SESS.turma; S.screen = 'home';
   loginMsg = ''; avisoSenha = (r.novo || r.senhaNova) ? pin : '';
   go();
@@ -686,7 +644,7 @@ async function sair(forcar){
   SESS = null; lsDel(SK);
   sairAviso = false; avisoSenha = ''; loginMsg = ''; LF = {nome:'', turma:''};
   cacheMeta = {pendente:false, servidorEm:0}; lastSent = '';
-  S = merge(null); go();
+  G = mergeG(null); carregarAtual(); go();
 }
 
 /* ---------- utilidades ---------- */
@@ -708,6 +666,30 @@ const curFase = () => FASES.findIndex(f => f.id === S.screen);
 function curStep(){ const fi = curFase(); if(fi < 0) return null; const f = FASES[fi]; return f.steps[Math.min(S.step[f.id]||0, f.steps.length-1)]; }
 const causa = i => CAUSAS.find(c => c.id === S.causas[i]) || CAUSAS[i];
 const abertura = () => ABERTURAS.find(a => a.id === S.abertura) || ABERTURAS[0];
+
+const serieAtual = () => SESS ? String(SESS.id).split('/')[0] : '';
+// perfil de teste do professor ("coringa"): entra por qualquer série e vê as atividades de todas
+const ehCoringa = () => !!(SESS && (SESS.coringa === true || serieAtual() === 'perfil-teste'));
+const minhasAtividades = () => Object.values(ATIV).filter(a => ehCoringa() || String(a.serie) === serieAtual())
+  .sort((x, y) => (Number(x.serie) || 0) - (Number(y.serie) || 0) || (x.ordem || 0) - (y.ordem || 0));
+const fimOk = () => FASES.length > 0 && !!S.done[FASES[FASES.length - 1].id];
+// H: o que o conteúdo de cada atividade pode consultar
+const H = {
+  get S(){ return S; },
+  escolha: k => { const e = C && C.escolhas && C.escolhas[k], v = (S.esco || {})[k]; return (e && e.cards.find(c => c.id === v)) || null; },
+  opcao: id => { const m = S.m[id]; if(!m || m.o == null || m.o < 0) return null; const d = blockDef(id); return d.opts[m.o] || null; },
+  texto: id => blockText(id),
+  escreveu: id => { const m = S.m[id]; return !!(m && m.o === -1); },
+  causa: i => causa(i), abertura: () => abertura(), ORD, ORDF, esc, words
+};
+function abrirAtividade(id){
+  if(!ATIV[id]) return;
+  guardarAtual();
+  G.atual = id; carregarAtual(); S.screen = 'home';
+  avisoSenha = ''; sairAviso = false;
+  go();
+}
+function trocarAtividade(){ guardarAtual(); G.atual = null; carregarAtual(); go(); }
 
 let toastT;
 function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'), 2400); }
@@ -771,8 +753,16 @@ function propPreviewHTML(){
 }
 
 /* ---------- blocos montados ---------- */
-const optText = o => Array.isArray(o) ? o[1] : o;
+const optText = o => Array.isArray(o) ? o[1] : (o && typeof o === 'object') ? o.t : o;
+const optTag = o => Array.isArray(o) ? (REP[o[0]] ? REP[o[0]].tipo : '') : (o && typeof o === 'object') ? (o.tag || '') : '';
 function blockDef(id){
+  if(C && typeof C.blockDef === 'function'){
+    const d = C.blockDef(id, H);
+    if(d) return Object.assign({n:'', q:'', tip:'', cons:null, opts:[]}, d);
+  }
+  return dissertBlockDef(id);
+}
+function dissertBlockDef(id){
   if(id === 'intro_ponte'){
     const tp = abertura().tipo;
     return {n:'Parte 2 de 3 · O problema',q:'Mostre o problema no Brasil',
@@ -782,9 +772,7 @@ function blockDef(id){
   if(id === 'intro_tese'){
     const a = causa(0), b = causa(1);
     return {n:'Parte 3 de 3 · Tese',q:'Diga a sua opinião (a tese)',tip:`A tese junta os 2 motivos que você escolheu: “${a.nome}” e “${b.nome}”.`,cons:CON.tese,
-      opts:[`os desafios para a formação de leitores no Brasil estão ligados, principalmente, ${a.tese} e ${b.tese}.`,
-            `a formação de leitores no Brasil é prejudicada, principalmente, ${a.por} e ${b.por}.`,
-            `dois fatores dificultam a formação de leitores no Brasil: ${a.nom} e ${b.nom}.`]};
+      opts:(C.teses || []).map(f => f(a, b))};
   }
   const m = id.match(/^d([12])_(\w+)$/);
   if(m){
@@ -797,7 +785,7 @@ function blockDef(id){
   if(id === 'c_retomada'){
     const a = causa(0), b = causa(1);
     return {n:'Parte 1 de 3 · Retomada',q:'Comece a conclusão',tip:'Avise que está terminando e lembre o problema.',cons:CON.retomada,
-      opts:['fica claro que o Brasil ainda precisa avançar muito na formação de leitores.','é necessário enfrentar os problemas que afastam os brasileiros da leitura.',`${a.nom} e ${b.nom} precisam ser enfrentados para que o Brasil tenha mais leitores.`]};
+      opts:C.retomadas ? C.retomadas(a, b) : []};
   }
   if(id === 'c_detalhe'){
     const ac = acaoSel();
@@ -811,17 +799,23 @@ function conOk(id){
   if(!d.cons) return true;
   return !!(m && m.c != null && d.cons[m.c] && d.cons[m.c].ok);
 }
-const LOWER_START = /^(O|A|Os|As|Um|Uma|Uns|Umas|Eles|Elas|Isso|Esse|Essa|Esses|Essas|Muitos|Muitas|Muito|Muita|Quem|Hoje|Na|No|Nas|Nos|Em|De|Para|Com|Por|Sem|Se|Quando|Mais|Ainda|Todo|Toda|Todos|Todas)\b/;
+const LOWER_START = /^(O|A|Os|As|Um|Uma|Uns|Umas|Eles|Elas|Eu|Meu|Minha|Meus|Minhas|Ele|Ela|Aquele|Aquela|Naquele|Naquela|Isso|Esse|Essa|Esses|Essas|Muitos|Muitas|Muito|Muita|Quem|Hoje|Na|No|Nas|Nos|Em|De|Para|Com|Por|Sem|Se|Quando|Mais|Ainda|Todo|Toda|Todos|Todas)\b/;
 function blockBody(id){
   const d = blockDef(id), m = S.m[id];
   if(!m || m.o == null) return '';
   if(m.o === -1) return (m.txt || '').replace(/\s+/g,' ').trim();
   return d.opts[m.o] != null ? optText(d.opts[m.o]) : '';
 }
+function versoFix(t){ t = (t || '').replace(/\s+/g,' ').trim(); return t ? t.charAt(0).toUpperCase() + t.slice(1) : ''; }
 function blockText(id){
   const d = blockDef(id);
   let body = blockBody(id);
   if(!body || !conOk(id)) return '';
+  if(d.verso){
+    // verso digitado pelo aluno depois da palavra do desafio: "Como A vida…" → "Como a vida…"
+    if(d.cons && S.m[id].o === -1 && LOWER_START.test(body)) body = body.charAt(0).toLowerCase() + body.slice(1);
+    return versoFix(d.cons ? d.cons[S.m[id].c].t + ' ' + body : body);
+  }
   if(!d.cons) return fix(body);
   if(LOWER_START.test(body)) body = body.charAt(0).toLowerCase() + body.slice(1);
   return fix(d.cons[S.m[id].c].t + ' ' + body);
@@ -829,8 +823,8 @@ function blockText(id){
 function usedReps(exceptId){
   const u = new Set();
   if(S.abertura) u.add(S.abertura);
-  const pm = S.m.intro_ponte;
-  if(pm && pm.o === 1 && abertura().tipo === 'contraste') u.add('r53');
+  const pm = S.m.intro_ponte, ab = abertura(), pr = C && C.ponteRep && ab && C.ponteRep[ab.tipo];
+  if(pm && pm.o != null && pr && pr[pm.o]) u.add(pr[pm.o]);
   ['d1_prova','d2_prova'].forEach(b => {
     if(b === exceptId) return;
     const m = S.m[b]; if(!m || m.o == null || m.o < 0) return;
@@ -846,59 +840,109 @@ function blockOk(id){
   const o = blockDef(id).opts[m.o];
   return o != null && !repUsada(id, o);
 }
-const blockOut = b => b === 'ABERT' ? (S.abertura ? REP[S.abertura].frase : '') : b === 'PROP' ? propSentence() : blockText(b);
+const blockOut = b => (b && typeof b === 'object') ? (b.fixo || '') : b === 'ABERT' ? (S.abertura && REP[S.abertura] ? REP[S.abertura].frase : '') : b === 'PROP' ? propSentence() : blockText(b);
 function avisos(t){
   const ab = (t.match(ABREV) || []).map(x => x.toLowerCase());
   if(ab.length) return `Evite abreviações de internet (${[...new Set(ab)].join(', ')}). Escreva a palavra inteira.`;
-  if(/\beu acho\b/i.test(t)) return 'Evite “eu acho”. Na redação, mostre a sua opinião com argumentos.';
+  if(ehDissert() && /\beu acho\b/i.test(t)) return 'Evite “eu acho”. Na redação, mostre a sua opinião com argumentos.';
   if(/\b(tipo assim|mano|véi|top demais)\b/i.test(t)) return 'Evite gírias. Use a linguagem formal.';
   return '';
 }
 function updateAviso(t){ const a = $('#aviso'); if(!a) return; const w = avisos(t || ''); a.hidden = !w; a.textContent = w; }
 
 /* ---------- parágrafos ---------- */
+const CORES = ['hl1','hl3','hl4','hl5','hl2','hl0'];
 function partsOf(p){
+  if(!ehDissert()){
+    const pt = PARTES[p]; if(!pt) return [];
+    return pt.blocos.map((b, i) => ({txt: blockOut(b), cls: (pt.cores && pt.cores[i]) || CORES[i % CORES.length], label: (pt.rotulos && pt.rotulos[i]) || ''}));
+  }
   if(p === 0) return [{txt:blockOut('ABERT'),cls:'hl4',label:'Repertório'},{txt:blockText('intro_ponte'),cls:'hl2',label:'Problema'},{txt:blockText('intro_tese'),cls:'hl1',label:'Tese'}];
   if(p === 1 || p === 2){ const k = 'd'+p; return [{txt:blockText(k+'_topico'),cls:'hl1',label:'Tópico'},{txt:blockText(k+'_explica'),cls:'hl3',label:'Explicação'},{txt:blockText(k+'_prova'),cls:'hl4',label:'Prova'},{txt:blockText(k+'_fecha'),cls:'hl5',label:'Consequência'}]; }
   return [{txt:blockText('c_retomada'),cls:'hl0',label:'Retomada'},{txt:propSentence(),cls:'prop',label:'Solução'},{txt:blockText('c_detalhe'),cls:'hl5',label:'Detalhe'}];
 }
-const compose = p => partsOf(p).map(x => x.txt).filter(Boolean).join(' ');
-const estLines = () => S.paras.reduce((n,p) => { p = (p || '').trim(); return p ? n + Math.ceil((p.length + 6) / 66) : n; }, 0);
+const compose = p => partsOf(p).map(x => x.txt).filter(Boolean).join(ehVerso() ? '\n' : ' ');
+const estLines = () => S.paras.reduce((n,p) => { p = (p || '').trim(); return p ? n + (ehVerso() ? p.split('\n').filter(x => x.trim()).length : Math.ceil((p.length + 6) / 66)) : n; }, 0);
 
 /* ---------- telas ---------- */
 function heroHTML(){
   return `
   <section class="hero">
-    <p class="eyebrow">Redação ENEM · 2ª série</p>
+    <p class="eyebrow">${C ? esc(C.rotulo + ' · ' + C.genero) : 'Produção de texto · 1ª, 2ª e 3ª séries'}</p>
     <h1>Missão <span class="mark">Redação</span></h1>
-    <p class="lead">Você vai montar uma redação do ENEM jogando. Cada escolha sua vira um pedaço do texto, e cada acerto vale XP.</p>
-    <div class="proposta"><span class="eyebrow">Tema da redação</span><p class="tema">“${TEMA}”</p></div>
+    <p class="lead">${C ? C.lead : 'Você vai montar o seu texto jogando. Cada escolha sua vira um pedaço do texto, e cada acerto vale XP.'}</p>
+    <div class="autor"><span class="logo" role="img" aria-label="Logo Guilherme Camozzato"></span><span><small>Criado por</small><b>Professor Guilherme Camozzato Teixeira</b></span></div>
+    ${C ? `<div class="proposta"><span class="eyebrow">${esc(C.temaRotulo || 'Tema')}</span><p class="tema">“${esc(TEMA)}”</p></div>` : ''}
   </section>`;
 }
+function avisosTopo(){
+  return `${avisoSenha ? `<div class="lembrete" role="status"><b>Sua senha é ${esc(avisoSenha)}.</b> Anote no caderno! Você vai precisar dela para continuar em outro dia ou em outro celular.</div>` : ''}
+    ${sairAviso ? `<div class="card"><p class="erro">A sua última parte ainda não foi salva na nuvem. Conecte à internet e tente de novo.</p>
+      <div class="row"><button class="btn primary" data-act="sair">Tentar de novo</button><button class="btn danger" data-act="sair-forcar">Sair mesmo assim</button></div></div>` : ''}`;
+}
+function atividadesHTML(){
+  const lista = minhasAtividades(), cor = ehCoringa();
+  const cards = lista.map((a, i) => {
+    const s = G.ativ[a.id], tot = a.fases.length, f = s && s.done ? a.fases.filter(x => s.done[x.id]).length : 0, ok = tot > 0 && f >= tot;
+    const st = ok ? 'Concluída' : f > 0 ? `Fase ${f} de ${tot}` : (s && s.xp) ? 'Em andamento' : 'Começar';
+    const grupo = cor && (i === 0 || String(lista[i - 1].serie) !== String(a.serie)) ? `<p class="eyebrow ativ-serie">${esc(String(a.serie))}ª Série</p>` : '';
+    return `${grupo}<button class="ativ ${ok ? 'ok' : ''}" data-act="ativ" data-a="${esc(a.id)}">
+      <span class="c-k">${esc(a.rotulo)} · ${esc(a.genero)}</span>
+      <span class="c-t">${esc(a.tema)}</span>
+      <span class="ativ-st">${st}</span>
+      <span class="minibar" aria-hidden="true"><i style="width:${tot ? Math.round(f / tot * 100) : 0}%"></i></span></button>`;
+  }).join('');
+  return `${heroHTML()}
+  ${avisosTopo()}
+  <div class="card">
+    <p class="eyebrow">Oi, ${esc(S.nome)}!${S.turma ? ' · ' + esc(S.turma) : ''}</p>
+    <h3>Escolha a sua atividade</h3>
+    ${cor ? '<p class="tip">Perfil de teste do professor: aqui aparecem as atividades de todas as séries. O que você fizer aqui não entra nas contas das turmas.</p>' : ''}
+    ${cards ? `<div class="ativs">${cards}</div>` : '<p class="erro">Ainda não há atividades para a sua série. Avise o professor.</p>'}
+    <p class="fine">Cada atividade guarda o seu próprio progresso. Você pode trocar quando quiser.</p>
+    <div class="row"><button class="btn ghost" data-act="sair">Sair</button></div>
+  </div>`;
+}
+async function carregarTurmas(){
+  if(turmasCarregando) return;
+  turmasCarregando = true; turmasErro = false;
+  try{
+    const r = await fetch('/api/turmas', {cache:'no-store'});
+    const j = await r.json();
+    if(j && j.ok && Array.isArray(j.turmas)) TURMAS = j.turmas; else turmasErro = true;
+  }catch(e){ turmasErro = true; }
+  turmasCarregando = false;
+  if(!SESS) render();
+}
 function entrarHTML(){
+  if(TURMAS === null && !turmasErro) carregarTurmas();
+  const series = TURMAS === null
+    ? (turmasErro ? `<p class="erro">Não deu para carregar as séries. Confira a internet.</p><div class="row"><button class="btn" data-act="turmas-recarregar">Tentar de novo</button></div>` : '<p class="fine">Carregando as séries…</p>')
+    : TURMAS.length
+      ? `<div class="series" role="radiogroup" aria-label="Sua série">${TURMAS.map(t => `<button class="serie ${LF.turma === t.key ? 'sel' : ''}" data-act="serie" data-k="${esc(t.key)}" role="radio" aria-checked="${LF.turma === t.key}">${esc(t.label)}</button>`).join('')}</div>`
+      : '<p class="erro">Nenhuma série cadastrada ainda. Avise o professor.</p>';
   return `${heroHTML()}
   <div class="card">
     <h3>Entrar no jogo</h3>
     ${loginMsg ? `<p class="erro" role="alert">${esc(loginMsg)}</p>` : ''}
-    <label class="field" for="in-nome">Nome e sobrenome<input class="in" id="in-nome" data-lf="nome" autocomplete="name" autocapitalize="words" value="${esc(LF.nome)}" placeholder="Ex.: Ana Souza"></label>
-    <label class="field" for="in-turma">Turma<input class="in" id="in-turma" data-lf="turma" autocomplete="off" value="${esc(LF.turma)}" placeholder="Ex.: 2º B"></label>
-    <label class="field" for="in-pin">Senha de 4 números<input class="in pin" id="in-pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="0000"></label>
-    <p class="tip">Primeira vez? Invente agora uma senha de 4 números e anote no caderno. Você vai usar a mesma senha para continuar depois, em qualquer celular.</p>
+    <div class="field"><span>1. Toque na sua série</span>${series}</div>
+    <label class="field" for="in-nome">2. Seu nome completo<input class="in nome-up" id="in-nome" data-lf="nome" autocomplete="name" autocapitalize="characters" spellcheck="false" value="${esc(LF.nome)}" placeholder="EX.: ANA JULIA DA SILVA"></label>
+    <label class="field" for="in-pin">3. Senha de 6 números<input class="in pin" id="in-pin" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="000000"></label>
+    <p class="tip">Primeira vez? Invente agora uma senha de 6 números e anote no caderno. Você vai usar a mesma senha para continuar depois, em qualquer celular.</p>
     <div class="row"><button class="btn primary" id="btn-entrar" data-act="entrar">Entrar ${ICON.right}</button></div>
   </div>
-  <p class="fine">Esqueceu a senha? Peça ao professor para apagar a sua senha. Você cria outra e continua de onde parou.</p>`;
+  <p class="fine">Esqueceu a senha? Peça ao professor. Ele cria uma senha nova para você, e você continua de onde parou.</p>`;
 }
 function homeHTML(){
   const nt = nextTarget(), nfi = FASES.findIndex(f => f.id === nt), nf = FASES[nfi];
-  const allDone = nt === 'folha';
+  const allDone = nt === 'folha', ob = OB();
   const top = `
-    ${avisoSenha ? `<div class="lembrete" role="status"><b>Sua senha é ${esc(avisoSenha)}.</b> Anote no caderno! Você vai precisar dela para continuar em outro dia ou em outro celular.</div>` : ''}
-    ${sairAviso ? `<div class="card"><p class="erro">A sua última parte ainda não foi salva na nuvem. Conecte à internet e tente de novo.</p>
-      <div class="row"><button class="btn primary" data-act="sair">Tentar de novo</button><button class="btn danger" data-act="sair-forcar">Sair mesmo assim</button></div></div>` : ''}
+    ${avisosTopo()}
     <div class="card">
-      <p class="eyebrow">Oi, ${esc(S.nome)}!${S.turma ? ' · Turma ' + esc(S.turma) : ''}</p>
-      <h3>${allDone ? 'Sua redação está pronta. Revise e confira.' : `Próxima parada: Fase ${nfi+1} · ${nf.titulo}`}</h3>
-      <div class="row"><button class="btn primary" data-act="open" data-f="${nt}">${allDone ? 'Abrir minha redação' : 'Continuar'} ${ICON.right}</button>
+      <p class="eyebrow">Oi, ${esc(S.nome)}!${S.turma ? ' · ' + esc(S.turma) : ''}</p>
+      <h3>${allDone ? `${ob.sua} está ${ob.pronta}. Revise e confira.` : `Próxima parada: Fase ${nfi+1} · ${nf.titulo}`}</h3>
+      <div class="row"><button class="btn primary" data-act="open" data-f="${nt}">${allDone ? `Abrir ${ob.minha}` : 'Continuar'} ${ICON.right}</button>
+        <button class="btn" data-act="atividades">Trocar de atividade</button>
         <button class="btn ghost" data-act="sair">Sair</button></div>
     </div>`;
   const nextIdx = FASES.findIndex(f => !S.done[f.id]);
@@ -910,19 +954,19 @@ function homeHTML(){
       <span><span class="st-t">${f.titulo}</span><span class="st-s">${f.sub}</span></span>
       <span class="pill">${s === 'done' ? 'Feita' : s === 'now' ? 'Jogar' : 'Bloqueada'}</span></button></li>`;
   }).join('');
-  const fOk = !!S.done.concl;
+  const fOk = fimOk();
   const folha = `<li><button class="station ${fOk ? 'now' : 'lock'}" data-act="open" data-f="folha" ${fOk && S.started ? '' : 'disabled'}>
       <span class="dot">${ICON.pen}</span>
-      <span><span class="st-t">Folha de redação</span><span class="st-s">Revisar e entregar</span></span>
+      <span><span class="st-t">${esc(C.folhaTitulo || 'Folha')}</span><span class="st-s">Revisar e entregar</span></span>
       <span class="pill">${fOk ? 'Abrir' : 'Bloqueada'}</span></button></li>`;
   return `${heroHTML()}
   ${top}
   <section class="stack">
     <h2>Sua trilha</h2>
-    <p class="tip">7 fases. As 3 primeiras preparam você. Nas 4 últimas, você monta os 4 parágrafos da redação.</p>
+    <p class="tip">${C.trilhaTip || ''}</p>
     <ol class="trail">${st}${folha}</ol>
   </section>
-  <p class="fine">Seu progresso fica salvo na nuvem. Para continuar em outro celular, entre com o mesmo nome, turma e senha.</p>`;
+  <p class="fine">Seu progresso fica salvo na nuvem. Para continuar em outro celular, entre com a mesma série, o mesmo nome e a mesma senha.</p>`;
 }
 
 function propostaHTML(){
@@ -930,20 +974,27 @@ function propostaHTML(){
   <div class="stack"><h2>Leia a proposta com atenção</h2><p class="tip">Leia duas vezes. Se preferir, toque em “Ouvir”.</p>${speakBtn('t-prop')}</div>
   <div class="proposta" id="t-prop">
     <p class="eyebrow">Contexto de produção</p>
-    <p>Você está prestando o 1º dia do Exame Nacional do Ensino Médio (ENEM) como treineiro, e está na hora de fazer a redação. Esta é a primeira ação a ser realizada no dia da prova, enquanto a cabeça está “fresca”. Leia a proposta completa com atenção. Fique atento aos textos motivadores, lendo-os mais de uma vez, e elabore seu texto.</p>
+    <p>${C.proposta.contexto}</p>
     <p class="eyebrow">Comando</p>
-    <p>A partir da leitura dos textos motivadores e com base nos conhecimentos construídos ao longo de sua formação, redija texto dissertativo-argumentativo em modalidade escrita formal da língua portuguesa sobre o tema “${TEMA}”, apresentando proposta de intervenção que respeite os direitos humanos. Selecione, organize e relacione, de forma coerente e coesa, argumentos e fatos para defesa de seu ponto de vista.</p>
+    <p>${C.proposta.comando}</p>
   </div>
   <p class="tip">Parece muita coisa? No próximo passo, a gente traduz.</p>`;
 }
 
 function infoHTML(k){
+  const ci = (C && C.info) || {};
+  if(ci[k] && ci[k].html != null){
+    const h = typeof ci[k].html === 'function' ? ci[k].html(H) : ci[k].html;
+    return `
+  <div class="stack"><h2>${ci[k].titulo || ''}</h2>${speakBtn('t-info')}</div>
+  <div class="stack" id="t-info">${h}</div>`;
+  }
   if(k === 'missao') return `
   <div class="stack"><h2>Traduzindo a proposta</h2>${speakBtn('t-info')}</div>
   <div class="stack" id="t-info">
     <div class="cards three">
       <div class="card"><p class="eyebrow">O que escrever</p><h3>Texto dissertativo-argumentativo</h3><p>Você dá a sua opinião sobre um problema e prova com argumentos.</p></div>
-      <div class="card"><p class="eyebrow">Sobre o quê</p><h3>O tema</h3><p><b>Desafios</b> = problemas, dificuldades.<br><b>Formação de leitores</b> = fazer as pessoas lerem e gostarem de ler.</p><p class="exmini">A pergunta do tema é: <b>por que é difícil fazer os brasileiros lerem?</b></p></div>
+      <div class="card"><p class="eyebrow">Sobre o quê</p><h3>O tema</h3>${ci.temaCard || ''}</div>
       <div class="card"><p class="eyebrow">Como terminar</p><h3>Proposta de intervenção</h3><p>Uma solução para o problema. Ela precisa respeitar os direitos humanos: nada de violência ou castigo.</p></div>
     </div>
     <h3>A planta da sua redação: 4 parágrafos</h3>
@@ -958,7 +1009,7 @@ function infoHTML(k){
   <div class="stack"><h2>O que é um argumento?</h2>${speakBtn('t-info')}</div>
   <div class="stack" id="t-info">
     <div class="card"><p>Argumento é um <b>motivo</b> que prova a sua opinião.</p>
-      <p class="exmini"><b>Opinião:</b> formar leitores no Brasil é difícil.<br><b>Argumento:</b> porque muitos bairros não têm biblioteca.</p></div>
+      <p class="exmini"><b>Opinião:</b> ${(ci.argumentoExemplo || {}).opiniao || ''}<br><b>Argumento:</b> ${(ci.argumentoExemplo || {}).argumento || ''}</p></div>
     <p>No próximo passo, você vai escolher <b>2 motivos</b>. Cada motivo vira um parágrafo da sua redação.</p>
   </div>`;
   if(k === 'intro') return `
@@ -970,7 +1021,7 @@ function infoHTML(k){
       <li class="hl1"><b>3</b><div><strong>Tese</strong><span>A sua opinião e os 2 motivos que você escolheu.</span></div></li>
     </ol>
     <div class="exemplo stack tight"><span class="lbl">Exemplo de introdução</span>
-      <p>O escritor Monteiro Lobato afirmou que “um país se faz com homens e livros”. No entanto, o Brasil ainda está longe dessa ideia, já que muitas pessoas não têm o hábito de ler. Nesse contexto, os desafios para a formação de leitores no Brasil estão ligados, principalmente, ao uso exagerado das redes sociais e à falta de acesso aos livros.</p></div>
+      <p>${ci.introExemplo || ''}</p></div>
   </div>`;
   if(k === 'desenv') return `
   <div class="stack"><h2>A receita do parágrafo de argumento</h2>${speakBtn('t-info')}</div>
@@ -990,10 +1041,10 @@ function infoHTML(k){
     <p class="tip">A parte do meio é a mais importante: a solução. O ENEM procura 5 elementos nela.</p>
     <ol class="planta">
       <li class="hl0"><b>1</b><div><strong>Retomada</strong><span>Comece com “Portanto” e lembre o problema.</span></div></li>
-      <li class="hl1"><b>2</b><div><strong>Quem vai resolver?</strong><span>Ex.: o Ministério da Educação</span></div></li>
-      <li class="hl2"><b>2</b><div><strong>O que vai fazer?</strong><span>Ex.: criar clubes de leitura</span></div></li>
-      <li class="hl3"><b>2</b><div><strong>Como vai fazer?</strong><span>Ex.: por meio de verbas públicas</span></div></li>
-      <li class="hl4"><b>2</b><div><strong>Para quê?</strong><span>Ex.: a fim de que os jovens leiam mais</span></div></li>
+      <li class="hl1"><b>2</b><div><strong>Quem vai resolver?</strong><span>Ex.: ${(ci.solucaoExemplos || {}).agente || ''}</span></div></li>
+      <li class="hl2"><b>2</b><div><strong>O que vai fazer?</strong><span>Ex.: ${(ci.solucaoExemplos || {}).acao || ''}</span></div></li>
+      <li class="hl3"><b>2</b><div><strong>Como vai fazer?</strong><span>Ex.: ${(ci.solucaoExemplos || {}).meio || ''}</span></div></li>
+      <li class="hl4"><b>2</b><div><strong>Para quê?</strong><span>Ex.: ${(ci.solucaoExemplos || {}).fim || ''}</span></div></li>
       <li class="hl5"><b>3</b><div><strong>Detalhe</strong><span>Explique melhor uma parte da solução.</span></div></li>
     </ol>
   </div>`;
@@ -1017,35 +1068,22 @@ function quizHTML(qid){
 }
 
 const gw = (k,t) => `<button class="gloss" data-act="gloss" data-g="${k}">${t}</button>`;
-function readHTML(){
-  const original = `
-    <h3>Cultura da leitura em ${gw('declinio','declínio')} e o avanço do ${gw('funcional','analfabetismo funcional')} no Brasil</h3>
-    <p>O ${gw('habito','hábito')} da leitura entre os brasileiros está em queda. Em um país com mais de 200 milhões de habitantes, o número de ${gw('naoleitores','não leitores')} representa 53% da população. O dado desperta preocupação na Semana Nacional do Livro e da Biblioteca, celebrada entre quinta (23) e quarta-feira (29).</p>
-    <p>Hoje, o Brasil tem cerca de 93,4 milhões de leitores — quem leu ao menos um livro nos três meses anteriores —, que correspondem a 47% da população.</p>
-    <p>O número é oito ${gw('pontos','pontos percentuais')} menor do que o registrado em 2007, quando os leitores eram 55% dos brasileiros, segundo a sexta edição da pesquisa Retratos da Leitura no Brasil, do Instituto Pró-Livro e Ministério da Cultura.</p>
-    <p>A queda, no entanto, não é apenas percentual. O estudo também aponta para uma diminuição da capacidade de ${gw('concentracao','concentração')} e ${gw('compreensao','compreensão')}, acendendo um alerta sobre o avanço do chamado ${gw('funcional','analfabetismo funcional')}. A condição, segundo a Organização das Nações Unidas para a Educação, a Ciência e a Cultura (${gw('unesco','Unesco')}), abrange pessoas que até reconhecem letras e números, mas não conseguem ${gw('interpretar','interpretar')} textos simples e usar a leitura e a escrita no ${gw('cotidiano','cotidiano')}, o que afeta o desenvolvimento pessoal e a plena ${gw('cidadania','cidadania')}.</p>
-    <p class="fonte">Disponível em: <a href="https://www12.senado.leg.br/noticias/infomaterias/2025/10/cultura-da-leitura-em-declinio-e-o-avanco-do-analfabetismo-funcional-no-brasil" target="_blank" rel="noopener">www12.senado.leg.br/noticias/infomaterias/2025/10/cultura-da-leitura-em-declinio-e-o-avanco-do-analfabetismo-funcional-no-brasil</a>. Acesso em: 20 ago. 2026. Adaptado.</p>`;
-  const facil = `
-    <h3>O texto em 5 frases</h3>
-    <ul class="facil">
-      <li>Mais da metade dos brasileiros (<b>53%</b>) não é leitora.</li>
-      <li>Na pesquisa, <b>leitor</b> é quem leu pelo menos 1 livro nos últimos 3 meses.</li>
-      <li>Em 2007, <b>55%</b> eram leitores. Hoje, são só <b>47%</b>. O número caiu.</li>
-      <li>As pessoas estão com <b>mais dificuldade de se concentrar</b> e de entender o que leem.</li>
-      <li>Isso faz crescer o <b>analfabetismo funcional</b>: a pessoa conhece as letras, mas não entende um texto simples.</li>
-    </ul>`;
+const glossar = h => String(h || '').replace(/\[\[(\w+)\|([^\]]+)\]\]/g, (_, k, t) => gw(k, t));
+function readHTML(st){
+  const lista = (C && C.textos) || [], x = Math.min((st && st.x) || 0, Math.max(lista.length - 1, 0)), tx = lista[x] || {html:'', facil:''};
+  const temFacil = !!tx.facil, facil = S.easy && temFacil;
   return `
-  <div class="stack"><p class="eyebrow">Texto de apoio 1</p><h2>Leia o texto com calma</h2>
-    <p class="tip">Toque nas palavras sublinhadas para ver o que significam. Se estiver difícil, abra a versão fácil, mas depois volte ao original.</p></div>
+  <div class="stack"><p class="eyebrow">${esc(tx.rotulo || 'Texto de apoio')}</p><h2>${tx.chamada || 'Leia o texto com calma'}</h2>
+    <p class="tip">Toque nas palavras sublinhadas para ver o que significam.${temFacil ? ' Se estiver difícil, abra a versão fácil, mas depois volte ao original.' : ''}</p></div>
   <div class="row">
-    <div class="seg" role="group" aria-label="Versão do texto">
-      <button class="${!S.easy ? 'on' : ''}" data-act="easy" data-v="0" aria-pressed="${!S.easy}">Texto original</button>
-      <button class="${S.easy ? 'on' : ''}" data-act="easy" data-v="1" aria-pressed="${S.easy}">Versão fácil</button>
-    </div>
+    ${temFacil ? `<div class="seg" role="group" aria-label="Versão do texto">
+      <button class="${!facil ? 'on' : ''}" data-act="easy" data-v="0" aria-pressed="${!facil}">Texto original</button>
+      <button class="${facil ? 'on' : ''}" data-act="easy" data-v="1" aria-pressed="${facil}">Versão fácil</button>
+    </div>` : ''}
     ${speakBtn('t-read')}
   </div>
-  <article class="texto" id="t-read">${S.easy ? facil : original}</article>
-  ${S.easy ? '' : `<div class="dic" id="dic" aria-live="polite"><span class="lbl">Dicionário</span><p>Toque em uma palavra sublinhada.</p></div>`}`;
+  <article class="texto" id="t-read">${facil ? glossar(tx.facil) : glossar(tx.html)}</article>
+  ${facil ? '' : `<div class="dic" id="dic" aria-live="polite"><span class="lbl">Dicionário</span><p>Toque em uma palavra sublinhada.</p></div>`}`;
 }
 
 function causasHTML(){
@@ -1053,7 +1091,7 @@ function causasHTML(){
   const sel = S.causasTmp;
   const depois = ['intro','d1','d2','concl'].some(k => S.done[k] || S.m[k === 'intro' ? 'intro_tese' : k === 'concl' ? 'c_retomada' : k + '_topico']);
   return `
-  <div class="stack"><h2>Escolha 2 motivos</h2><p class="tip" id="tip-c">Por que é difícil formar leitores no Brasil? Toque em 2 cartas. A 1ª que você tocar vira o 1º argumento.</p>${speakBtn('tip-c')}
+  <div class="stack"><h2>Escolha 2 motivos</h2><p class="tip" id="tip-c">${esc((C && C.causasPergunta) || '')} Toque em 2 cartas. A 1ª que você tocar vira o 1º argumento.</p>${speakBtn('tip-c')}
   ${depois ? '<p class="aviso-c">Atenção: se você trocar os motivos, as fases 4 a 7 vão ser refeitas com os motivos novos.</p>' : ''}</div>
   <div class="grid2">${CAUSAS.map(c => {
     const pos = sel.indexOf(c.id);
@@ -1074,10 +1112,26 @@ function aberturaHTML(){
   }).join('')}</div>`;
 }
 
+function escolhaHTML(st){
+  const e = (C.escolhas || {})[st.k] || {titulo:'', tip:'', cards:[]}, v = (S.esco || {})[st.k];
+  const algo = (e.reseta || []).some(b => S.m[b] && S.m[b].o != null);
+  return `
+  <div class="stack"><p class="eyebrow">${esc(e.eyebrow || 'Escolha')}</p><h2>${e.titulo}</h2><p class="tip" id="tip-e">${e.tip || ''}</p>${speakBtn('tip-e')}
+  ${algo ? '<p class="aviso-c">Atenção: se você trocar aqui, as partes que dependem desta escolha vão ser refeitas.</p>' : ''}</div>
+  <div class="grid2">${e.cards.map(c => `<button class="cartao ${v === c.id ? 'sel' : ''}" data-act="esco" data-k="${esc(st.k)}" data-v="${esc(c.id)}" aria-pressed="${v === c.id}">
+      ${c.tag ? `<span class="c-k">${c.tag}</span>` : ''}<span class="c-t">${c.nome}</span>${c.desc ? `<span class="c-d">${c.desc}</span>` : ''}</button>`).join('')}</div>`;
+}
+function escolher(k, v){
+  const e = (C.escolhas || {})[k]; if(!e) return;
+  if(!S.esco) S.esco = {};
+  if(S.esco[k] && S.esco[k] !== v) (e.reseta || []).forEach(b => { delete S.m[b]; });
+  S.esco[k] = v; render();
+}
+
 function monteHTML(st){
   const id = st.id, d = blockDef(id), m = mOf(id);
-  const pi = PARA_OF[id], blocks = PARA_BLOCKS[pi];
-  const prev = blocks.slice(0, blocks.indexOf(id)).map(blockOut).filter(Boolean).join(' ');
+  const pi = PARA_OF[id], blocks = PARA_BLOCKS[pi] || [id];   // o título não pertence a nenhuma parte
+  const prev = blocks.slice(0, blocks.indexOf(id)).map(blockOut).filter(Boolean).join(ehVerso() ? '\n' : ' ');
   const cOk = conOk(id), cur = blockText(id);
   const partial = cur ? esc(cur) : (d.cons && cOk ? esc(d.cons[m.c].t) + ' …' : '…');
   let conHTML = '';
@@ -1086,8 +1140,8 @@ function monteHTML(st){
     const fb = (last != null && d.cons[last] && !d.cons[last].ok) ? `<p class="fb no">${d.cons[last].d}</p>`
       : cOk ? `<p class="fb ok">Isso! “${esc(d.cons[m.c].t.replace(/,$/,''))}” combina aqui.</p>` : '';
     conHTML = `<div class="stack tight">
-      <p class="eyebrow">Desafio · palavra de ligação</p>
-      <h3>Qual destas combina para começar a frase?</h3>
+      <p class="eyebrow">${esc(d.consEyebrow || 'Desafio · palavra de ligação')}</p>
+      <h3>${d.consQ || 'Qual destas combina para começar a frase?'}</h3>
       <div class="chips">${d.cons.map((c,k) => { const bad = tried.includes(k) && !c.ok; return `<button class="chip ${m.c === k ? 'sel' : bad ? 'no' : ''}" data-act="con" data-k="${k}" ${bad ? 'disabled' : ''} aria-pressed="${m.c === k}">${esc(c.t.replace(/,$/,''))}</button>`; }).join('')}</div>
       <div aria-live="polite">${fb}</div></div>`;
   }
@@ -1095,23 +1149,23 @@ function monteHTML(st){
       <p class="eyebrow">Escolha a frase</p>
       <h3>${d.cons ? 'Agora, o que você quer dizer?' : 'Qual frase você quer usar?'}</h3>
       ${speakBtn('opts-w')}
-      <div class="opts" id="opts-w">${d.opts.map((o,k) => { const usada = repUsada(id, o); return `<button class="opt ${m.o === k ? 'sel' : ''} ${usada ? 'usado' : ''}" data-act="opt" data-k="${k}" aria-pressed="${m.o === k}" ${usada ? 'disabled' : ''}><span class="k">${'ABCDE'[k]}</span><span>${usada ? '<span class="tag hl0">Já está em outro parágrafo</span>' : Array.isArray(o) ? `<span class="tag hl4">${REP[o[0]].tipo}</span>` : ''}${esc(optText(o))}</span></button>`; }).join('')}
+      <div class="opts" id="opts-w">${d.opts.map((o,k) => { const usada = repUsada(id, o), tg = optTag(o); return `<button class="opt ${m.o === k ? 'sel' : ''} ${usada ? 'usado' : ''}" data-act="opt" data-k="${k}" aria-pressed="${m.o === k}" ${usada ? 'disabled' : ''}><span class="k">${'ABCDEFG'[k]}</span><span>${usada ? '<span class="tag hl0">Já está em outro parágrafo</span>' : tg ? `<span class="tag hl4">${esc(tg)}</span>` : ''}${esc(optText(o))}</span></button>`; }).join('')}
         <button class="opt custom ${m.o === -1 ? 'sel' : ''}" data-act="opt" data-k="-1" aria-pressed="${m.o === -1}"><span class="k">${ICON.penSm}</span><span>Quero escrever do meu jeito</span></button></div>
-      ${m.o === -1 ? `<label class="sr" for="mc-${id}">Escreva do seu jeito</label><textarea id="mc-${id}" class="caderno" data-mc="${id}" rows="3" placeholder="${d.cons ? 'Continue a frase depois de “' + esc(d.cons[m.c].t.replace(/,$/,'')) + '”…' : 'Escreva a sua frase aqui…'}">${esc(m.txt)}</textarea><p class="aviso" id="aviso" hidden></p>` : ''}
+      ${m.o === -1 ? `<label class="sr" for="mc-${id}">Escreva do seu jeito</label><textarea id="mc-${id}" class="caderno" data-mc="${id}" rows="3" placeholder="${d.cons ? 'Continue a frase depois de “' + esc(d.cons[m.c].t.replace(/,$/,'')) + '”…' : d.verso ? 'Escreva o seu verso aqui…' : 'Escreva a sua frase aqui…'}">${esc(m.txt)}</textarea><p class="aviso" id="aviso" hidden></p>` : ''}
     </div>`;
   return `
   <div class="stack"><p class="eyebrow">${d.n}</p><h2>${d.q}</h2><p class="tip" id="tip-w">${d.tip}</p>${speakBtn('tip-w')}</div>
-  <div class="obra"><span class="lbl">Sua redação · ${ORD[pi]} parágrafo</span><p>${prev ? `<span class="ant">${esc(prev)}</span> ` : ''}<span class="mark" id="cur">${partial}</span></p></div>
+  <div class="obra"><span class="lbl">${OB().sua} · ${esc(PARTES[pi] ? PARTES[pi].curto : 'Título')}</span><p class="${ehVerso() ? 'verso' : ''}">${prev ? `<span class="ant">${esc(prev)}</span>${ehVerso() ? '\n' : ' '}` : ''}<span class="mark" id="cur">${partial}</span></p></div>
   ${conHTML}
   ${optHTML}`;
 }
 
 function proposalHTML(){
   const G = [
-    ['agente','1. Quem vai fazer?','hl1',AGENTES.map(a => a.t.replace(/,$/,'')),'Ex.: os governos estaduais'],
-    ['acao','2. O que vai fazer?','hl2',ACOES.map(a => a.t),'Comece com um verbo. Ex.: levar escritores às escolas'],
-    ['meio','3. Como vai fazer?','hl3',MEIOS,'Ex.: por meio de feiras de livros'],
-    ['fim','4. Para quê?','hl4',FINS,'Ex.: para que todos possam ler']
+    ['agente','1. Quem vai fazer?','hl1',AGENTES.map(a => a.t.replace(/,$/,'')),'Quem vai agir? Ex.: os governos estaduais'],
+    ['acao','2. O que vai fazer?','hl2',ACOES.map(a => a.t),'Comece com um verbo. Ex.: criar, ampliar, oferecer…'],
+    ['meio','3. Como vai fazer?','hl3',MEIOS,'Comece com “por meio de”…'],
+    ['fim','4. Para quê?','hl4',FINS,'Comece com “para que” ou “a fim de”…']
   ];
   return `
   <div class="stack"><p class="eyebrow">Parte 2 de 3 · Solução</p><h2>Monte a sua solução</h2>
@@ -1127,18 +1181,18 @@ function proposalHTML(){
 }
 
 function reviewHTML(st, fi){
-  const p = st.p, parts = partsOf(p);
-  const body = parts.map(x => x.cls === 'prop' ? propPreviewHTML() : (x.txt ? `<span class="hl ${x.cls}">${esc(x.txt)}</span>` : '')).join(' ');
+  const p = st.p, parts = partsOf(p), v = ehVerso();
+  const body = parts.map(x => x.cls === 'prop' ? propPreviewHTML() : (x.txt ? `<span class="hl ${x.cls}">${esc(x.txt)}</span>` : '')).filter(Boolean).join(v ? '\n' : ' ');
   const legend = parts.map(x => x.cls === 'prop'
     ? '<span class="hl1">Quem</span><span class="hl2">O quê</span><span class="hl3">Como</span><span class="hl4">Para quê</span>'
-    : `<span class="${x.cls}">${x.label}</span>`).join('');
+    : x.label ? `<span class="${x.cls}">${esc(x.label)}</span>` : '').join('');
   const changed = S.done[FASES[fi].id] && S.edited[p];
   return `
-  <div class="stack"><p class="eyebrow">Revisão</p><h2>Seu ${ORD[p]} parágrafo ficou assim</h2>
+  <div class="stack"><p class="eyebrow">Revisão</p><h2>${esc((PARTES[p] || {}).nome || 'Seu texto')} ficou assim</h2>
     <p class="tip">Leia com calma ou toque em “Ouvir”. Se algo ficou estranho, toque em Voltar e mude.</p>${speakBtn('t-para')}</div>
-  <div class="paragrafo" id="t-para">${body}</div>
+  <div class="paragrafo ${v ? 'verso' : ''}" id="t-para">${body}</div>
   <div class="legenda">${legend}</div>
-  ${changed ? '<p class="aviso">Você já tinha mudado este parágrafo na folha. Ao concluir, esta versão substitui a da folha.</p>' : ''}`;
+  ${changed ? '<p class="aviso">Você já tinha mudado esta parte na folha. Ao concluir, esta versão substitui a da folha.</p>' : ''}`;
 }
 
 function repCard(r){
@@ -1156,9 +1210,9 @@ function rewardHTML(fi){
     <h2><span class="mark anim">Fase concluída!</span></h2>
     <p class="xpgain">${gain > 0 ? `<b>+${gain} XP</b> nesta fase.` : 'Você já tinha ganhado os pontos desta fase.'} Total: <b>${S.xp} XP</b>.</p>
     <p>${up ? 'Você subiu de nível! Agora você é' : 'Seu nível:'} <b>${levelName(S.xp)}</b>.</p>
-    ${typeof f.para === 'number' ? `<p class="lbl">${ORD[f.para]} parágrafo guardado na sua folha de redação.</p>` : ''}
+    ${typeof f.para === 'number' && PARTES[f.para] ? `<p class="lbl">Guardado na sua folha: ${esc(PARTES[f.para].curto)}.</p>` : ''}
     ${cards.length ? `<div class="newcards"><p class="eyebrow">Novas cartas na mochila</p>${cards.map(repCard).join('')}</div>` : ''}
-    <p class="tip">${!nx ? 'Agora é só revisar a sua redação completa.' : S.done[nx.id] ? 'Pronto! A sua folha de redação foi atualizada.' : `Próxima: Fase ${fi+2} · ${nx.titulo}.`}</p>
+    <p class="tip">${!nx ? `Agora é só revisar ${OB().sua.toLowerCase()} completa.`.replace('completa', OB().pronta === 'pronto' ? 'completo' : 'completa') : S.done[nx.id] ? 'Pronto! A sua folha foi atualizada.' : `Próxima: Fase ${fi+2} · ${nx.titulo}.`}</p>
   </div>`;
 }
 
@@ -1171,7 +1225,8 @@ function faseHTML(fi){
     case 'proposta': body = propostaHTML(); break;
     case 'info': body = infoHTML(st.k); break;
     case 'quiz': body = quizHTML(st.q); break;
-    case 'read': body = readHTML(); break;
+    case 'read': body = readHTML(st); break;
+    case 'escolha': body = escolhaHTML(st); break;
     case 'causas': body = causasHTML(); break;
     case 'abertura': body = aberturaHTML(); break;
     case 'monte': body = monteHTML(st); break;
@@ -1188,6 +1243,7 @@ function stepValid(st){
     case 'quiz': return !!(S.quiz[st.q] && S.quiz[st.q].ok);
     case 'causas': return (Array.isArray(S.causasTmp) ? S.causasTmp : S.causas).length === 2;
     case 'abertura': return !!S.abertura;
+    case 'escolha': return !!(S.esco && S.esco[st.k]);
     case 'monte': return blockOk(st.id);
     case 'proposal': return ['agente','acao','meio','fim'].every(g => propVal(g));
     default: return true;
@@ -1198,7 +1254,8 @@ function stepHint(st){
     case 'quiz': return 'Acerte a resposta para continuar.';
     case 'causas': return `Escolha 2 motivos (${(Array.isArray(S.causasTmp) ? S.causasTmp : S.causas).length} de 2).`;
     case 'abertura': return 'Escolha um repertório.';
-    case 'monte': { const m = S.m[st.id]; return !conOk(st.id) ? 'Escolha a palavra de ligação certa.' : (!m || m.o == null) ? 'Escolha uma frase.' : m.o === -1 ? 'Escreva pelo menos 3 palavras.' : 'Essa prova já está em outro parágrafo. Escolha outra.'; }
+    case 'escolha': return 'Escolha uma opção.';
+    case 'monte': { const m = S.m[st.id]; return !conOk(st.id) ? (blockDef(st.id).consHint || 'Escolha a palavra de ligação certa.') : (!m || m.o == null) ? 'Escolha uma frase.' : m.o === -1 ? 'Escreva pelo menos 3 palavras.' : 'Essa prova já está em outro parágrafo. Escolha outra.'; }
     case 'proposal': return 'Responda às 4 perguntas.';
     default: return '';
   }
@@ -1223,15 +1280,19 @@ function updateBar(){
 
 /* ---------- folha ---------- */
 function checks(){
-  const ps = S.paras.map(p => (p || '').trim()), all = ps.join(' '), low = all.toLowerCase(), lines = estLines();
-  const con = CONECTIVOS.filter(c => low.includes(c)).map(c => c.replace(/,$/,''));
+  const ps = S.paras.map(p => (p || '').trim());
+  if(C && typeof C.checks === 'function'){
+    try{ return C.checks(Object.assign({}, H, {paras: ps, titulo: S.tituloTexto || '', linhas: estLines()})) || []; }catch(e){ return []; }
+  }
+  const all = ps.join(' '), low = all.toLowerCase(), lines = estLines(), ck = (C && C.checagem) || {};
+  const con = CONECTIVOS.filter(c => temExpr(low, c)).map(c => c.replace(/,$/,''));
   const ab = (all.match(ABREV) || []).map(x => x.toLowerCase());
   const acho = /\beu acho\b/i.test(all);
   return [
     {id:'paras',ok:ps.every(Boolean),t:'Tem 4 parágrafos',d:'Introdução, 2 argumentos e conclusão.'},
     {id:'tam',ok:lines >= 8 && lines <= 30,t:'Tamanho certo',d:lines < 8 ? 'Está curto. No ENEM, redação com 7 linhas ou menos vale zero.' : lines > 30 ? 'Passou de 30 linhas. Corte o que estiver repetido.' : `Cerca de ${lines} linhas. O ENEM aceita de 8 a 30.`},
-    {id:'tema',ok:/leitor|leitura|\bler\b|livro/i.test(ps[0] || ''),t:'A introdução fala do tema',d:'Use as palavras “leitura” ou “leitores” já no 1º parágrafo.'},
-    {id:'rep',ok:REPRX.test(all),t:'Usa repertório',d:'Um dado, uma lei ou uma frase famosa.'},
+    {id:'tema',ok:!!(ck.temaRegex && ck.temaRegex.test(ps[0] || '')),t:'A introdução fala do tema',d:ck.temaDica || 'Use palavras do tema já no 1º parágrafo.'},
+    {id:'rep',ok:!!(ck.repRegex && ck.repRegex.test(all)),t:'Usa repertório',d:'Um dado, uma lei ou uma frase famosa.'},
     {id:'arg',ok:!!(ps[1] && ps[2]),t:'Tem 2 argumentos',d:'Um motivo em cada parágrafo do meio.'},
     {id:'con',ok:con.length >= 4,t:'Usa palavras de ligação',d:`Você usou ${con.length}${con.length ? ': ' + con.slice(0,6).join(', ') : ''}. Use pelo menos 4 diferentes.`},
     {id:'prop',ok:!!(propSentence() && blockText('c_detalhe') && ps[3]),t:'Solução com 5 elementos',d:'Quem, o quê, como, para quê e um detalhe.'},
@@ -1239,15 +1300,15 @@ function checks(){
   ];
 }
 function checksHTML(ch){
-  const by = id => ch.find(x => x.id === id).ok;
+  const by = id => { const x = ch.find(y => y.id === id); return !!(x && x.ok); };
   const comps = [['C1','Escrita formal',by('formal')],['C2','Tema e repertório',by('tema') && by('rep')],['C3','Argumentos',by('paras') && by('arg')],['C4','Palavras de ligação',by('con')],['C5','Solução',by('prop')]];
   return `
   <h3>Confira antes de entregar</h3>
-  <p class="tip">O ENEM corrige 5 competências, e cada uma vale até 200 pontos. Isto não é a sua nota: é uma lista para você revisar.</p>
-  <div class="comps">${comps.map(([c,t,ok]) => `<div class="comp ${ok ? 'ok' : ''}"><b>${c}</b><span>${t}</span><span class="st">${ok ? 'Tudo certo' : 'Revisar'}</span></div>`).join('')}</div>
+  ${ehDissert() ? `<p class="tip">O ENEM corrige 5 competências, e cada uma vale até 200 pontos. Isto não é a sua nota: é uma lista para você revisar.</p>
+  <div class="comps">${comps.map(([c,t,ok]) => `<div class="comp ${ok ? 'ok' : ''}"><b>${c}</b><span>${t}</span><span class="st">${ok ? 'Tudo certo' : 'Revisar'}</span></div>`).join('')}</div>` : '<p class="tip">Isto não é a sua nota: é uma lista para você revisar o texto.</p>'}
   <ul class="checks">${ch.map(x => `<li><span class="ic ${x.ok ? 'ok' : 'no'}" aria-hidden="true">${x.ok ? ICON.checkSm : '!'}</span><span><b>${x.t}</b><br><span class="fine">${esc(x.d)}</span></span></li>`).join('')}</ul>
   <h3>Revise você mesmo</h3>
-  <div class="opts">${REVS.map(([k,t]) => `<button class="opt ${S.rev[k] ? 'ok' : ''}" data-act="rev" data-r="${k}" aria-pressed="${!!S.rev[k]}"><span class="k">${S.rev[k] ? ICON.checkSm : ''}</span><span>${t}</span></button>`).join('')}</div>`;
+  <div class="opts">${revs().map(([k,t]) => `<button class="opt ${S.rev[k] ? 'ok' : ''}" data-act="rev" data-r="${k}" aria-pressed="${!!S.rev[k]}"><span class="k">${S.rev[k] ? ICON.checkSm : ''}</span><span>${t}</span></button>`).join('')}</div>`;
 }
 function meterHTML(l){
   const max = 34, pct = v => Math.min(100, v / max * 100), bad = l < 8 || l > 30;
@@ -1256,36 +1317,39 @@ function meterHTML(l){
     <span class="tick" style="left:${pct(8)}%"><span>8</span></span><span class="tick" style="left:${pct(30)}%"><span>30</span></span></div>`;
 }
 function folhaHTML(){
-  const all = FASES.every(f => S.done[f.id]);
+  const all = FASES.every(f => S.done[f.id]), ob = OB(), temTitulo = !!(C.tituloBloco || C.tituloFixo);
   return `
-  <div class="stack"><p class="eyebrow">${all ? 'Missão cumprida' : 'Folha de redação'}</p><h2>Sua redação está aqui</h2>
+  <div class="stack"><p class="eyebrow">${all ? 'Missão cumprida' : esc(C.folhaTitulo || 'Folha')}</p><h2>${ob.sua} está aqui</h2>
     <p class="tip">Leia tudo de novo. Você pode mudar qualquer palavra direto na folha.</p>
-    ${canSpeak ? `<button class="ouvir" data-act="speak-folha">${ICON.speak}<span>Ouvir minha redação</span></button>` : ''}</div>
+    ${canSpeak ? `<button class="ouvir" data-act="speak-folha">${ICON.speak}<span>Ouvir ${ob.minha}</span></button>` : ''}</div>
   <div class="folha">
-    <div class="folha-h"><span class="t">Redação · ENEM treineiro</span><span class="n">${esc(S.nome)}${S.turma ? ' · ' + esc(S.turma) : ''}</span></div>
-    ${S.paras.map((p,i) => `<label class="sr" for="fp-${i}">${PARA_NOME[i]}</label><textarea id="fp-${i}" data-folha="${i}" rows="2" placeholder="${PARA_NOME[i]}: conclua a fase para preencher.">${esc(p)}</textarea>`).join('')}
+    <div class="folha-h"><span class="t">${esc(C.folhaCabecalho || C.genero)}</span><span class="n">${esc(S.nome)}${S.turma ? ' · ' + esc(S.turma) : ''}</span></div>
+    ${temTitulo ? `<label class="sr" for="fp-titulo">Título</label><input class="titulo-in" id="fp-titulo" data-titulo="1" value="${esc(S.tituloTexto)}" placeholder="Título" ${C.tituloFixo ? 'readonly' : ''}>` : ''}
+    ${PARTES.map((pt,i) => `<label class="sr" for="fp-${i}">${esc(PARA_NOME[i])}</label><textarea id="fp-${i}" class="${ehVerso() ? 'verso' : ''}" data-folha="${i}" rows="2" placeholder="${esc(PARA_NOME[i])}: conclua a fase para preencher.">${esc(S.paras[i] || '')}</textarea>`).join('')}
   </div>
-  <div class="stack tight" id="medidor">${meterHTML(estLines())}</div>
+  ${ehDissert() ? `<div class="stack tight" id="medidor">${meterHTML(estLines())}</div>` : ''}
   <section class="stack" id="checks">${checksHTML(checks())}</section>
   <div class="card">
     <h3>Entregar para o professor</h3>
-    <p>${all && !cacheMeta.pendente ? '<b>Sua redação já está com o professor.</b> Ela foi salva na nuvem.' : 'Sua redação vai para o professor sozinha quando estiver salva (veja o aviso “Salvo” no alto da tela).'}</p>
-    <p class="fine">Se o professor pedir, toque em <b>Copiar redação</b> e cole onde ele indicar (por exemplo, no Google Sala de Aula).</p>
-    <p class="fine">No ENEM de verdade, não escreva o seu nome no texto: redação assinada vale zero. Aqui o nome aparece só para o professor saber de quem é.</p>
+    <p>${all && !cacheMeta.pendente ? `<b>${ob.sua} já está com o professor.</b> Foi salv${ob.pronta === 'pronto' ? 'o' : 'a'} na nuvem.` : `${ob.sua} vai para o professor sozinh${ob.pronta === 'pronto' ? 'o' : 'a'} quando estiver salv${ob.pronta === 'pronto' ? 'o' : 'a'} (veja o aviso “Salvo” no alto da tela).`}</p>
+    <p class="fine">Se o professor pedir, toque em <b>Copiar texto</b> e cole onde ele indicar (por exemplo, no Google Sala de Aula).</p>
+    ${ehDissert() ? '<p class="fine">No ENEM de verdade, não escreva o seu nome no texto: redação assinada vale zero. Aqui o nome aparece só para o professor saber de quem é.</p>' : ''}
     <div id="copybox" class="stack tight" hidden><label for="copy-ta" class="tip">Não deu para copiar sozinho. Selecione todo o texto abaixo e copie:</label><textarea id="copy-ta" class="in" rows="8" readonly></textarea></div>
   </div>
   <div class="row"><button class="btn danger" data-act="reset">Apagar tudo e recomeçar</button></div>
-  <div id="resetbox" class="card" hidden><p><b>Tem certeza?</b> Isso apaga a sua redação e os seus pontos neste aparelho.</p>
+  <div id="resetbox" class="card" hidden><p><b>Tem certeza?</b> Isso apaga ${ob.sua.toLowerCase()} e os seus pontos desta atividade.</p>
     <div class="row"><button class="btn danger" data-act="reset-yes">Sim, apagar</button><button class="btn" data-act="reset-no">Não, manter</button></div></div>`;
 }
 function refreshChecks(){
   const c = $('#checks'); if(c) c.innerHTML = checksHTML(checks());
-  const m = $('#medidor'); if(m) m.innerHTML = meterHTML(estLines());
+  const m = $('#medidor'); if(m && ehDissert()) m.innerHTML = meterHTML(estLines());
 }
 function grow(ta){ ta.style.height = 'auto'; const lh = 32; ta.style.height = Math.max(lh * 2, Math.ceil(ta.scrollHeight / lh) * lh) + 'px'; }
 function fullText(){
-  const head = [`Nome: ${SESS ? SESS.nome : S.nome}`, (SESS ? SESS.turma : S.turma) ? `Turma: ${SESS ? SESS.turma : S.turma}` : null, `Tema: ${TEMA}`].filter(Boolean).join('\n');
-  return head + '\n\n' + S.paras.map(p => (p || '').trim()).filter(Boolean).join('\n\n');
+  const head = [`Nome: ${SESS ? SESS.nome : S.nome}`, (SESS ? SESS.turma : S.turma) ? `Turma: ${SESS ? SESS.turma : S.turma}` : null,
+    C ? `Atividade: ${C.rotulo} · ${C.genero}` : null, `Tema: ${TEMA}`].filter(Boolean).join('\n');
+  const corpo = S.paras.map(p => (p || '').trim()).filter(Boolean).join('\n\n');
+  return head + '\n\n' + (S.tituloTexto ? S.tituloTexto + '\n\n' : '') + corpo;
 }
 function copyAll(){
   const txt = fullText();
@@ -1297,23 +1361,30 @@ function copyAll(){
   };
   try{
     if(!navigator.clipboard || !navigator.clipboard.writeText) return fallback();
-    navigator.clipboard.writeText(txt).then(() => toast('Redação copiada! Agora cole onde o professor pediu.'), fallback);
+    navigator.clipboard.writeText(txt).then(() => toast('Texto copiado! Agora cole onde o professor pediu.'), fallback);
   }catch(e){ fallback(); }
 }
 
 /* ---------- render ---------- */
 function renderTop(){
+  const em = !!(SESS && C);
   $('#xp-n').textContent = S.xp;
   $('#xp-l').textContent = levelName(S.xp);
+  document.querySelector('.xp').hidden = !em;
+  const bag = document.querySelector('.bagbtn');
+  bag.hidden = !em || !REP_ORDER.length;
   $('#bag-n').textContent = `${REP_ORDER.filter(r => S.rep[r]).length}/${REP_ORDER.length}`;
-  $('#prog').innerHTML = FASES.map(f => `<i class="${S.done[f.id] ? 'on' : f.id === S.screen ? 'now' : ''}"></i>`).join('');
+  $('#prog').innerHTML = em ? FASES.map(f => `<i class="${S.done[f.id] ? 'on' : f.id === S.screen ? 'now' : ''}"></i>`).join('') : '';
+  $('#prog').style.gridTemplateColumns = `repeat(${Math.max(FASES.length, 1)},1fr)`;
 }
 function setBarH(){
   const b = $('#bar');
   document.documentElement.style.setProperty('--barh', (b.hidden ? 0 : b.offsetHeight) + 'px');
 }
 function integridade(){
-  if(S.done.causas && (S.causas.length !== 2 || S.causas[0] === S.causas[1])) S.done.causas = false;
+  while(S.paras.length < PARTES.length) S.paras.push('');
+  if(S.paras.length > PARTES.length) S.paras.length = PARTES.length;
+  if(ehDissert() && S.done.causas && (S.causas.length !== 2 || S.causas[0] === S.causas[1])) S.done.causas = false;
   FASES.forEach(f => {
     if(!S.done[f.id]) return;
     const ok = f.steps.every(st => st.t === 'causas' ? S.causas.length === 2 : stepValid(st));
@@ -1323,24 +1394,29 @@ function integridade(){
     if(typeof f.para !== 'number' || S.edited[f.para]) return;
     S.paras[f.para] = S.done[f.id] ? compose(f.para) : '';
   });
+  if(C && C.tituloFixo) S.tituloTexto = C.tituloFixo;
+  else if(C && C.tituloBloco) S.tituloTexto = S.tituloEd != null ? S.tituloEd : blockText(C.tituloBloco).replace(/[.]$/, '');
+  else S.tituloTexto = '';
 }
 function render(){
   stopSpeak();
   let html = '', bar = null;
   if(!SESS) S.screen = 'entrar';
+  else if(!C) S.screen = 'atividades';
   else {
     integridade();
     const st = curStep();
     if(!(st && st.t === 'causas')) S.causasTmp = null;
-    if(S.screen === 'entrar') S.screen = 'home';
+    if(S.screen === 'entrar' || S.screen === 'atividades') S.screen = 'home';
   }
-  if(S.screen === 'folha' && !S.done.concl) S.screen = 'home';
-  if(!['home','folha','entrar'].includes(S.screen) && curFase() < 0) S.screen = 'home';
+  if(S.screen === 'folha' && !fimOk()) S.screen = 'home';
+  if(!['home','folha','entrar','atividades'].includes(S.screen) && curFase() < 0) S.screen = 'home';
   if(S.screen === 'entrar') html = entrarHTML();
+  else if(S.screen === 'atividades') html = atividadesHTML();
   else if(S.screen === 'home') html = homeHTML();
   else if(S.screen === 'folha'){
     html = folhaHTML();
-    bar = `<button class="btn ghost" data-act="home">${ICON.left}Trilha</button><p class="hint"></p><button class="btn primary next" data-act="copy">${ICON.copy}Copiar redação</button>`;
+    bar = `<button class="btn ghost" data-act="home">${ICON.left}Trilha</button><p class="hint"></p><button class="btn primary next" data-act="copy">${ICON.copy}Copiar texto</button>`;
   } else {
     const fi = curFase();
     html = faseHTML(fi); bar = faseBar(fi);
@@ -1373,14 +1449,14 @@ function pickOpt(k){
   const m = mOf(st.id), first = m.o == null;
   m.o = k; render();
   if(k === -1){ const t = document.querySelector('textarea[data-mc]'); if(t) t.focus(); }
-  else if(first) toast('Frase colocada na sua redação!');
+  else if(first) toast(ehVerso() ? 'Verso colocado no seu poema!' : `Frase colocada ${OB().sua === 'Seu texto' ? 'no seu texto' : (OB().sua.startsWith('Sua') ? 'na sua ' : 'no seu ') + OB().o}!`);
 }
 
 /* ---------- ações ---------- */
 function openTarget(f){
   if(!SESS) return;
   avisoSenha = ''; sairAviso = false;
-  if(f === 'folha'){ if(!S.done.concl) return; S.screen = 'folha'; return go(); }
+  if(f === 'folha'){ if(!fimOk()) return; S.screen = 'folha'; return go(); }
   const i = FASES.findIndex(x => x.id === f);
   if(i < 0 || !(S.done[f] || available(i))) return;
   const last = FASES[i].steps.length - 1;
@@ -1466,7 +1542,7 @@ function openBag(){
 }
 function closeBag(){ $('#bag').hidden = true; }
 
-const GUARD = new Set(['next','back','causa','opt','con','ans','abertura','prop','open','home','entrar','sair']);
+const GUARD = new Set(['next','back','causa','opt','con','ans','abertura','prop','open','home','entrar','sair','ativ','atividades','esco']);
 let lastTap = 0, lastAct = '';
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if(!b) return;
@@ -1474,10 +1550,15 @@ document.addEventListener('click', e => {
   if(GUARD.has(a)){ const t = Date.now(); if(a === lastAct && t - lastTap < 450) return; lastTap = t; lastAct = a; }
   switch(a){
     case 'entrar': entrar(); break;
+    case 'serie': LF.turma = b.dataset.k; document.querySelectorAll('.serie').forEach(x => { const on = x.dataset.k === LF.turma; x.classList.toggle('sel', on); x.setAttribute('aria-checked', on); }); break;
+    case 'turmas-recarregar': turmasErro = false; TURMAS = null; render(); break;
     case 'sair': sair(false); break;
     case 'sair-forcar': sair(true); break;
     case 'open': openTarget(b.dataset.f); break;
-    case 'home': closeBag(); S.screen = 'home'; go(); break;
+    case 'home': closeBag(); if(C) S.screen = 'home'; go(); break;
+    case 'ativ': abrirAtividade(b.dataset.a); break;
+    case 'atividades': trocarAtividade(); break;
+    case 'esco': escolher(b.dataset.k, b.dataset.v); break;
     case 'next': next(); break;
     case 'back': back(); break;
     case 'ans': answer(b.dataset.q, +b.dataset.k); break;
@@ -1489,13 +1570,13 @@ document.addEventListener('click', e => {
     case 'gloss': showGloss(b); break;
     case 'easy': S.easy = b.dataset.v === '1'; render(); break;
     case 'speak': { const el = document.getElementById(b.dataset.t); if(el) speakText(b, el.innerText); break; }
-    case 'speak-folha': speakText(b, S.paras.filter(Boolean).join(' ')); break;
+    case 'speak-folha': speakText(b, [S.tituloTexto].concat(S.paras).filter(Boolean).join('. ')); break;
     case 'bag': openBag(); break;
     case 'bag-close': closeBag(); break;
     case 'copy': copyAll(); break;
     case 'reset': { const r = $('#resetbox'); r.hidden = false; r.scrollIntoView({block:'center'}); break; }
     case 'reset-no': $('#resetbox').hidden = true; break;
-    case 'reset-yes': S = merge(null); if(SESS){ S.nome = SESS.nome; S.turma = SESS.turma; } S.screen = 'home'; go(); syncNow(); toast('Tudo apagado. Pode começar de novo!'); break;
+    case 'reset-yes': S = merge(null); if(SESS){ S.nome = SESS.nome; S.turma = SESS.turma; } S.screen = 'home'; guardarAtual(); go(); syncNow(); toast('Tudo apagado. Pode começar de novo!'); break;
     case 'rev': S.rev[b.dataset.r] = !S.rev[b.dataset.r]; refreshChecks(); save(); break;
   }
 });
@@ -1505,10 +1586,11 @@ document.addEventListener('input', e => {
   else if(d.lf){ LF[d.lf] = t.value; }
   else if(d.pc){ S.prop['c_' + d.pc] = t.value; const pv = $('#prop-prev'); if(pv) pv.innerHTML = propPreviewHTML(); updateBar(); saveSoon(); }
   else if(d.folha != null){ S.paras[+d.folha] = t.value; S.edited[+d.folha] = true; grow(t); refreshChecks(); saveSoon(); }
+  else if(d.titulo != null && C && !C.tituloFixo){ S.tituloEd = t.value; S.tituloTexto = t.value; refreshChecks(); saveSoon(); }
 });
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape' && !$('#bag').hidden) closeBag();
-  if(e.key === 'Enter' && e.target && e.target.closest && e.target.closest('#in-nome, #in-turma, #in-pin')){ e.preventDefault(); entrar(); }
+  if(e.key === 'Enter' && e.target && e.target.closest && e.target.closest('#in-nome, #in-pin')){ e.preventDefault(); entrar(); }
 });
 document.addEventListener('visibilitychange', () => { if(document.hidden){ clearTimeout(saveT); save(); flushBeacon(); } else if(SESS) refreshFromServer(); });
 window.addEventListener('pagehide', () => { clearTimeout(saveT); save(); flushBeacon(); });
@@ -1518,6 +1600,7 @@ $('#bag').addEventListener('click', e => { if(e.target.id === 'bag') closeBag();
 window.addEventListener('resize', () => { setBarH(); document.querySelectorAll('textarea[data-folha]').forEach(grow); });
 
 /* ---------- início ---------- */
+if(SESS && G.atual) S.screen = S.screen || 'home';
 if(SESS && !cacheMeta.pendente) lastSent = JSON.stringify(snapshot());
 render();
 if(SESS) refreshFromServer();

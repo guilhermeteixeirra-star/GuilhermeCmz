@@ -7,6 +7,8 @@
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="color-scheme" content="light dark">
+<meta name="author" content="Professor Guilherme Camozzato Teixeira">
+<meta name="copyright" content="© 2026 Professor Guilherme Camozzato Teixeira">
 <title>Painel do professor · Missão Redação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,6 +125,7 @@ textarea.in{line-height:1.5;resize:vertical}
 .msg b{font-weight:800}
 .msg.longa{font-weight:400}
 .msg.longa b{font-weight:700}
+.pin-novo{display:inline-block;font-family:var(--f-display);font-weight:800;font-size:1.8em;letter-spacing:.18em;font-variant-numeric:tabular-nums;line-height:1.1;margin:4px 0 2px}
 
 /* entrada */
 .entrada{min-height:calc(100dvh - 200px);display:flex;align-items:center;justify-content:center}
@@ -170,11 +173,33 @@ textarea.in{line-height:1.5;resize:vertical}
 .sel select{min-height:44px;padding:6px 38px 6px 12px;border-radius:999px;font-size:.95rem;font-weight:700;width:auto;cursor:pointer}
 .sel svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink-soft)}
 
-/* barra de progresso (7 fases) */
+/* barra de progresso (um traço por fase; o número de fases vem da atividade) */
 .barra{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;width:100%;min-width:84px}
 .barra i{height:7px;border-radius:4px;background:var(--rule)}
 .barra i.on{background:var(--pen)}
 .barra.ok i.on{background:var(--ok)}
+
+/* autoria (igual ao jogo: logo como máscara, na cor do texto) */
+.logo{display:inline-block;flex:none;background-color:currentColor;-webkit-mask:url("/logo.svg") center / contain no-repeat;mask:url("/logo.svg") center / contain no-repeat}
+.brand .logo{width:30px;height:30px;color:var(--ink)}
+.autor{display:flex;align-items:center;gap:12px;color:var(--ink);min-width:0}
+.autor .logo{width:60px;height:60px}
+.autor small{display:block;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+.autor b{display:block;font-family:var(--f-display);font-weight:800;font-size:1.05rem;line-height:1.2;overflow-wrap:anywhere}
+.rodape{display:flex;align-items:center;justify-content:center;gap:10px;border-top:1px solid var(--rule);margin-top:36px;padding-top:16px;color:var(--ink-soft);font-size:.82rem;line-height:1.4;text-align:left}
+.rodape .logo{width:30px;height:30px;color:var(--ink-soft)}
+
+/* progresso por atividade (lista, turmas e detalhe) */
+.pas{display:flex;flex-direction:column;gap:7px;min-width:0}
+.pa{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:3px 10px;font-size:.88rem;line-height:1.3;min-width:0}
+.pa-r{font-weight:700;color:var(--ink);overflow-wrap:anywhere;min-width:0}
+.pa-r small{font-weight:400;color:var(--ink-soft);white-space:nowrap}
+.pa-s{white-space:nowrap;color:var(--ink-soft);font-weight:700;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:4px}
+.pa-s.ok{color:var(--ok)}
+.pa-s.nao{font-weight:400}
+.pa .barra{grid-column:1 / -1;min-width:0}
+.pa .barra i{height:5px}
+.pa-vazio{font-size:.88rem;color:var(--ink-soft)}
 
 /* etiquetas */
 .tags{display:flex;flex-wrap:wrap;gap:6px}
@@ -191,7 +216,8 @@ textarea.in{line-height:1.5;resize:vertical}
 .ca-fases{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 .ca-fases.ok{color:var(--ok)}
 .ca-fases svg{color:var(--ink-soft)}
-.ca .barra,.ca-meta,.ca .tags{grid-column:1 / -1}
+.ca .barra,.ca-meta,.ca .tags,.ca .pas{grid-column:1 / -1}
+.ca-seta{color:var(--ink-soft);display:grid;place-items:center}
 .ca-meta{font-size:.88rem;color:var(--ink-soft);overflow-wrap:anywhere}
 
 /* lista no computador/iPad: tabela */
@@ -205,10 +231,9 @@ textarea.in{line-height:1.5;resize:vertical}
 .tabela .c-nome{min-width:220px}
 .tabela .c-nome .tags{margin-top:4px}
 .nome-btn{background:none;border:0;padding:2px 0;font-weight:700;color:var(--ink);text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--rule);text-decoration-thickness:2px;text-underline-offset:4px;overflow-wrap:anywhere;border-radius:4px}
-.prog-cel{display:flex;align-items:center;gap:10px;min-width:150px}
-.prog-cel .barra{width:104px;flex:none}
-.prog-cel b{font-variant-numeric:tabular-nums;white-space:nowrap}
-.prog-cel b.ok{color:var(--ok)}
+.tabela .c-prog{min-width:250px;width:40%}
+.tabela .c-prog .pas{max-width:360px}
+.tabela .c-serie{white-space:nowrap}
 .quando{white-space:nowrap}
 
 .vazio-box{display:flex;flex-direction:column;gap:10px;align-items:flex-start;text-align:left}
@@ -242,6 +267,24 @@ textarea.in{line-height:1.5;resize:vertical}
 .folha-c .lbl{display:block;line-height:2rem;font-size:1rem}
 .folha-c p{text-indent:2em;white-space:pre-wrap;overflow-wrap:anywhere}
 .folha-c p.vazio{text-indent:0;color:var(--ink-soft);font-style:italic}
+.folha-c p.titulo-texto{text-indent:0;text-align:center;font-family:var(--f-display);font-weight:800;font-size:1.15rem;line-height:2rem}
+.folha-c.verso p{text-indent:0;white-space:normal}
+.folha-c .v{display:block;padding-left:1.4em;text-indent:-1.4em} /* um verso por linha; se quebrar, a continuação fica recuada */
+.fato .pa-r small{display:inline;font-size:inherit}
+
+/* detalhe: uma seção por atividade */
+.ativ-sec{display:flex;flex-direction:column;gap:12px;min-width:0;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 76px)}
+.ativ-sec + .ativ-sec{border-top:1px dashed var(--rule);padding-top:20px}
+.ativ-cab{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ativ-cab h2{overflow-wrap:anywhere}
+.ativ-tema{color:var(--ink-soft);font-size:.95rem;overflow-wrap:anywhere;max-width:70ch}
+.ativ-tema b{color:var(--ink);font-weight:700}
+.ativ-st{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.9rem;color:var(--ink-soft)}
+.ativ-st .barra{width:132px;min-width:0}
+.ativ-vazia{background:var(--sheet);border:1px dashed var(--rule);border-radius:12px;padding:12px 14px;color:var(--ink-soft)}
+.indice{display:flex;flex-wrap:wrap;gap:8px}
+.indice .chip{font-size:.88rem;gap:6px;padding:5px 12px}
+.indice .chip svg{color:var(--ok)}
 .copybox{display:flex;flex-direction:column;gap:10px}
 .copybox textarea{min-height:12rem}
 
@@ -259,6 +302,102 @@ textarea.in{line-height:1.5;resize:vertical}
 .toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 74px);transform:translate(-50%,-8px);z-index:30;background:var(--ink);color:var(--paper);font-weight:700;border-radius:999px;padding:10px 18px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+/* abas: Progresso | Turmas e alunos */
+.abas-wrap{margin-bottom:20px}
+.abas{display:inline-flex;gap:4px;background:var(--sheet);border:1px solid var(--rule);border-radius:999px;padding:4px;box-shadow:var(--shadow);max-width:100%}
+.aba{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:.98rem;color:var(--ink-soft);background:transparent;border:0;border-radius:999px;padding:8px 18px;min-height:44px;cursor:pointer;white-space:nowrap;min-width:0}
+.aba svg{flex:none}
+.aba[aria-current="page"]{background:var(--pen);color:var(--pen-ink)}
+@media (max-width:480px){.abas{display:flex}.aba{flex:1 1 0;padding-inline:8px}}
+@media (max-width:359px){.aba svg{display:none}}
+
+/* turmas e alunos: cartões das séries */
+.series{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+@media (max-width:560px){.series{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sc{display:flex;flex-direction:column;gap:7px;text-align:left;background:var(--sheet);border:2px solid var(--rule);border-radius:var(--r);padding:12px 14px 14px;box-shadow:var(--shadow);color:var(--ink);cursor:pointer;min-width:0}
+.sc[aria-pressed="true"]{border-color:var(--pen);box-shadow:inset 0 0 0 1px var(--pen),var(--shadow)}
+.sc-t{display:flex;align-items:center;justify-content:space-between;gap:6px;font-family:var(--f-display);font-weight:800;font-size:1.15rem;line-height:1.15;overflow-wrap:anywhere}
+.sc-t svg{flex:none;color:var(--pen)}
+.sc-n{font-size:.88rem;color:var(--ink-soft);line-height:1.35}
+.sc-n b{color:var(--ink);font-variant-numeric:tabular-nums}
+.sc-n b.ok{color:var(--ok)}
+.prop{display:flex;height:8px;border-radius:4px;background:var(--rule);overflow:hidden}
+.prop i{display:block;height:100%}
+.prop .c{background:var(--ok)}
+.prop .a{background:var(--pen)}
+.serie-cab{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
+.legenda{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.86rem;color:var(--ink-soft)}
+.legenda span{display:inline-flex;align-items:center;gap:6px}
+.legenda i{width:10px;height:10px;border-radius:3px;background:var(--rule);display:inline-block}
+.legenda i.c{background:var(--ok)}
+.legenda i.a{background:var(--pen)}
+
+/* lista da chamada */
+.chamada{list-style:none;margin:0;padding:0;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.chamada > li + li{border-top:1px solid var(--rule)}
+.ch{display:grid;grid-template-columns:1.9em minmax(0,1fr) 18px;grid-template-areas:"n nome seta" "n sit seta";column-gap:10px;row-gap:5px;align-items:center;width:100%;min-height:56px;padding:11px 14px;text-align:left;background:transparent;border:0;border-radius:0;color:var(--ink);font:inherit}
+button.ch{cursor:pointer}
+.ch-n{grid-area:n;align-self:start;font-variant-numeric:tabular-nums;font-weight:700;font-size:.86rem;color:var(--ink-soft);text-align:right;line-height:1.55}
+.ch-nome{grid-area:nome;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.ch-sit{grid-area:sit;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;min-width:0;font-size:.86rem;color:var(--ink-soft)}
+.ch-seta{grid-area:seta;color:var(--ink-soft);display:grid;place-items:center}
+.ch .barra{width:56px;min-width:0}
+.ch .barra i{height:6px}
+.ch-quando{white-space:nowrap}
+.sit{display:inline-flex;align-items:center;gap:4px;font-size:.8rem;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap;line-height:1.5}
+.sit svg{flex:none}
+.sit.nao{color:var(--ink-soft);background:var(--hl0)}
+.sit.fase{color:var(--hl-ink);background:var(--hl4)}
+.sit.ok{color:var(--ok);background:var(--ok-bg)}
+@media (min-width:760px){
+  .ch{grid-template-columns:2.4em minmax(0,1fr) minmax(0,400px) 18px;grid-template-areas:"n nome sit seta";padding:10px 18px;min-height:52px}
+  .coringa .ch{grid-template-columns:minmax(0,1fr) minmax(0,420px) 18px;grid-template-areas:"nome sit seta"}
+  .ch-n{align-self:center;line-height:1.3}
+  .ch-quando{margin-left:auto}
+  .ch .barra{width:84px}
+}
+.ativ-esc{display:flex;flex-direction:column;gap:8px}
+.ativ-esc .chip{font-size:.92rem}
+.sc-a{font-size:.8rem;font-weight:700;color:var(--pen);line-height:1.3;overflow-wrap:anywhere}
+.ch-sit .pas{flex:1 1 220px}
+.coringa{border-style:dashed}
+.coringa .chamada{box-shadow:none}
+.ch .pa .barra{width:auto}
+.coringa .ch{grid-template-columns:minmax(0,1fr) 18px;grid-template-areas:"nome seta" "sit seta";row-gap:8px}
+.coringa .ch-n{display:none}
+.coringa .ch-sit{flex-direction:column;align-items:stretch;gap:8px}
+.coringa .ch-sit .pas{flex:none}
+.coringa .ch-sit > .sit,.coringa .ch-sit > .tag{align-self:flex-start}
+.coringa .ch-quando{margin-left:0}
+.fora{display:flex;flex-direction:column;gap:10px}
+.fora .ch-n{color:var(--warn)}
+
+/* editar listas */
+.ed-series{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));align-items:start}
+.ed-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.ed-cab .btn{margin-right:-.3em;flex:none}
+textarea.ed-nomes{min-height:15rem;font-size:1rem;line-height:1.55}
+@media (min-width:760px){textarea.ed-nomes{white-space:pre;overflow-wrap:normal}}
+.ed-info{font-size:.92rem;color:var(--ink-soft);font-weight:700}
+.ed-info b{color:var(--ink);font-variant-numeric:tabular-nums}
+.ed-info .mais{color:var(--ok)}
+.ed-info .menos{color:var(--warn)}
+.ed-avisos{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.ed-avisos:empty{display:none}
+.ed-avisos li{font-size:.9rem;line-height:1.4;border-radius:10px;padding:7px 11px;background:var(--hl0);color:var(--ink);overflow-wrap:anywhere}
+.ed-avisos li.erro{background:var(--warn-bg);color:var(--warn);font-weight:700}
+.ed-serie.removida{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--paper);box-shadow:none;border:2px dashed var(--rule)}
+.ed-serie.com-erro{border-color:var(--warn)}
+.ed-acoes{display:flex;flex-wrap:wrap;gap:10px}
+.ed-barra{position:sticky;bottom:0;z-index:6;display:flex;align-items:center;gap:10px 14px;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:10px 12px 10px 16px;margin-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 18px rgb(22 33 58 / .12)}
+.ed-estado{flex:1;min-width:0;font-size:.9rem;font-weight:700;color:var(--ink-soft);line-height:1.3}
+.ed-estado.sujo{color:var(--warn)}
+.ed-barra .btn{flex:none}
+#ed-msg,#conf-listas,#conf-descartar{scroll-margin-bottom:110px;scroll-margin-top:84px}
+.ed-serie{scroll-margin-top:84px;scroll-margin-bottom:110px}
+.nomes-lista{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}
+.resumo-listas{margin:6px 0 0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-weight:400;overflow-wrap:anywhere}
+
 /* realce ao passar o mouse: só onde existe mouse (no toque ele "gruda") */
 @media (hover:hover){
   .tbtn:hover{border-color:var(--pen)}
@@ -272,6 +411,10 @@ textarea.in{line-height:1.5;resize:vertical}
   .ca:hover{border-color:var(--pen)}
   .tabela tbody tr:hover{background:var(--paper)}
   .nome-btn:hover{text-decoration-color:var(--pen)}
+  .aba:hover:not([aria-current="page"]){color:var(--ink);background:var(--paper)}
+  .sc:hover{border-color:var(--pen)}
+  button.ch:hover{background:var(--paper)}
+  button.ch:hover .ch-seta{color:var(--pen)}
 }
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
@@ -283,7 +426,7 @@ textarea.in{line-height:1.5;resize:vertical}
   <div class="wrap gutter">
     <div class="top-in">
       <button class="brand" type="button" data-act="inicio" aria-label="Missão Redação, painel do professor: ir para a lista de alunos">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 20l1.2-4.8L15.6 4.8a2.1 2.1 0 0 1 3 3L8.2 18.2 4 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13.6 6.8l3 3" stroke="currentColor" stroke-width="2"/></svg>
+        <span class="logo" aria-hidden="true"></span>
         <span class="nome-app">Missão Redação</span>
         <span class="papel">Professor</span>
       </button>
@@ -303,12 +446,27 @@ textarea.in{line-height:1.5;resize:vertical}
 </header>
 
 <main>
+  <!-- Abas (só na lista e em Turmas e alunos) -->
+  <nav class="wrap gutter abas-wrap" id="abas" aria-label="Partes do painel" hidden>
+    <div class="abas">
+      <button class="aba" type="button" data-act="aba" data-aba="">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 19h16M7 16V11M12 16V6M17 16v-3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span>Progresso</span>
+      </button>
+      <button class="aba" type="button" data-act="aba" data-aba="turmas">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg>
+        <span>Turmas e alunos</span>
+      </button>
+    </div>
+  </nav>
+
   <!-- Entrada -->
   <section class="view entrada wrap gutter" id="v-login" hidden aria-labelledby="login-titulo">
     <div class="card">
       <p class="eyebrow">Missão Redação</p>
       <h1 id="login-titulo" tabindex="-1">Painel do <span class="mark anim">professor</span></h1>
-      <p class="tip">Veja o progresso e as redações dos seus alunos.</p>
+      <div class="autor"><span class="logo" role="img" aria-label="Logo Guilherme Camozzato"></span><span><small>Criado por</small><b>Professor Guilherme Camozzato Teixeira</b></span></div>
+      <p class="tip">Veja o progresso e os textos dos seus alunos, atividade por atividade.</p>
       <p class="msg" id="login-msg" role="status" hidden></p>
       <form id="f-login" novalidate>
         <input class="sr" type="text" name="username" autocomplete="username" value="professor" tabindex="-1" aria-hidden="true" readonly>
@@ -327,10 +485,10 @@ textarea.in{line-height:1.5;resize:vertical}
     <div class="cab">
       <div class="stack tight">
         <p class="eyebrow">Painel do professor</p>
-        <h1 id="lista-titulo" tabindex="-1">Seus alunos</h1>
+        <h1 id="lista-titulo" tabindex="-1">Progresso dos alunos</h1>
       </div>
       <div class="cab-acao">
-        <button class="btn sm" type="button" data-act="atualizar" id="b-atualizar">
+        <button class="btn sm b-atualizar" type="button" data-act="atualizar" id="b-atualizar">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span>Atualizar</span>
         </button>
@@ -342,7 +500,7 @@ textarea.in{line-height:1.5;resize:vertical}
     <div class="stats" id="stats"></div>
 
     <div class="card">
-      <div class="chips" id="chips" role="group" aria-label="Filtrar por turma"></div>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por série"></div>
       <label class="busca" for="busca">
         <span class="sr">Buscar aluno pelo nome</span>
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
@@ -358,7 +516,7 @@ textarea.in{line-height:1.5;resize:vertical}
         </button>
         <button class="btn sm" type="button" data-act="copiar-todas" id="b-copiar-todas">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-          <span>Copiar redações da turma</span>
+          <span>Copiar textos da turma</span>
         </button>
       </div>
       <p class="fine" id="export-status" role="status"></p>
@@ -377,7 +535,7 @@ textarea.in{line-height:1.5;resize:vertical}
       <label class="ordem" for="ordem">Ordem
         <span class="sel">
           <select class="in" id="ordem">
-            <option value="turma">Turma e nome</option>
+            <option value="turma">Série e nome</option>
             <option value="progresso">Menos fases primeiro</option>
             <option value="atividade">Atividade mais recente</option>
           </select>
@@ -395,6 +553,46 @@ textarea.in{line-height:1.5;resize:vertical}
       <span class="url" id="url-jogo"></span>
       <button class="btn sm" type="button" data-act="copiar-link">Copiar link</button>
     </section>
+  </section>
+
+  <!-- Turmas e alunos -->
+  <section class="view wrap gutter" id="v-turmas" hidden aria-labelledby="turmas-titulo">
+    <div class="cab">
+      <div class="stack tight">
+        <p class="eyebrow">Painel do professor</p>
+        <h1 id="turmas-titulo" tabindex="-1">Turmas e alunos</h1>
+      </div>
+      <div class="cab-acao">
+        <button class="btn sm b-atualizar" type="button" data-act="atualizar">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Atualizar</span>
+        </button>
+        <button class="btn sm" type="button" data-act="editar-listas" id="b-editar-listas">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20l1.2-4.8L15.6 4.8a2.1 2.1 0 0 1 3 3L8.2 18.2 4 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span>Editar listas</span>
+        </button>
+        <p class="status" id="status-turmas" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="fine" id="turmas-fonte"></p>
+    <div id="turmas-conteudo" class="stack" style="gap:20px"></div>
+  </section>
+
+  <!-- Editar listas -->
+  <section class="view wrap gutter" id="v-editar" hidden aria-labelledby="editar-titulo">
+    <button class="btn ghost voltar" type="button" data-act="voltar">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Voltar para as turmas</span>
+    </button>
+    <div class="stack tight">
+      <p class="eyebrow">Turmas e alunos</p>
+      <h1 id="editar-titulo" tabindex="-1">Editar listas</h1>
+    </div>
+    <div class="stack tight">
+      <p class="tip">Escreva <b>um aluno por linha</b>, com nome e sobrenome, como na chamada. Pode colar a lista inteira. Acento e letra minúscula não fazem diferença: ao salvar, os nomes ficam em MAIÚSCULAS, sem acento e em ordem alfabética.</p>
+      <p class="tip">Só entra no jogo quem está na lista da série que escolheu.</p>
+    </div>
+    <div id="editar-conteudo" class="stack" style="gap:16px"></div>
   </section>
 
   <!-- Detalhe do aluno -->
@@ -436,10 +634,20 @@ textarea.in{line-height:1.5;resize:vertical}
       </form>
     </div>
   </section>
+
+  <div class="wrap gutter">
+    <footer class="rodape"><span class="logo" aria-hidden="true"></span><span>© 2026 Professor Guilherme Camozzato Teixeira.<br>Todos os direitos reservados.</span></footer>
+  </div>
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<!-- Atividades: as MESMAS do jogo (public/index.html). Se um arquivo faltar ou der erro, o painel continua. -->
+<script src="/atividades/leitores.js"></script>
+<script src="/atividades/cronica-olhar.js"></script>
+<script src="/atividades/poema-carpe-diem.js"></script>
+<script src="/atividades/justica-climatica.js"></script>
+<script src="/atividades/inseguranca-alimentar.js"></script>
 <script>
 (function(){
 'use strict';
@@ -448,10 +656,20 @@ textarea.in{line-height:1.5;resize:vertical}
 var LS_TOKEN = 'mr3:prof';
 var LS_TURMA = 'mr3:prof:turma';
 var LS_ORDEM = 'mr3:prof:ordem';
+var LS_DISP = 'mr3:prof:disp'; // marca deste aparelho: erros de outras pessoas não trancam o professor aqui
+var LS_SERIE = 'mr3:prof:serie';
+var OUTRAS = '~outras';        // filtro "Outras turmas" (cadastros de turmas que não estão nas listas); nunca é uma turmaKey
+var MAX_SERIES = 20, MAX_NOMES = 80, MAX_NOME = 90, MAX_LABEL = 40; // mesmos limites do servidor
 var MSG_REDE = 'Sem internet. Confira a conexão e tente de novo.';
 var MSG_SESSAO = 'Sua entrada expirou. Entre de novo com a senha do professor.';
-var PARA_NOME = ['Introdução', '1º argumento', '2º argumento', 'Conclusão'];
-var N_FASES = 7;
+var PARA_NOME = ['Introdução', '1º argumento', '2º argumento', 'Conclusão']; // dissertativo (e registros antigos)
+var N_FASES = 7;               // registros antigos, de antes das atividades
+var TESTE = '~teste';          // filtro "Perfil de teste" (perfil do professor); nunca é uma turmaKey
+var TURMA_TESTE = 'perfil-teste'; // turmaKey do perfil de teste (src/core.mjs)
+var ROTULO_TESTE = 'Perfil de teste';
+var LS_ATIV = 'mr3:prof:ativ'; // atividade escolhida em cada série (Turmas e alunos)
+var ATIV_ID = /^[a-z0-9][a-z0-9-]{0,39}$/;
+var MAX_ATIV = 12, MAX_PARTES = 8;
 var INTERVALO = 30000;
 var ID_RE = /^[a-z0-9-]+\/[a-z0-9-]+$/;
 
@@ -460,7 +678,10 @@ var ICON = {
   chev: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   copy: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
   key: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 12l8.5-8.5M16.5 6.5l2.5 2.5M14.5 8.5l2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
-  trash: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  trash: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  mais: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  lapis: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20l1.2-4.8L15.6 4.8a2.1 2.1 0 0 1 3 3L8.2 18.2 4 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  okSc: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7 12.5l3.3 3.3L17 9" fill="none" stroke="var(--sheet)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 };
 
 /* ---------- utilidades ---------- */
@@ -506,7 +727,133 @@ function textoEtapa(v){
   if (typeof v === 'number' && v > 0) return 'Passo ' + v;
   return '';
 }
-function nomeTurma(rot){ return /^\s*turma\b/i.test(rot) ? rot : 'Turma ' + rot; }
+function nomeTurma(rot){ return /(^|\s)(turma|s[ée]rie|ano)(\s|$)/i.test(rot) ? rot : 'Turma ' + rot; }
+
+/* ---------- nomes da lista e chaves das séries (mesma regra do servidor, src/core.mjs) ---------- */
+function reOu(fonte, flags, reserva){ try { return new RegExp(fonte, flags); } catch (e) { return reserva; } }
+var RE_MARCAS = reOu('\\p{M}', 'gu', /[̀-ͯ᪰-᫿᷀-᷿⃐-⃿︠-︯]/g);
+var RE_CONTROLE = reOu('[\\p{Cc}\\p{Cf}]', 'gu', /[\u0000-\u001f\u007f-\u009f­؜​-‏‪-‮⁠-⁤﻿]/g);
+function tem(o, k){ return Object.prototype.hasOwnProperty.call(o, k); }
+/* NFKC → NFD → sem acentos → MAIÚSCULAS → o que não é A–Z vira espaço → espaços colapsados */
+function nomeLista(v){
+  if (typeof v !== 'string') return '';
+  return v.slice(0, 1000).normalize('NFKC').normalize('NFD').replace(RE_MARCAS, '').toUpperCase()
+    .replace(/[^A-Z ]+/g, ' ').replace(/ {2,}/g, ' ').trim();
+}
+/* id do cadastro de um nome da lista: "<chave da série>/<nome em minúsculas com - no lugar dos espaços>" */
+function idDaLista(key, nome){ return key + '/' + nome.toLowerCase().replace(/ /g, '-'); }
+function limparRotulo(s){ return String(s == null ? '' : s).normalize('NFC').replace(/\s+/g, ' ').replace(RE_CONTROLE, '').replace(/ {2,}/g, ' ').trim(); }
+var ORDINAIS = {primeiro: '1', primeira: '1', segundo: '2', segunda: '2', terceiro: '3', terceira: '3'};
+var IGNORADAS = {serie: 1, ano: 1, turma: 1, do: 1, da: 1, de: 1, em: 1, ensino: 1, medio: 1};
+/* chave da série ("1ª Série" → "1"), igual a normalizarTurma(label).turmaKey do servidor */
+function chaveSerie(label){
+  var base = limparRotulo(label).toLowerCase().replace(/[ºª°˚]/g, ' ').normalize('NFD').replace(RE_MARCAS, '');
+  var partes = base.split(/[^a-z0-9]+/).filter(Boolean)
+    .map(function(p){ return tem(ORDINAIS, p) ? ORDINAIS[p] : p; })
+    .map(function(p){ return /\d/.test(p) ? p.replace(/serie|ano|turma/g, '') : p; })
+    .filter(function(p){ return p && !tem(IGNORADAS, p); });
+  if (partes.length >= 2 && /^\d+[ao]$/.test(partes[0])) partes = [partes[0].slice(0, -1)].concat(partes.slice(1));
+  return partes.join('').replace(/[^a-z0-9]/g, '').slice(0, 24);
+}
+/* Uma linha da caixa de texto → nome da lista. Tira o título da série colado junto
+   ("1ª Série: Ana Souza" → "ANA SOUZA"; a linha "1ª Série" sozinha some) e o número da chamada ("1º Ana"). */
+var RE_TITULO = /^\s*\d{1,2}\s*[ªº°]?\s*\.?\s*(s[ée]rie|ano|turma)\b(.*)$/i;
+function linhaParaNome(linha){
+  var s = String(linha), titulo = false;
+  var i = s.indexOf(':'), m;
+  if (i >= 0 && /\d/.test(s.slice(0, i))) { s = s.slice(i + 1); titulo = true; }
+  else if ((m = RE_TITULO.exec(s))) {
+    var resto = m[2], j = resto.search(/[\-–—]/);
+    if (j >= 0) s = resto.slice(j + 1);
+    else if (nomeLista(resto).length <= 1) return {nome: '', titulo: true};
+    else s = resto;
+    titulo = true;
+  }
+  s = s.replace(/^\s*\d+\s*[ªº°]?\s*[.)\-–—]?\s+/, '');
+  return {nome: nomeLista(s), titulo: titulo};
+}
+
+/* ---------- atividades: o catálogo vem dos MESMOS arquivos /atividades/*.js do jogo ---------- */
+/* Tudo o que vem dos arquivos de atividade é tratado como texto (escapado ao mostrar). Um arquivo que
+   faltou ou deu erro só fica de fora: o painel continua, e os textos dos alunos aparecem com os dados salvos. */
+function linha(v, max){
+  if (typeof v === 'number' && isFinite(v)) v = String(v);
+  return typeof v === 'string' ? v.replace(/\s+/g, ' ').replace(RE_CONTROLE, '').trim().slice(0, max) : '';
+}
+function inteiro(v, max){ return typeof v === 'number' && isFinite(v) ? Math.min(max, Math.max(0, Math.round(v))) : 0; }
+function lerCatalogo(){
+  var lista = [];
+  try { if (Array.isArray(window.ATIVIDADES)) lista = window.ATIVIDADES.slice(); } catch (e) {}
+  var vistos = new Set(), out = [];
+  lista.forEach(function(a){
+    try {
+      if (!a || typeof a !== 'object' || typeof a.id !== 'string' || !ATIV_ID.test(a.id) || vistos.has(a.id)) return;
+      var partes = Array.isArray(a.partes) ? a.partes : (a.tipo === 'dissertativo' ? PARA_NOME.map(function(n){ return {campo: n}; }) : []);
+      out.push({
+        id: a.id, serie: linha(a.serie, 4), ordem: Number(a.ordem) || 0,
+        rotulo: linha(a.rotulo, 40) || a.id, genero: linha(a.genero, 60), tema: linha(a.tema, 300),
+        total: Array.isArray(a.fases) ? Math.min(a.fases.length, 99) : 0,
+        verso: a.juntar === 'verso',
+        nomesPartes: partes.slice(0, MAX_PARTES).map(function(x){ return linha(x && (x.campo || x.nome), 60); })
+      });
+      vistos.add(a.id);
+    } catch (e) { /* atividade com problema: fica de fora */ }
+  });
+  return ordenarInfos(out);
+}
+function numSerie(s){ var n = parseInt(s, 10); return isFinite(n) ? n : 999; }
+function ordenarInfos(l){
+  return l.sort(function(x, y){ return numSerie(x.serie) - numSerie(y.serie) || coll.compare(x.serie, y.serie) || x.ordem - y.ordem || coll.compare(x.rotulo, y.rotulo) || coll.compare(x.id, y.id); });
+}
+var CATALOGO = lerCatalogo();
+var CAT = new Map(CATALOGO.map(function(a){ return [a.id, a]; }));
+function atividadesDaSerie(key){ return CATALOGO.filter(function(a){ return a.serie === key; }); }
+function generoCurto(g){ var m = /^[^\s-]+/.exec(g || ''); return m ? m[0] : ''; }
+function nomeAtiv(i){ return i.rotulo + (i.genero ? ' · ' + generoCurto(i.genero) : ''); }
+/* Dados de uma atividade para mostrar: o catálogo (os arquivos do jogo) vale sempre que a atividade está nele;
+   o que veio salvo nos textos (mandado pelo celular do aluno) só preenche o que o catálogo não tem. */
+function infoAtiv(id, t){
+  var c = CAT.get(id) || null;
+  var nomesC = c && c.nomesPartes.some(Boolean) ? c.nomesPartes : null;
+  var nomesT = t && t.nomesPartes.some(Boolean) ? t.nomesPartes : null;
+  return {
+    id: id, noCatalogo: !!c,
+    serie: (c && c.serie) || (t && t.serie) || '',
+    ordem: c ? c.ordem : 999,
+    rotulo: (c && c.rotulo) || (t && t.rotulo) || id,
+    genero: (c && c.genero) || (t && t.genero) || '',
+    tema: (c && c.tema) || (t && t.tema) || '',
+    total: (c && c.total) || (t && t.total) || 0,
+    verso: c ? c.verso : !!(t && t.verso),
+    nomesPartes: nomesC || nomesT || []
+  };
+}
+function limparAtividades(l){
+  if (!Array.isArray(l)) return [];
+  var vistos = new Set(), out = [];
+  l.forEach(function(x){
+    if (out.length >= MAX_ATIV || !x || typeof x.id !== 'string' || !ATIV_ID.test(x.id) || vistos.has(x.id)) return;
+    vistos.add(x.id);
+    out.push({id: x.id, fases: inteiro(x.fases, 99), total: inteiro(x.total, 99), concluiu: x.concluiu === true, temTexto: x.temTexto === true});
+  });
+  return out;
+}
+/* textos do detalhe ({id: texto}) → lista [{id, ...}] (null = ainda não veio) */
+function limparTextos(o){
+  if (!o || typeof o !== 'object' || Array.isArray(o)) return null;
+  var out = [];
+  Object.keys(o).forEach(function(id){
+    var t = o[id];
+    if (out.length >= MAX_ATIV || !ATIV_ID.test(id) || !t || typeof t !== 'object' || Array.isArray(t)) return;
+    out.push({
+      id: id, rotulo: linha(t.rotulo, 40), genero: linha(t.genero, 60), tema: linha(t.tema, 300), serie: linha(t.serie, 4), titulo: linha(t.titulo, 200),
+      partes: (Array.isArray(t.partes) ? t.partes : []).slice(0, MAX_PARTES).map(function(x){ return typeof x === 'string' ? x.replace(/\r\n?/g, '\n') : ''; }),
+      nomesPartes: (Array.isArray(t.nomesPartes) ? t.nomesPartes : []).slice(0, MAX_PARTES).map(function(n){ return linha(n, 60); }),
+      verso: t.verso === true, fases: inteiro(t.fases, 99), total: inteiro(t.total, 99), concluiu: t.concluiu === true, xp: inteiro(t.xp, 1e9)
+    });
+  });
+  return out;
+}
 
 /* ---------- estado ---------- */
 var token = ls.get(LS_TOKEN) || '';
@@ -519,7 +866,24 @@ var busca = '';
 var ordem = ls.get(LS_ORDEM) || 'turma';
 if (['turma', 'progresso', 'atividade'].indexOf(ordem) < 0) ordem = 'turma';
 var rotulos = new Map();     // turmaKey -> rótulo exibido
-var detalhes = new Map();    // id -> {atualizadoEm, paras}
+var series = null;           // lista oficial {fonte, turmas:[{key, label, alunos:[nomes]}]} (null = ainda não veio)
+var erroSeries = '';
+var chavesOficiais = new Set(); // chaves das séries da lista
+var idsLista = new Set();       // ids de cadastro de todos os nomes da lista
+var filtroSerie = ls.get(LS_SERIE) || '';
+var filtroSit = 'todos';     // todos | nao | andamento | concluiu
+var filtroAtiv = (function(){ // chave da série -> id da atividade escolhida em Turmas e alunos
+  var m = new Map();
+  try { var o = JSON.parse(ls.get(LS_ATIV) || '{}'); Object.keys(o).forEach(function(k){ if (typeof o[k] === 'string' && ATIV_ID.test(o[k])) m.set(k, o[k]); }); } catch (e) {}
+  return m;
+})();
+var rascunho = null;         // edição das listas ainda não salva
+var uidSerie = 0;
+var pendenteListas = null;   // listas lidas, esperando a confirmação na página
+var salvandoListas = false;
+var avisosT = 0;
+var scrolls = {};
+var detalhes = new Map();    // id -> {atualizadoEm, textos} (textos do detalhe, para a planilha e "Copiar textos")
 var view = '';
 var alunoAberto = '';
 var alunoDados = null;
@@ -590,22 +954,34 @@ function limparAluno(x){
     temRedacao: !!x.temRedacao,
     semSenha: !!x.semSenha,
     bloqueado: !!x.bloqueado,
+    coringa: x.coringa === true || String(x.turmaKey || '') === TURMA_TESTE,
+    atividades: limparAtividades(x.atividades),
     criadoEm: n(x.criadoEm) || null,
     atualizadoEm: n(x.atualizadoEm) || null,
-    paras: Array.isArray(x.paras) ? [0, 1, 2, 3].map(function(i){ return typeof x.paras[i] === 'string' ? x.paras[i] : ''; }) : null
+    paras: Array.isArray(x.paras) ? [0, 1, 2, 3].map(function(i){ return typeof x.paras[i] === 'string' ? x.paras[i] : ''; }) : null,
+    textos: limparTextos(x.textos)
   };
 }
 
 /* ---------- navegação ---------- */
 function mostrarView(v){
   if (view === 'lista' && v !== 'lista') scrollLista = window.scrollY || 0;
+  if (view && view !== v) scrolls[view] = window.scrollY || 0;
   view = v;
-  ['login', 'lista', 'aluno', 'senha'].forEach(function(n){ $('#v-' + n).hidden = n !== v; });
+  ['login', 'lista', 'turmas', 'editar', 'aluno', 'senha'].forEach(function(n){ $('#v-' + n).hidden = n !== v; });
   $('#top-acoes').hidden = v === 'login';
+  var comAbas = v === 'lista' || v === 'turmas';
+  $('#abas').hidden = !comAbas;
+  Array.prototype.forEach.call(document.querySelectorAll('#abas .aba'), function(b){
+    var atual = (b.getAttribute('data-aba') || 'lista') === v;
+    if (atual) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
 }
 function lerHash(){
   var h = (location.hash || '').replace(/^#/, '');
   if (h === 'senha') return {v: 'senha'};
+  if (h === 'turmas') return {v: 'turmas'};
+  if (h === 'listas') return {v: 'editar'};
   if (h.indexOf('aluno=') === 0){
     try {
       var id = decodeURIComponent(h.slice(6));
@@ -619,6 +995,8 @@ function rota(){
   var r = lerHash();
   if (r.v === 'aluno') return mostrarAluno(r.id);
   if (r.v === 'senha') return mostrarSenha();
+  if (r.v === 'turmas') return mostrarTurmas();
+  if (r.v === 'editar') return mostrarEditar();
   return mostrarLista();
 }
 function navegar(hash){
@@ -651,16 +1029,19 @@ function mostrarLogin(msg, tipo){
 function limparSessao(){
   token = ''; ls.del(LS_TOKEN);
   alunos = []; carregado = false; atualizadoAs = 0; erroLista = '';
+  series = null; erroSeries = ''; chavesOficiais = new Set(); idsLista = new Set(); rotulos = new Map();
+  pendenteListas = null;
   detalhes.clear(); alunoDados = null; alunoAberto = ''; ultimoAberto = '';
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 }
 function sessaoExpirou(){
   if (!token) return;
-  limparSessao();
+  limparSessao(); /* a edição das listas ainda não salva continua aqui para depois de entrar de novo */
   mostrarLogin(MSG_SESSAO, 'erro');
 }
 function sair(){
   limparSessao();
+  rascunho = null;
   mostrarLogin('Você saiu. Até a próxima!', 'ok');
 }
 
@@ -672,9 +1053,13 @@ $('#f-login').addEventListener('submit', function(ev){
   $('#login-msg').hidden = true;
   if (!senha.trim()) { erro.textContent = 'Escreva a senha.'; erro.hidden = false; campo.focus(); return; }
   botao.disabled = true; botao.textContent = 'Entrando…';
-  api('/professor/entrar', {metodo: 'POST', corpo: {senha: senha}, auth: false}).then(function(r){
+  var corpo = {senha: senha};
+  var disp = ls.get(LS_DISP);
+  if (disp) corpo.dispositivo = disp;
+  api('/professor/entrar', {metodo: 'POST', corpo: corpo, auth: false}).then(function(r){
     token = String(r.token || '');
     ls.set(LS_TOKEN, token);
+    if (typeof r.dispositivo === 'string' && r.dispositivo) ls.set(LS_DISP, r.dispositivo);
     campo.value = '';
     rota();
   }, function(e){
@@ -694,26 +1079,146 @@ document.addEventListener('change', function(ev){
   }
 });
 
-/* ---------- lista ---------- */
-function calcularTurmas(){
+/* ---------- séries oficiais ---------- */
+function limparSeries(r){
+  var l = r && Array.isArray(r.turmas) ? r.turmas : [];
+  var vistas = new Set();
+  return l.filter(function(s){
+    if (!s || typeof s.key !== 'string' || !/^[a-z0-9]+$/.test(s.key) || typeof s.label !== 'string' || vistas.has(s.key)) return false;
+    vistas.add(s.key);
+    return true;
+  }).map(function(s){
+    return {key: s.key, label: s.label, alunos: (Array.isArray(s.alunos) ? s.alunos : []).filter(function(n){ return typeof n === 'string' && n; })};
+  });
+}
+function limparCoringas(r){
+  var l = r && Array.isArray(r.coringas) ? r.coringas : [];
+  return l.filter(function(n, i){ return typeof n === 'string' && n && l.indexOf(n) === i; }).slice(0, 10);
+}
+function aplicarSeries(r){
+  series = {fonte: r && r.fonte === 'painel' ? 'painel' : 'padrao', turmas: limparSeries(r), coringas: limparCoringas(r), coringaSenha: !!(r && r.coringaSenha === true), coringaSenhaInvalida: !!(r && r.coringaSenhaInvalida === true)};
+  erroSeries = '';
+  atualizarRotulos();
+}
+function temSeries(){ return !!(series && series.turmas.length); }
+function serieDaChave(key){
+  if (!series) return null;
+  for (var i = 0; i < series.turmas.length; i++) if (series.turmas[i].key === key) return series.turmas[i];
+  return null;
+}
+/* Rótulos das turmas: os das séries oficiais; sem lista oficial, o nome mais usado nos cadastros. */
+function atualizarRotulos(){
+  chavesOficiais = new Set(); idsLista = new Set();
+  if (temSeries()) {
+    rotulos = new Map([[TURMA_TESTE, ROTULO_TESTE]]);
+    series.turmas.forEach(function(s){
+      rotulos.set(s.key, s.label);
+      chavesOficiais.add(s.key);
+      s.alunos.forEach(function(n){ idsLista.add(idDaLista(s.key, n)); });
+    });
+    return;
+  }
   var m = new Map();
   alunos.forEach(function(a){
+    if (a.coringa) return;
     var t = m.get(a.turmaKey);
-    if (!t) { t = {key: a.turmaKey, n: 0, nomes: new Map()}; m.set(a.turmaKey, t); }
-    t.n++;
-    t.nomes.set(a.turma, (t.nomes.get(a.turma) || 0) + 1);
+    if (!t) { t = new Map(); m.set(a.turmaKey, t); }
+    t.set(a.turma, (t.get(a.turma) || 0) + 1);
   });
-  var lista = [];
-  m.forEach(function(t){
+  rotulos = new Map([[TURMA_TESTE, ROTULO_TESTE]]);
+  m.forEach(function(nomes, key){
     var melhor = '', qt = -1;
-    t.nomes.forEach(function(q, nome){ if (q > qt) { qt = q; melhor = nome; } });
-    lista.push({key: t.key, n: t.n, nome: melhor || t.key});
+    nomes.forEach(function(q, nome){ if (q > qt) { qt = q; melhor = nome; } });
+    rotulos.set(key, melhor || key);
   });
-  rotulos = new Map(lista.map(function(t){ return [t.key, t.nome]; }));
+}
+/* '' = está na lista (ou é o perfil de teste); 'fora' = a série existe mas o nome não está nela; 'outra' = turma que não está nas listas */
+function situacaoNaLista(a){
+  if (!temSeries() || a.coringa) return '';
+  if (!chavesOficiais.has(a.turmaKey)) return 'outra';
+  return idsLista.has(a.id) ? '' : 'fora';
+}
+
+/* ---------- progresso por atividade ---------- */
+function progressoMapa(a){ var m = new Map(); a.atividades.forEach(function(x){ m.set(x.id, x); }); return m; }
+/* Atividades que aparecem para o aluno: as da série dele (catálogo, mesmo as que ele não começou) e as que
+   ele começou (mesmo fora do catálogo). Perfil de teste: só as que começou. Em ordem de série e de atividade. */
+function itensProgresso(a){
+  var m = progressoMapa(a), vistos = new Set(), infos = [];
+  var porT = new Map((a.textos || []).map(function(t){ return [t.id, t]; })); /* no detalhe: rótulos de atividades fora do catálogo */
+  if (!a.coringa) atividadesDaSerie(a.turmaKey).forEach(function(c){ vistos.add(c.id); infos.push(infoAtiv(c.id, null)); });
+  a.atividades.forEach(function(x){ if (!vistos.has(x.id)) { vistos.add(x.id); infos.push(infoAtiv(x.id, porT.get(x.id) || null)); } });
+  return ordenarInfos(infos).map(function(i){ return {info: i, p: m.get(i.id) || null}; });
+}
+/* Situação numa atividade. p = progresso do aluno nela (null = não começou). */
+function statusAtiv(p, info, longo){
+  var total = (info.noCatalogo && info.total) || (p && p.total) || info.total || 0;
+  if (!p) return {cls: 'nao', sit: 'nao', txt: longo ? 'Ainda não começou' : 'Não começou', f: 0, total: total, ok: false};
+  if (p.concluiu) return {cls: 'ok', sit: 'concluiu', txt: 'Concluiu', f: total || p.fases, total: total, ok: true};
+  return {cls: '', sit: 'andamento', txt: total ? 'Fase ' + Math.min(p.fases + 1, total) + ' de ' + total : 'Começou', f: total ? Math.min(p.fases, total) : 0, total: total, ok: false};
+}
+function nomeSerie(key){ return rotulos.get(key) || (key ? key + 'ª Série' : ''); }
+function progressoHTML(a){
+  var itens = itensProgresso(a);
+  if (!itens.length) return '<span class="pa-vazio">' + (a.coringa ? 'Nenhuma atividade começada.' : 'Ainda não começou nenhuma atividade.') + '</span>';
+  return '<span class="pas">' + itens.map(function(it){
+    var st = statusAtiv(it.p, it.info);
+    return '<span class="pa"><span class="pa-r">' + esc(it.info.rotulo) +
+        (it.info.genero ? ' <small>· ' + esc(generoCurto(it.info.genero)) + '</small>' : it.info.noCatalogo ? '' : ' <small>· fora do jogo</small>') +
+        (a.coringa && it.info.serie ? ' <small>· ' + esc(nomeSerie(it.info.serie)) + '</small>' : '') + '</span>' +
+      '<span class="pa-s ' + st.cls + '">' + (st.ok ? ICON.checkSm : '') + esc(st.txt) + '</span>' +
+      barra(st.f, st.total, st.ok) + '</span>';
+  }).join('') + '</span>';
+}
+/* "Texto 1: Concluiu · Texto 2: Fase 2 de 6" (texto simples) */
+function resumoProgresso(a){
+  var itens = itensProgresso(a);
+  if (!itens.length) return 'ainda não começou nenhuma atividade';
+  return itens.map(function(it){ return it.info.rotulo + ': ' + statusAtiv(it.p, it.info).txt; }).join(' · ');
+}
+/* Concluiu todas as atividades da série dele (catálogo). Sem catálogo para a série: o que o servidor diz. */
+function concluiuTudo(a){
+  if (a.coringa) return a.concluiu;
+  var exp = atividadesDaSerie(a.turmaKey);
+  if (!exp.length) return a.concluiu;
+  var m = progressoMapa(a);
+  return exp.every(function(c){ var p = m.get(c.id); return !!(p && p.concluiu); });
+}
+function somaFases(a){ return a.atividades.reduce(function(n, x){ return n + (x.concluiu ? Math.max(x.fases, x.total) : x.fases); }, 0); }
+
+/* ---------- lista ---------- */
+/* Filtros da lista: as séries oficiais (mesmo sem ninguém), "Perfil de teste" e, se houver, "Outras turmas".
+   O perfil de teste do professor só aparece no filtro dele (não entra em "Todas" nem nas contas). */
+function alunosDeVerdade(){ return alunos.filter(function(a){ return !a.coringa; }); }
+function calcularTurmas(){
+  var cont = new Map(), reais = alunosDeVerdade();
+  reais.forEach(function(a){ cont.set(a.turmaKey, (cont.get(a.turmaKey) || 0) + 1); });
+  var teste = alunos.length - reais.length;
+  var lista = [];
+  if (temSeries()) {
+    lista = series.turmas.map(function(s){ return {key: s.key, n: cont.get(s.key) || 0, nome: s.label}; });
+    var outras = reais.filter(function(a){ return !chavesOficiais.has(a.turmaKey); }).length;
+    if (outras) lista.push({key: OUTRAS, n: outras, nome: 'Outras turmas'});
+  } else {
+    cont.forEach(function(n, key){ lista.push({key: key, n: n, nome: rotulos.get(key) || key}); });
+  }
+  if (teste) lista.push({key: TESTE, n: teste, nome: ROTULO_TESTE});
   return lista;
 }
-function rotulo(a){ return rotulos.get(a.turmaKey) || a.turma; }
-function daTurma(){ return filtroTurma ? alunos.filter(function(a){ return a.turmaKey === filtroTurma; }) : alunos; }
+function rotulo(a){ return a.coringa ? ROTULO_TESTE : (rotulos.get(a.turmaKey) || a.turma); }
+function nomeFiltro(){
+  if (!filtroTurma) return 'Todas as séries';
+  if (filtroTurma === OUTRAS) return 'Outras turmas';
+  if (filtroTurma === TESTE) return ROTULO_TESTE;
+  return nomeTurma(rotulos.get(filtroTurma) || filtroTurma);
+}
+function daTurma(){
+  if (filtroTurma === TESTE) return alunos.filter(function(a){ return a.coringa; });
+  var reais = alunosDeVerdade();
+  if (!filtroTurma) return reais;
+  if (filtroTurma === OUTRAS) return reais.filter(function(a){ return !chavesOficiais.has(a.turmaKey); });
+  return reais.filter(function(a){ return a.turmaKey === filtroTurma; });
+}
 function filtrados(){
   var termos = norm(busca).split(' ').filter(Boolean);
   var l = daTurma().filter(function(a){
@@ -722,67 +1227,69 @@ function filtrados(){
     return termos.every(function(t){ return n.indexOf(t) >= 0; });
   });
   if (ordem === 'progresso') {
-    l = l.slice().sort(function(a, b){ return a.fases - b.fases || a.xp - b.xp || coll.compare(a.nome, b.nome); });
+    l = l.slice().sort(function(a, b){ return somaFases(a) - somaFases(b) || a.xp - b.xp || coll.compare(a.nome, b.nome); });
   } else if (ordem === 'atividade') {
     l = l.slice().sort(function(a, b){ return (b.atualizadoEm || 0) - (a.atualizadoEm || 0) || coll.compare(a.nome, b.nome); });
   }
   return l;
 }
-function barra(f, concluiu){
-  var s = '';
-  for (var i = 0; i < N_FASES; i++) s += '<i class="' + (i < f ? 'on' : '') + '"></i>';
-  return '<span class="barra' + (concluiu ? ' ok' : '') + '" aria-hidden="true">' + s + '</span>';
+/* Barra com um traço por fase (f de total). Muitas fases: no máximo 20 traços. */
+function barra(f, total, concluiu){
+  total = Math.max(1, Math.round(total || N_FASES));
+  var n = Math.min(total, 20), on = Math.round(Math.min(f, total) * n / total), s = '';
+  for (var i = 0; i < n; i++) s += '<i class="' + (i < on ? 'on' : '') + '"></i>';
+  return '<span class="barra' + (concluiu ? ' ok' : '') + '" style="grid-template-columns:repeat(' + n + ',minmax(0,1fr))" aria-hidden="true">' + s + '</span>';
 }
 function etiquetas(a){
   var t = [];
-  if (a.concluiu) t.push('<span class="tag ok">' + ICON.checkSm + 'Concluiu</span>');
+  if (a.coringa) t.push('<span class="tag info">' + ROTULO_TESTE + '</span>');
+  if (concluiuTudo(a)) t.push('<span class="tag ok">' + ICON.checkSm + (a.coringa ? 'Concluiu as que começou' : 'Concluiu tudo') + '</span>');
   if (a.bloqueado) t.push('<span class="tag warn">Bloqueado</span>');
   if (a.semSenha) t.push('<span class="tag info">Sem senha</span>');
   return t.join('');
 }
 function cartao(a){
-  var f = Math.min(a.fases, N_FASES), tg = etiquetas(a);
+  var tg = etiquetas(a);
   return '<li><button type="button" class="ca" data-id="' + esc(a.id) + '">' +
     '<span class="ca-nome">' + esc(a.nome) + '</span>' +
-    '<span class="ca-fases' + (a.concluiu ? ' ok' : '') + '">' + f + '/' + N_FASES + '<span class="sr"> fases</span>' + ICON.chev + '</span>' +
-    barra(f, a.concluiu) +
-    '<span class="ca-meta">' + esc(rotulo(a)) + ' · ' + a.linhas + ' ' + pl(a.linhas, 'linha', 'linhas') + ' · ' +
+    '<span class="ca-seta">' + ICON.chev + '</span>' +
+    '<span class="ca-meta">' + esc(rotulo(a)) + ' · ' +
       '<span title="' + esc(dataHora(a.atualizadoEm)) + '">' + esc(relativo(a.atualizadoEm)) + '</span></span>' +
+    progressoHTML(a) +
     (tg ? '<span class="tags">' + tg + '</span>' : '') +
   '</button></li>';
 }
 function linhaTabela(a){
-  var f = Math.min(a.fases, N_FASES), tg = etiquetas(a);
+  var tg = etiquetas(a);
   return '<tr data-id="' + esc(a.id) + '">' +
     '<td class="c-nome"><button type="button" class="nome-btn" data-id="' + esc(a.id) + '">' + esc(a.nome) + '</button>' +
       (tg ? '<span class="tags">' + tg + '</span>' : '') + '</td>' +
-    '<td class="quebra">' + esc(rotulo(a)) + '</td>' +
-    '<td><span class="prog-cel">' + barra(f, a.concluiu) + '<b class="' + (a.concluiu ? 'ok' : '') + '">' + f + '/' + N_FASES + '<span class="sr"> fases</span></b></span></td>' +
+    '<td class="c-serie">' + esc(rotulo(a)) + '</td>' +
+    '<td class="c-prog">' + progressoHTML(a) + '</td>' +
     '<td class="num">' + a.linhas + '</td>' +
     '<td class="quando"><span title="' + esc(dataHora(a.atualizadoEm)) + '">' + esc(relativo(a.atualizadoEm)) + '</span></td>' +
   '</tr>';
 }
 
 function renderStatus(){
-  var s = $('#status');
-  if (!s) return;
+  var cls = 'status', txt = '';
   if (carregado && erroLista) {
-    s.className = 'status erro';
-    s.textContent = erroLista === MSG_REDE
+    cls = 'status erro';
+    txt = erroLista === MSG_REDE
       ? 'Sem internet. Mostrando a lista de ' + hhmm(new Date(atualizadoAs)) + '.'
       : 'Não deu para atualizar. Mostrando a lista de ' + hhmm(new Date(atualizadoAs)) + '.';
   } else if (carregado) {
-    s.className = 'status';
-    s.textContent = (avisoManual ? 'Lista atualizada às ' : 'Atualizado às ') + hhmm(new Date(atualizadoAs)) + '. Atualiza sozinho a cada 30 segundos.';
-  } else {
-    s.className = 'status';
-    s.textContent = '';
+    txt = (avisoManual ? 'Lista atualizada às ' : 'Atualizado às ') + hhmm(new Date(atualizadoAs)) + '. Atualiza sozinho a cada 30 segundos.';
   }
+  ['#status', '#status-turmas'].forEach(function(sel){
+    var s = $(sel);
+    if (s) { s.className = cls; s.textContent = txt; }
+  });
 }
 
 function renderLista(){
   var turmas = calcularTurmas();
-  if (carregado && filtroTurma && !rotulos.has(filtroTurma)) { filtroTurma = ''; ls.del(LS_TURMA); }
+  if (carregado && filtroTurma && !turmas.some(function(t){ return t.key === filtroTurma; })) { filtroTurma = ''; ls.del(LS_TURMA); }
 
   var focoTurma = null, focoId = null, at = document.activeElement;
   if (at && at.closest) {
@@ -792,7 +1299,7 @@ function renderLista(){
   }
 
   /* chips */
-  var chips = '<button type="button" class="chip" data-turma="" aria-pressed="' + (!filtroTurma) + '"><span class="t">Todas</span><span class="n">' + alunos.length + '</span></button>';
+  var chips = '<button type="button" class="chip" data-turma="" aria-pressed="' + (!filtroTurma) + '"><span class="t">Todas</span><span class="n">' + alunosDeVerdade().length + '</span></button>';
   turmas.forEach(function(t){
     chips += '<button type="button" class="chip" data-turma="' + esc(t.key) + '" aria-pressed="' + (filtroTurma === t.key) + '"><span class="t">' + esc(t.nome) + '</span><span class="n">' + t.n + '</span></button>';
   });
@@ -801,13 +1308,13 @@ function renderLista(){
   /* resumo */
   var base = daTurma();
   var total = base.length;
-  var concl = base.filter(function(a){ return a.concluiu; }).length;
+  var concl = base.filter(concluiuTudo).length;
   var pct = total ? Math.round(concl * 100 / total) : 0;
-  $('#escopo').textContent = carregado ? (filtroTurma ? nomeTurma(rotulos.get(filtroTurma) || filtroTurma) : 'Todas as turmas') : '';
+  $('#escopo').textContent = carregado ? nomeFiltro() + (filtroTurma === TESTE ? ' (não conta nas turmas)' : '') : '';
   $('#stats').innerHTML = carregado ?
-    '<div class="stat"><b>' + total + '</b><span>' + pl(total, 'aluno', 'alunos') + '</span></div>' +
-    '<div class="stat ok"><b>' + concl + '</b><span>' + pl(concl, 'concluiu', 'concluíram') + '</span>' +
-      '<span class="medidor" role="img" aria-label="' + pct + '% da turma concluiu"><i style="width:' + pct + '%"></i></span></div>' +
+    '<div class="stat"><b>' + total + '</b><span>' + (filtroTurma === TESTE ? pl(total, 'perfil', 'perfis') : pl(total, 'aluno', 'alunos')) + '</span></div>' +
+    '<div class="stat ok"><b>' + concl + '</b><span>' + pl(concl, 'concluiu tudo', 'concluíram tudo') + '</span>' +
+      '<span class="medidor" role="img" aria-label="' + pct + '% concluiu todas as atividades"><i style="width:' + pct + '%"></i></span></div>' +
     '<div class="stat"><b>' + (total - concl) + '</b><span>em andamento</span></div>'
     : '';
 
@@ -819,16 +1326,21 @@ function renderLista(){
       '<button class="btn sm" type="button" data-act="atualizar">Tentar de novo</button></div>';
   } else if (!carregado) {
     el.innerHTML = '<div class="card"><p class="carregando"><span class="pulso" aria-hidden="true"></span>Carregando os alunos…</p></div>';
-  } else if (!alunos.length) {
+  } else if (!alunos.length || (!filtroTurma && !total)) {
     el.innerHTML = '<div class="card vazio-box"><h2 class="h3">Nenhum aluno entrou ainda.</h2>' +
-      '<p class="tip">Mande o link do jogo para a turma. Quando o aluno entrar com nome, turma e senha, ele aparece aqui.</p></div>';
+      '<p class="tip">Mande o link do jogo para a turma. Quando o aluno entrar com a série, o nome e a senha, ele aparece aqui.</p>' +
+      (temSeries() ? '<button class="btn sm" type="button" data-act="aba" data-aba="turmas">Ver a lista de cada série</button>' : '') + '</div>';
+  } else if (!total) {
+    el.innerHTML = '<div class="card vazio-box"><h2 class="h3 quebra">' + esc(rotulos.get(filtroTurma) || 'Esta série') + ': ninguém entrou ainda.</h2>' +
+      '<p class="tip">Em Turmas e alunos você vê a lista da chamada e quem ainda falta entrar.</p>' +
+      '<button class="btn sm" type="button" data-act="aba" data-aba="turmas">Ver Turmas e alunos</button></div>';
   } else if (!l.length) {
     el.innerHTML = '<div class="card vazio-box"><h2 class="h3">Nenhum aluno encontrado.</h2>' +
-      '<p class="tip">Confira o nome digitado na busca' + (filtroTurma ? ' ou escolha outra turma' : '') + '.</p>' +
+      '<p class="tip">Confira o nome digitado na busca' + (filtroTurma ? ' ou escolha outra série' : '') + '.</p>' +
       '<button class="btn sm" type="button" data-act="limpar-busca">Limpar a busca</button></div>';
   } else if (mqTabela && mqTabela.matches) {
     el.innerHTML = '<div class="tabela-wrap"><table class="tabela"><caption class="sr">Alunos e progresso</caption>' +
-      '<thead><tr><th scope="col">Nome</th><th scope="col">Turma</th><th scope="col">Progresso</th><th scope="col" class="num">Linhas</th><th scope="col">Última atividade</th></tr></thead>' +
+      '<thead><tr><th scope="col">Nome</th><th scope="col">Série</th><th scope="col">Progresso por atividade</th><th scope="col" class="num">Linhas</th><th scope="col">Última atividade</th></tr></thead>' +
       '<tbody>' + l.map(linhaTabela).join('') + '</tbody></table></div>';
   } else {
     el.innerHTML = '<ul class="cartoes" aria-label="Alunos">' + l.map(cartao).join('') + '</ul>';
@@ -847,16 +1359,29 @@ function renderLista(){
   if (focoId) { var b = $('#lista button[data-id="' + cssId(focoId) + '"]'); if (b) b.focus({preventScroll: true}); }
 }
 
+function aplicarAlunos(r){
+  alunos = (Array.isArray(r.alunos) ? r.alunos : []).map(limparAluno).filter(function(a){ return ID_RE.test(a.id); });
+  var ids = new Set(alunos.map(function(a){ return a.id; }));
+  detalhes.forEach(function(_, id){ if (!ids.has(id)) detalhes.delete(id); });
+  atualizarRotulos();
+}
+function botoesAtualizar(ocupado){
+  Array.prototype.forEach.call(document.querySelectorAll('.b-atualizar'), function(b){
+    b.classList.toggle('girar', ocupado);
+    if (ocupado) b.setAttribute('aria-busy', 'true'); else b.removeAttribute('aria-busy');
+  });
+}
+/* Busca os alunos e as listas das séries juntos (as duas telas usam as duas coisas). */
 function carregarLista(opcoes){
   opcoes = opcoes || {};
   if (carregando) return carregando;
-  var botao = $('#b-atualizar');
-  botao.classList.add('girar');
-  botao.setAttribute('aria-busy', 'true');
-  carregando = api('/professor/alunos').then(function(r){
-    alunos = (Array.isArray(r.alunos) ? r.alunos : []).map(limparAluno).filter(function(a){ return ID_RE.test(a.id); });
-    var ids = new Set(alunos.map(function(a){ return a.id; }));
-    detalhes.forEach(function(_, id){ if (!ids.has(id)) detalhes.delete(id); });
+  botoesAtualizar(true);
+  var pedSeries = api('/professor/turmas').then(null, function(e){ return {falhou: e}; });
+  carregando = Promise.all([api('/professor/alunos'), pedSeries]).then(function(rs){
+    var t = rs[1];
+    if (t && t.falhou) { if (t.falhou.codigo !== 'sessao') erroSeries = t.falhou.message || MSG_REDE; }
+    else aplicarSeries(t);
+    aplicarAlunos(rs[0]);
     carregado = true; atualizadoAs = Date.now(); erroLista = '';
     avisoManual = !!opcoes.manual;
   }, function(e){
@@ -865,10 +1390,12 @@ function carregarLista(opcoes){
     if (opcoes.manual) toast(erroLista);
   }).then(function(){
     carregando = null;
-    botao.classList.remove('girar');
-    botao.removeAttribute('aria-busy');
+    botoesAtualizar(false);
     if (!token) return;
-    if (view === 'lista') renderLista(); else renderStatus();
+    if (view === 'lista') renderLista();
+    else if (view === 'turmas') renderTurmas();
+    else if (view === 'editar') { if (!rascunho) renderEditor(); else atualizarAvisosEditor(); renderStatus(); }
+    else renderStatus();
   });
   return carregando;
 }
@@ -906,14 +1433,630 @@ if (mqTabela) {
   if (mqTabela.addEventListener) mqTabela.addEventListener('change', aoMudar); else if (mqTabela.addListener) mqTabela.addListener(aoMudar);
 }
 
+/* ---------- foco ao redesenhar ---------- */
+function guardarFoco(sel, attrs){
+  var at = document.activeElement;
+  if (!at || !at.closest || !at.closest(sel)) return null;
+  for (var i = 0; i < attrs.length; i++) if (at.hasAttribute(attrs[i])) return [attrs[i], at.getAttribute(attrs[i])];
+  return null;
+}
+function voltarFoco(sel, f){
+  if (!f) return;
+  var b = $(sel + ' [' + f[0] + '="' + cssId(f[1]) + '"]');
+  if (b) { try { b.focus({preventScroll: true}); } catch (e) { b.focus(); } }
+}
+
+/* ---------- turmas e alunos ---------- */
+/* Atividade escolhida numa série: a guardada, se ainda existe no catálogo; senão a primeira. null = a série não tem atividade. */
+function ativDaSerie(key){
+  var acts = atividadesDaSerie(key);
+  if (!acts.length) return null;
+  var id = filtroAtiv.get(key);
+  for (var i = 0; i < acts.length; i++) if (acts[i].id === id) return acts[i];
+  return acts[0];
+}
+function guardarAtivs(){
+  var o = {};
+  filtroAtiv.forEach(function(v, k){ o[k] = v; });
+  ls.set(LS_ATIV, JSON.stringify(o));
+}
+/* 'nao' (não entrou ou não começou) | 'andamento' | 'concluiu'. Série sem atividade: entrou = 'andamento'. */
+function sitNaAtiv(a, act){
+  if (!a) return 'nao';
+  if (!act) return 'andamento';
+  var p = progressoMapa(a).get(act.id);
+  return !p ? 'nao' : p.concluiu ? 'concluiu' : 'andamento';
+}
+function contarSerie(s, porId, act){
+  var c = {total: s.alunos.length, entraram: 0, comecaram: 0, concluiram: 0};
+  s.alunos.forEach(function(n){
+    var a = porId.get(idDaLista(s.key, n));
+    if (!a) return;
+    c.entraram++;
+    var p = act ? progressoMapa(a).get(act.id) : null;
+    if (p) { c.comecaram++; if (p.concluiu) c.concluiram++; }
+  });
+  return c;
+}
+function quandoHTML(a){ return '<span class="ch-quando" title="' + esc(dataHora(a.atualizadoEm)) + '">' + esc(relativo(a.atualizadoEm)) + '</span>'; }
+function avisosHTML(a){
+  return (a.bloqueado ? '<span class="tag warn">Bloqueado</span>' : '') + (a.semSenha ? '<span class="tag info">Sem senha</span>' : '');
+}
+/* Situação na atividade escolhida: "Ainda não entrou" / "Ainda não começou" / "Fase N de T" / "Concluiu". */
+function situacaoHTML(a, act){
+  if (!a) return '<span class="sit nao">Ainda não entrou</span>';
+  var s;
+  if (!act) s = '<span class="sit fase">Entrou</span>';
+  else {
+    var p = progressoMapa(a).get(act.id) || null, st = statusAtiv(p, infoAtiv(act.id, null), true);
+    s = st.ok ? '<span class="sit ok">' + ICON.checkSm + 'Concluiu</span>'
+      : !p ? '<span class="sit nao">' + esc(st.txt) + '</span>'
+      : '<span class="sit fase">' + esc(st.txt) + '</span>' + barra(st.f, st.total, false);
+  }
+  return s + avisosHTML(a) + quandoHTML(a);
+}
+function linhaChamada(num, nome, a, act, sitHtml){
+  var dentro = '<span class="ch-n">' + num + '</span><span class="ch-nome">' + esc(nome) + '</span>' +
+    '<span class="ch-sit">' + (sitHtml != null ? sitHtml : situacaoHTML(a, act)) + '</span>';
+  if (!a) return '<li><div class="ch">' + dentro + '</div></li>';
+  return '<li><button type="button" class="ch" data-id="' + esc(a.id) + '">' + dentro + '<span class="ch-seta">' + ICON.chev + '</span></button></li>';
+}
+function situacoes(act){
+  return act
+    ? [['todos', 'Todos'], ['nao', 'Não começaram'], ['andamento', 'Em andamento'], ['concluiu', 'Concluíram']]
+    : [['todos', 'Todos'], ['nao', 'Ainda não entraram'], ['andamento', 'Já entraram']];
+}
+function vazioSit(sit, act){
+  if (sit === 'todos') return 'A lista desta série está vazia. Toque em Editar listas para colocar os nomes.';
+  if (!act) return sit === 'nao' ? 'Todos desta série já entraram no jogo.' : 'Ninguém desta série entrou ainda.';
+  return {nao: 'Todos desta série já começaram esta atividade.', andamento: 'Ninguém desta série está no meio desta atividade agora.',
+    concluiu: 'Ninguém desta série concluiu esta atividade ainda.'}[sit];
+}
+/* Se a variável CORINGA_SENHA do Netlify está valendo (o valor nunca vem do servidor, só se está configurada). */
+function senhaTesteHTML(){
+  var ok = !!(series && series.coringaSenha), ruim = !ok && !!(series && series.coringaSenhaInvalida);
+  return '<p class="' + (ruim ? 'msg erro longa' : 'fine') + ' coringa-senha" data-senha="' + (ok ? 'sim' : ruim ? 'invalida' : 'nao') + '"><b>Senha inicial do perfil:</b> ' +
+    (ok ? 'configurada' : ruim ? 'com problema. A variável CORINGA_SENHA não está no formato certo: gere de novo com node dev/hash-pin.mjs. Até corrigir, o perfil de teste não é criado.'
+      : 'não configurada (o primeiro acesso cria a senha)') + '</p>';
+}
+/* Cartão do perfil de teste do professor (nomes de GET /api/professor/turmas → coringas). Não entra nas contas. */
+function cartaoTeste(){
+  var nomes = (series && series.coringas) || [], porId = new Map(), vistos = new Set();
+  alunos.forEach(function(a){ if (a.coringa) porId.set(a.id, a); });
+  var itens = nomes.map(function(n){ var id = idDaLista(TURMA_TESTE, n); vistos.add(id); return {nome: n, a: porId.get(id) || null}; });
+  porId.forEach(function(a, id){ if (!vistos.has(id)) itens.push({nome: a.nome, a: a}); });
+  if (!itens.length) return '';
+  return '<section class="card coringa" aria-labelledby="teste-titulo">' +
+    '<h2 class="h3" id="teste-titulo">' + ROTULO_TESTE + '</h2>' +
+    '<p class="fine">Entra escolhendo qualquer série e vê as atividades de todas as séries. Não conta nas turmas.</p>' +
+    senhaTesteHTML() +
+    '<ul class="chamada" aria-label="' + ROTULO_TESTE + '">' + itens.map(function(it){
+      var sit = !it.a ? '<span class="sit nao">Ainda não entrou</span>' : progressoHTML(it.a) + avisosHTML(it.a) + quandoHTML(it.a);
+      return linhaChamada('', it.nome, it.a, null, sit);
+    }).join('') + '</ul></section>';
+}
+
+function renderTurmas(){
+  var el = $('#turmas-conteudo'), fonte = $('#turmas-fonte');
+  $('#b-editar-listas').disabled = !series;
+  renderStatus();
+  if (!carregado || !series) {
+    fonte.textContent = '';
+    var erro = !carregado ? erroLista : erroSeries;
+    el.innerHTML = erro
+      ? '<div class="card vazio-box"><p class="msg erro">' + esc(erro) + '</p><button class="btn sm" type="button" data-act="atualizar">Tentar de novo</button></div>'
+      : '<div class="card"><p class="carregando"><span class="pulso" aria-hidden="true"></span>Carregando as turmas…</p></div>';
+    return;
+  }
+  var foco = guardarFoco('#turmas-conteudo', ['data-id', 'data-serie', 'data-sit', 'data-ativ-chip', 'data-act']);
+  fonte.textContent = (series.fonte === 'painel' ? 'Listas salvas no painel.' : 'Listas da configuração do site (Netlify).') +
+    ' Só entra no jogo quem está na lista da série que escolher.';
+
+  var h = '';
+  if (rascunho && rascunho.sujo) {
+    h += '<div class="msg info longa row" style="justify-content:space-between"><span><b>Você mudou as listas e ainda não salvou.</b></span>' +
+      '<button class="btn sm" type="button" data-act="editar-listas">Continuar editando</button></div>';
+  }
+  if (!series.turmas.length) {
+    el.innerHTML = h + '<div class="card vazio-box"><h2 class="h3">Ainda não tem lista de alunos.</h2>' +
+      '<p class="tip">Sem a lista, nenhum aluno consegue entrar no jogo. Toque em Editar listas para colocar as séries e os nomes dos alunos.</p>' +
+      '<button class="btn primary sm" type="button" data-act="editar-listas">' + ICON.lapis + '<span>Editar listas</span></button></div>' + cartaoTeste();
+    voltarFoco('#turmas-conteudo', foco);
+    return;
+  }
+
+  /* o perfil de teste não entra nas contas de nenhuma série */
+  var reais = alunosDeVerdade();
+  var porId = new Map(reais.map(function(a){ return [a.id, a]; }));
+  if (!serieDaChave(filtroSerie)) filtroSerie = series.turmas[0].key;
+  var s = serieDaChave(filtroSerie);
+  var act = ativDaSerie(s.key);
+
+  /* um cartão por série, com os contadores da atividade escolhida nela */
+  h += '<div class="stack tight"><div class="series" role="group" aria-label="Escolha a série">' + series.turmas.map(function(x){
+    var ax = ativDaSerie(x.key), c = contarSerie(x, porId, ax), sel = x.key === filtroSerie;
+    var feitos = ax ? c.comecaram : c.entraram;
+    var pc = c.total ? c.concluiram * 100 / c.total : 0;
+    var pa = c.total ? (feitos - c.concluiram) * 100 / c.total : 0;
+    return '<button type="button" class="sc" data-serie="' + esc(x.key) + '" aria-pressed="' + sel + '">' +
+      '<span class="sc-t"><span class="quebra">' + esc(x.label) + '</span>' + (sel ? ICON.okSc : '') + '</span>' +
+      (ax ? '<span class="sc-a">' + esc(nomeAtiv(ax)) + '</span>' : '') +
+      '<span class="sc-n"><b>' + feitos + '</b> de <b>' + c.total + '</b> ' + (ax ? pl(feitos, 'começou', 'começaram') : pl(feitos, 'entrou', 'entraram')) + '</span>' +
+      '<span class="prop" aria-hidden="true"><i class="c" style="width:' + pc.toFixed(2) + '%"></i><i class="a" style="width:' + pa.toFixed(2) + '%"></i></span>' +
+      (ax ? '<span class="sc-n"><b class="ok">' + c.concluiram + '</b> ' + pl(c.concluiram, 'concluiu', 'concluíram') + '</span>' : '') +
+    '</button>';
+  }).join('') + '</div>' +
+  '<p class="legenda" aria-hidden="true"><span><i class="c"></i>Concluíram</span><span><i class="a"></i>Em andamento</span><span><i></i>Ainda não começaram</span></p></div>';
+
+  /* a lista da chamada da série escolhida, na atividade escolhida */
+  var acts = atividadesDaSerie(s.key);
+  var linhas = s.alunos.map(function(nome, i){
+    var a = porId.get(idDaLista(s.key, nome)) || null;
+    return {num: i + 1, nome: nome, a: a, sit: sitNaAtiv(a, act)};
+  });
+  var sits = situacoes(act);
+  if (!sits.some(function(x){ return x[0] === filtroSit; })) filtroSit = 'todos';
+  var cont = {todos: linhas.length, nao: 0, andamento: 0, concluiu: 0};
+  linhas.forEach(function(l){ cont[l.sit]++; });
+  var passa = function(sit){ return filtroSit === 'todos' || sit === filtroSit; };
+  var vis = linhas.filter(function(l){ return passa(l.sit); });
+  var fora = reais.filter(function(a){ return a.turmaKey === s.key && !idsLista.has(a.id); });
+  var foraVis = fora.filter(function(a){ return passa(sitNaAtiv(a, act)); });
+
+  var escolha = act
+    ? '<div class="ativ-esc"><p class="eyebrow" id="ativ-esc-t">Atividade</p>' +
+        '<div class="chips" role="group" aria-labelledby="ativ-esc-t">' + acts.map(function(c){
+          return '<button type="button" class="chip" data-ativ-chip="' + esc(c.id) + '" aria-pressed="' + (c.id === act.id) + '"><span class="t">' + esc(nomeAtiv(c)) + '</span></button>';
+        }).join('') + '</div>' +
+        '<p class="fine quebra"><b>' + esc(act.genero || act.rotulo) + '.</b> Tema: ' + esc(act.tema) + (act.total ? ' · ' + act.total + ' fases' : '') + '</p></div>'
+    : '<p class="msg info longa">' + (CATALOGO.length ? 'Ainda não há atividades desta série no jogo.' : 'Não deu para carregar as atividades do jogo. Atualize a página.') +
+        ' Aqui aparece só quem já entrou.</p>';
+
+  h += '<section class="stack" aria-labelledby="serie-titulo">' +
+    '<div class="serie-cab"><h2 id="serie-titulo" class="quebra">' + esc(s.label) + '</h2>' +
+      '<p class="fine">' + cont.todos + ' ' + pl(cont.todos, 'aluno', 'alunos') + ' na lista da chamada</p></div>' +
+    escolha +
+    '<div class="chips" role="group" aria-label="Mostrar">' + sits.map(function(x){
+      return '<button type="button" class="chip" data-sit="' + x[0] + '" aria-pressed="' + (filtroSit === x[0]) + '"><span class="t">' + x[1] + '</span><span class="n">' + cont[x[0]] + '</span></button>';
+    }).join('') + '</div>' +
+    (vis.length
+      ? '<ol class="chamada" aria-label="' + esc('Lista da chamada: ' + s.label + (act ? ', ' + nomeAtiv(act) : '')) + '">' + vis.map(function(l){ return linhaChamada(l.num, l.nome, l.a, act); }).join('') + '</ol>'
+      : '<div class="card"><p class="tip">' + vazioSit(filtroSit, act) + '</p></div>') +
+    (foraVis.length
+      ? '<section class="fora" aria-labelledby="fora-titulo"><h3 id="fora-titulo">Fora da lista (' + foraVis.length + ')</h3>' +
+        '<p class="fine">Já entraram no jogo, mas o nome não está na lista desta série (o nome mudou ou saiu da lista). Não conseguem mais entrar. O progresso e os textos continuam guardados.</p>' +
+        '<ol class="chamada">' + foraVis.map(function(a){ return linhaChamada('', a.nome, a, act); }).join('') + '</ol></section>'
+      : '') +
+  '</section>';
+
+  h += cartaoTeste();
+  var outras = reais.filter(function(a){ return !chavesOficiais.has(a.turmaKey); }).length;
+  if (outras) {
+    h += '<p class="fine">' + outras + ' ' + pl(outras, 'cadastro é de uma turma que não está', 'cadastros são de turmas que não estão') +
+      ' nas listas (de antes da lista da chamada). <button class="pular" type="button" data-act="ver-outras">Ver em Progresso</button></p>';
+  }
+  el.innerHTML = h;
+  voltarFoco('#turmas-conteudo', foco);
+}
+
+function mostrarTurmas(){
+  var anterior = view;
+  mostrarView('turmas');
+  document.title = 'Turmas e alunos · Painel do professor';
+  renderTurmas();
+  if (anterior === 'aluno' || anterior === 'editar' || anterior === 'senha') {
+    window.scrollTo(0, scrolls.turmas || 0);
+    var b = anterior === 'aluno' && ultimoAberto && $('#turmas-conteudo button[data-id="' + cssId(ultimoAberto) + '"]');
+    if (!b && anterior === 'editar') b = $('#b-editar-listas');
+    if (b) { try { b.focus({preventScroll: true}); } catch (e) { b.focus(); } }
+    else focarTitulo('#turmas-titulo');
+  } else {
+    window.scrollTo(0, 0);
+    if (anterior === 'login') focarTitulo('#turmas-titulo');
+  }
+  if (!carregado || !series || Date.now() - atualizadoAs >= INTERVALO) carregarLista();
+}
+
+/* ---------- editar listas ---------- */
+function iniciarRascunho(){
+  var t = series ? series.turmas : [];
+  rascunho = {
+    base: JSON.stringify(t.map(function(s){ return {key: s.key, label: s.label, alunos: s.alunos}; })),
+    sujo: false, salvoAs: 0,
+    lista: t.map(function(s){ return {uid: ++uidSerie, label: s.label, texto: s.alunos.join('\n'), removida: false}; })
+  };
+  if (!rascunho.lista.length) rascunho.lista.push({uid: ++uidSerie, label: '', texto: '', removida: false});
+}
+function itemRascunho(uid){
+  if (!rascunho) return null;
+  for (var i = 0; i < rascunho.lista.length; i++) if (rascunho.lista[i].uid === uid) return rascunho.lista[i];
+  return null;
+}
+function listaCurta(nomes, max){
+  max = max || 6;
+  var l = nomes.slice(0, max).map(function(n){ return '"' + n + '"'; }).join(', ');
+  return nomes.length > max ? l + ' e mais ' + (nomes.length - max) : l;
+}
+/* Uma série do rascunho → {uid, label, key, nomes, erros, avisos, campo} (mesmas regras do servidor). */
+function lerSerieRascunho(s){
+  var label = limparRotulo(s.label), key = chaveSerie(label);
+  var r = {uid: s.uid, label: label, key: key, nomes: [], erros: [], avisos: [], campo: ''};
+  if (!label) { r.erros.push('Escreva o nome da série. Exemplo: 1ª Série.'); r.campo = 'label'; }
+  else if (Array.from(label).length > MAX_LABEL) { r.erros.push('O nome da série é grande demais (máximo ' + MAX_LABEL + ' letras).'); r.campo = 'label'; }
+  else if (!key) { r.erros.push('O nome da série precisa ter o número. Exemplo: 1ª Série.'); r.campo = 'label'; }
+  var vistos = new Set(), repetidos = 0, titulo = false, curtos = [], longos = [];
+  String(s.texto || '').split(/\r\n|\r|\n/).forEach(function(linha){
+    if (!linha.trim()) return;
+    var x = linhaParaNome(linha);
+    if (x.titulo) titulo = true;
+    if (!x.nome) return;
+    if (vistos.has(x.nome)) { repetidos++; return; }
+    vistos.add(x.nome);
+    if (x.nome.length > MAX_NOME) longos.push(x.nome.slice(0, 40) + '…');
+    else if (x.nome.indexOf(' ') < 0) curtos.push(x.nome);
+    r.nomes.push(x.nome);
+  });
+  r.nomes.sort(function(a, b){ return coll.compare(a, b) || (a < b ? -1 : a > b ? 1 : 0); });
+  if (curtos.length) { r.erros.push('Escreva nome e sobrenome: ' + listaCurta(curtos) + '.'); r.campo = r.campo || 'texto'; }
+  if (longos.length) { r.erros.push('Nome grande demais (máximo ' + MAX_NOME + ' letras): ' + listaCurta(longos, 2) + '.'); r.campo = r.campo || 'texto'; }
+  if (r.nomes.length > MAX_NOMES) { r.erros.push('Ficaram ' + r.nomes.length + ' nomes. O máximo é ' + MAX_NOMES + ' por série.'); r.campo = r.campo || 'texto'; }
+  if (repetidos) r.avisos.push(repetidos + ' ' + pl(repetidos, 'nome repetido vai', 'nomes repetidos vão') + ' ficar uma vez só.');
+  if (titulo) r.avisos.push('O nome da série escrito na caixa (como "1ª Série:") não entra como aluno.');
+  return r;
+}
+function lerRascunho(){
+  var lidas = rascunho.lista.filter(function(s){ return !s.removida; }).map(lerSerieRascunho);
+  var porChave = new Map();
+  lidas.forEach(function(l){
+    if (!l.key || l.campo === 'label') return;
+    var outra = porChave.get(l.key);
+    if (outra) { l.erros.unshift('As séries "' + outra.label + '" e "' + l.label + '" ficaram iguais. Use nomes diferentes.'); l.campo = 'label'; }
+    else porChave.set(l.key, l);
+  });
+  var geral = !lidas.length ? 'Coloque pelo menos uma série.' : lidas.length > MAX_SERIES ? 'Dá para ter no máximo ' + MAX_SERIES + ' séries.' : '';
+  return {lidas: lidas, geral: geral, comErro: lidas.filter(function(l){ return l.erros.length; })};
+}
+function assinaturaRascunho(r){
+  return JSON.stringify(r.lidas.map(function(l){ return {key: l.key, label: l.label, alunos: l.nomes}; }));
+}
+function idsDasSeries(lista){
+  var ids = new Set();
+  lista.forEach(function(s){ (s.alunos || s.nomes).forEach(function(n){ ids.add(idDaLista(s.key, n)); }); });
+  return ids;
+}
+
+function cartaoEditor(s){
+  var u = s.uid, nome = limparRotulo(s.label);
+  if (s.removida) {
+    return '<section class="card ed-serie removida" data-uid="' + u + '">' +
+      '<p><b>' + esc(nome || 'Série sem nome') + '</b> vai sair das listas quando você salvar.</p>' +
+      '<button class="btn sm" type="button" data-act="desfazer-tirar" data-uid="' + u + '">Desfazer</button></section>';
+  }
+  return '<section class="card ed-serie" data-uid="' + u + '" aria-labelledby="ed-t-' + u + '">' +
+    '<div class="ed-cab"><h2 class="h3 quebra" id="ed-t-' + u + '">' + esc(nome || 'Série nova') + '</h2>' +
+      '<button class="btn ghost sm" type="button" data-act="tirar-serie" data-uid="' + u + '">' + ICON.trash + '<span>Tirar série</span></button></div>' +
+    '<label class="field" for="ed-l-' + u + '">Nome da série' +
+      '<input class="in" id="ed-l-' + u + '" data-ed="label" data-uid="' + u + '" value="' + esc(s.label) + '" maxlength="' + MAX_LABEL + '" autocomplete="off" placeholder="Exemplo: 1ª Série"></label>' +
+    '<label class="field" for="ed-a-' + u + '">Alunos, um por linha' +
+      '<textarea class="in ed-nomes" id="ed-a-' + u + '" data-ed="texto" data-uid="' + u + '" rows="12" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="words" aria-describedby="ed-i-' + u + ' ed-w-' + u + '"></textarea></label>' +
+    '<p class="ed-info" id="ed-i-' + u + '"></p>' +
+    '<ul class="ed-avisos" id="ed-w-' + u + '"></ul>' +
+  '</section>';
+}
+function renderEditor(){
+  var el = $('#editar-conteudo');
+  if (!rascunho) {
+    if (!series) {
+      var erro = erroSeries || (!carregado && erroLista);
+      el.innerHTML = erro
+        ? '<div class="card vazio-box"><p class="msg erro">' + esc(erro) + '</p><button class="btn sm" type="button" data-act="atualizar">Tentar de novo</button></div>'
+        : '<div class="card"><p class="carregando"><span class="pulso" aria-hidden="true"></span>Carregando as listas…</p></div>';
+      return;
+    }
+    iniciarRascunho();
+  }
+  pendenteListas = null;
+  var ativos = rascunho.lista.filter(function(s){ return !s.removida; }).length;
+  el.innerHTML =
+    '<div class="ed-series">' + rascunho.lista.map(cartaoEditor).join('') + '</div>' +
+    '<div class="ed-acoes">' +
+      '<button class="btn sm" type="button" data-act="adicionar-serie" id="b-adicionar-serie"' + (ativos >= MAX_SERIES ? ' disabled' : '') + '>' + ICON.mais + '<span>Adicionar série</span></button>' +
+      '<button class="btn sm" type="button" data-act="pedir-descartar" id="b-descartar">Descartar mudanças</button>' +
+    '</div>' +
+    '<div class="confirma" id="conf-descartar" role="group" aria-labelledby="conf-descartar-t" hidden>' +
+      '<p id="conf-descartar-t" tabindex="-1"><b>Descartar as mudanças?</b> As listas voltam a ser as que estão salvas.</p>' +
+      '<div class="row"><button class="btn primary sm" type="button" data-act="descartar">Sim, descartar</button>' +
+      '<button class="btn sm" type="button" data-act="cancelar">Cancelar</button></div>' +
+    '</div>' +
+    '<div class="confirma perigo" id="conf-listas" role="group" aria-labelledby="conf-listas-t" hidden></div>' +
+    '<div class="msg" id="ed-msg" tabindex="-1" hidden></div>' +
+    '<div class="ed-barra"><p class="ed-estado" id="ed-estado" aria-live="polite"></p>' +
+      '<button class="btn primary" type="button" data-act="salvar-listas" id="b-salvar-listas">Salvar listas</button></div>';
+  rascunho.lista.forEach(function(s){ var ta = $('#ed-a-' + s.uid); if (ta) ta.value = s.texto; });
+  atualizarAvisosEditor();
+}
+/* Contagem, avisos e erros de cada série enquanto o professor escreve. */
+function atualizarAvisosEditor(){
+  clearTimeout(avisosT);
+  if (!rascunho || view !== 'editar' || !$('#ed-estado')) return null;
+  var r = lerRascunho();
+  var salvas = new Map((series ? series.turmas : []).map(function(s){ return [s.key, s]; }));
+  r.lidas.forEach(function(l){
+    var info = $('#ed-i-' + l.uid), av = $('#ed-w-' + l.uid), t = $('#ed-t-' + l.uid);
+    if (!info || !av) return;
+    if (t) t.textContent = l.label || 'Série nova';
+    var antes = l.key ? salvas.get(l.key) : null;
+    var txt = '<b>' + l.nomes.length + '</b> ' + pl(l.nomes.length, 'nome', 'nomes');
+    if (antes) {
+      var a = new Set(antes.alunos), d = new Set(l.nomes);
+      var novos = l.nomes.filter(function(n){ return !a.has(n); }).length;
+      var saem = antes.alunos.filter(function(n){ return !d.has(n); }).length;
+      if (novos) txt += ' · <span class="mais">' + novos + ' ' + pl(novos, 'novo', 'novos') + '</span>';
+      if (saem) txt += ' · <span class="menos">' + saem + ' ' + pl(saem, 'sai', 'saem') + '</span>';
+    } else if (l.key && l.campo !== 'label') txt += ' · série nova';
+    info.innerHTML = txt;
+    av.innerHTML = l.erros.map(function(e){ return '<li class="erro">' + esc(e) + '</li>'; }).join('') +
+      l.avisos.map(function(e){ return '<li>' + esc(e) + '</li>'; }).join('');
+    var card = info.closest('.ed-serie');
+    if (card) card.classList.toggle('com-erro', l.erros.length > 0);
+  });
+  rascunho.sujo = assinaturaRascunho(r) !== rascunho.base;
+  atualizarBarraEditor();
+  return r;
+}
+function atualizarBarraEditor(){
+  var e = $('#ed-estado'), d = $('#b-descartar');
+  if (!e || !rascunho) return;
+  e.className = 'ed-estado' + (rascunho.sujo ? ' sujo' : '');
+  e.textContent = rascunho.sujo ? 'Você mudou as listas. Falta salvar.'
+    : rascunho.salvoAs ? 'Listas salvas às ' + hhmm(new Date(rascunho.salvoAs)) + '.'
+    : 'Nenhuma mudança ainda.';
+  if (d) d.disabled = !rascunho.sujo;
+}
+function msgEditor(tipo, conteudo, ehHtml){
+  var m = $('#ed-msg');
+  if (!m) return;
+  m.setAttribute('role', tipo === 'erro' ? 'alert' : 'status');
+  m.className = 'msg ' + tipo + (ehHtml ? ' longa' : '');
+  if (ehHtml) m.innerHTML = conteudo; else m.textContent = conteudo;
+  m.hidden = false;
+  try { m.scrollIntoView({block: 'nearest'}); } catch (e) { m.scrollIntoView(false); }
+}
+function esconderMsgEditor(){ var m = $('#ed-msg'); if (m) m.hidden = true; }
+function fecharConfirmaListas(){
+  var c = $('#conf-listas');
+  if (c) c.hidden = true;
+  pendenteListas = null;
+}
+function mostrarEditar(){
+  mostrarView('editar');
+  document.title = 'Editar listas · Painel do professor';
+  window.scrollTo(0, 0);
+  renderEditor();
+  focarTitulo('#editar-titulo');
+  if (!carregado || !series) carregarLista();
+}
+
+/* Salvar: confere os erros, busca a lista e os alunos de agora e pede confirmação na página
+   se algum aluno que já entrou vai sair da lista (ou se a lista mudou em outro aparelho). */
+function pedirSalvarListas(botao){
+  if (!rascunho || salvandoListas) return;
+  fecharConfirmaListas();
+  esconderMsgEditor();
+  var r = atualizarAvisosEditor() || lerRascunho();
+  if (r.geral || r.comErro.length) {
+    var p = r.comErro[0];
+    msgEditor('erro', r.geral || ('Confira a série ' + (p.label || 'nova') + ': ' + p.erros[0]));
+    var campo = p && $(p.campo === 'label' ? '#ed-l-' + p.uid : '#ed-a-' + p.uid);
+    if (campo) {
+      try { campo.focus({preventScroll: true}); } catch (e) { campo.focus(); }
+      try { campo.closest('.ed-serie').scrollIntoView({block: 'start'}); } catch (e) {}
+    }
+    return;
+  }
+  salvandoListas = true;
+  var soltar = ocupar(botao, 'Conferindo…');
+  Promise.all([api('/professor/turmas'), api('/professor/alunos')]).then(function(rs){
+    salvandoListas = false;
+    soltar();
+    aplicarSeries(rs[0]);
+    aplicarAlunos(rs[1]);
+    carregado = true; atualizadoAs = Date.now(); erroLista = '';
+    if (view !== 'editar' || !rascunho) return;
+    var antes = idsDasSeries(series.turmas), depois = idsDasSeries(r.lidas);
+    var saem = alunos.filter(function(a){ return antes.has(a.id) && !depois.has(a.id); });
+    var mudouFora = JSON.stringify(series.turmas.map(function(s){ return {key: s.key, label: s.label, alunos: s.alunos}; })) !== rascunho.base;
+    if (saem.length || mudouFora) { mostrarConfirmaListas(r, saem, mudouFora); return; }
+    enviarListas(r, $('#b-salvar-listas'));
+  }, function(e){
+    salvandoListas = false;
+    soltar();
+    if (e.codigo === 'sessao') return;
+    msgEditor('erro', e.message);
+  });
+}
+function mostrarConfirmaListas(r, saem, mudouFora){
+  pendenteListas = r;
+  var c = $('#conf-listas');
+  var h = '';
+  if (saem.length) {
+    var um = saem.length === 1;
+    h += '<p id="conf-listas-t" tabindex="-1"><b>' + (um ? 'Um aluno que já entrou no jogo vai sair da lista:' : saem.length + ' alunos que já entraram no jogo vão sair da lista:') + '</b></p>' +
+      '<ul class="nomes-lista">' + saem.slice(0, 12).map(function(a){
+        return '<li><b>' + esc(a.nome) + '</b> · ' + esc(rotulo(a)) + ' · ' + esc(resumoProgresso(a)) + '</li>';
+      }).join('') + (saem.length > 12 ? '<li>e mais ' + (saem.length - 12) + '</li>' : '') + '</ul>' +
+      '<p>' + (um ? 'Ele não vai conseguir entrar mais.' : 'Eles não vão conseguir entrar mais.') +
+      ' O progresso e os textos continuam guardados e aparecem em Progresso. Se você só corrigiu a grafia de um nome, o aluno começa do zero com o nome novo.</p>';
+  }
+  if (mudouFora) {
+    h += '<p' + (saem.length ? '' : ' id="conf-listas-t" tabindex="-1"') + '><b>As listas foram mudadas em outro aparelho</b> depois que você começou a editar. Se salvar agora, vale a sua versão. Para ver a versão nova, use "Descartar mudanças".</p>';
+  }
+  h += '<div class="row"><button class="btn ' + (saem.length ? 'danger cheio' : 'primary') + ' sm" type="button" data-act="confirmar-listas">Sim, salvar assim</button>' +
+    '<button class="btn sm" type="button" data-act="cancelar">Voltar e conferir</button></div>';
+  c.className = 'confirma' + (saem.length ? ' perigo' : '');
+  c.innerHTML = h;
+  abrirConfirma('#conf-listas');
+}
+function resumoSalvo(antes, depois){
+  var mapa = new Map(antes.map(function(s){ return [s.key, s]; }));
+  var nomesHtml = function(l){
+    var m = l.slice(0, 8).map(esc).join(', ');
+    return l.length > 8 ? m + ' e mais ' + (l.length - 8) : m;
+  };
+  var itens = depois.map(function(s){
+    var a = mapa.get(s.key);
+    mapa.delete(s.key);
+    var txt = '<b>' + esc(s.label) + '</b>' + (a && a.label !== s.label ? ' (antes: ' + esc(a.label) + ')' : '') + ': ' + s.alunos.length + ' ' + pl(s.alunos.length, 'nome', 'nomes');
+    if (!a) return '<li>' + txt + ', série nova.</li>';
+    var A = new Set(a.alunos), D = new Set(s.alunos);
+    var novos = s.alunos.filter(function(n){ return !A.has(n); });
+    var sairam = a.alunos.filter(function(n){ return !D.has(n); });
+    if (novos.length) txt += '. ' + pl(novos.length, 'Entrou', 'Entraram') + ' na lista: ' + nomesHtml(novos);
+    if (sairam.length) txt += '. ' + pl(sairam.length, 'Saiu', 'Saíram') + ': ' + nomesHtml(sairam);
+    if (!novos.length && !sairam.length) txt += ', sem mudança nos nomes';
+    return '<li>' + txt + '.</li>';
+  });
+  mapa.forEach(function(s){ itens.push('<li><b>' + esc(s.label) + '</b> saiu das listas.</li>'); });
+  return '<b>Listas salvas!</b> Os nomes ficaram em MAIÚSCULAS, sem acento e em ordem alfabética, do jeito que o aluno vai escrever. Confira nas caixas acima.' +
+    '<ul class="resumo-listas">' + itens.join('') + '</ul>';
+}
+function enviarListas(r, botao){
+  if (salvandoListas || !rascunho) return;
+  salvandoListas = true;
+  var conf = $('#conf-listas'), confBotao = conf && !conf.hidden ? conf.querySelector('[data-act="confirmar-listas"]') : null;
+  var soltar = ocupar(botao || $('#b-salvar-listas'), 'Salvando…');
+  var soltar2 = confBotao ? ocupar(confBotao, 'Salvando…') : function(){};
+  var antes = series ? series.turmas : [];
+  var corpo = {turmas: r.lidas.map(function(l){ return {label: l.label, alunos: l.nomes}; })};
+  api('/professor/turmas', {metodo: 'POST', corpo: corpo}).then(function(res){
+    salvandoListas = false;
+    aplicarSeries(res);
+    rascunho = null;
+    iniciarRascunho();
+    rascunho.salvoAs = Date.now();
+    toast('Listas salvas!');
+    if (view !== 'editar') return;
+    renderEditor();
+    msgEditor('ok', resumoSalvo(antes, series.turmas), true);
+    var m = $('#ed-msg'); if (m) { try { m.focus({preventScroll: true}); } catch (e) {} }
+  }, function(e){
+    salvandoListas = false;
+    soltar(); soltar2();
+    if (e.codigo === 'sessao') return;
+    fecharConfirmaListas();
+    msgEditor('erro', e.message);
+  });
+}
+
+/* digitação no editor */
+document.addEventListener('input', function(ev){
+  var t = ev.target;
+  var campo = t && t.getAttribute && t.getAttribute('data-ed');
+  if (!campo || !rascunho) return;
+  var s = itemRascunho(Number(t.getAttribute('data-uid')));
+  if (!s) return;
+  s[campo] = t.value;
+  rascunho.sujo = true;
+  fecharConfirmaListas();
+  esconderMsgEditor();
+  atualizarBarraEditor();
+  clearTimeout(avisosT);
+  avisosT = setTimeout(atualizarAvisosEditor, 180);
+});
+
 /* ---------- detalhe do aluno ---------- */
-function paragrafosHTML(a, carregandoTexto){
-  if (carregandoTexto) return '<p class="vazio">Carregando a redação…</p>';
-  return PARA_NOME.map(function(nome, i){
-    var p = String((a.paras && a.paras[i]) || '').trim();
-    return '<span class="lbl">' + nome + '</span>' +
-      (p ? '<p>' + esc(p) + '</p>' : '<p class="vazio">Ainda não escreveu este parágrafo.</p>');
-  }).join('');
+function temTxt(x){ return !!String(x || '').trim(); }
+/* Seções do detalhe, uma por atividade, em ordem de série e de atividade. Aluno: as atividades da série dele
+   (mesmo as que ainda não começou) e as que ele começou ou tem texto (mesmo fora do catálogo).
+   Perfil de teste: só as que começou. a.textos = null enquanto o detalhe não chegou. */
+function secoesAluno(a){
+  var textos = a.textos || [], porT = new Map(textos.map(function(t){ return [t.id, t]; }));
+  var m = progressoMapa(a), vistos = new Set(), ids = [];
+  function add(id){ if (!vistos.has(id)) { vistos.add(id); ids.push(id); } }
+  if (!a.coringa) atividadesDaSerie(a.turmaKey).forEach(function(c){ add(c.id); });
+  a.atividades.forEach(function(x){ add(x.id); });
+  textos.forEach(function(t){ add(t.id); });
+  return ordenarInfos(ids.map(function(id){ return infoAtiv(id, porT.get(id) || null); })).map(function(i){
+    var t = porT.get(i.id) || null, pr = m.get(i.id) || null;
+    if (!pr && t) pr = {id: i.id, fases: t.fases, total: t.total, concluiu: t.concluiu, temTexto: t.partes.some(temTxt)};
+    return {info: i, t: t, p: pr};
+  });
+}
+function nomeParte(info, i){ return info.nomesPartes[i] || (i + 1) + (info.verso ? 'ª estrofe' : 'º parágrafo'); }
+function linhasTexto(t){
+  if (!t) return 0;
+  return t.partes.reduce(function(n, x){
+    x = String(x || '').trim();
+    return x ? n + (t.verso ? x.split('\n').filter(temTxt).length : Math.ceil((x.length + 6) / 66)) : n;
+  }, 0);
+}
+function nomeAtivLongo(info, a){
+  return info.rotulo + (info.genero ? ' · ' + info.genero : '') + (a && a.coringa && info.serie ? ' (' + nomeSerie(info.serie) + ')' : '');
+}
+/* Título e partes, como na folha (texto simples). */
+function corpoTexto(t){
+  if (!t) return '';
+  var l = [];
+  if (temTxt(t.titulo)) l.push(t.titulo.trim());
+  t.partes.forEach(function(x){ if (temTxt(x)) l.push(String(x).trim()); });
+  return l.join('\n\n');
+}
+function partesHTML(sec){
+  var t = sec.t, info = sec.info, h = '';
+  var n = Math.max(t ? t.partes.length : 0, info.nomesPartes.length);
+  if (t && temTxt(t.titulo)) h += '<p class="titulo-texto">' + esc(t.titulo.trim()) + '</p>';
+  for (var i = 0; i < n; i++) {
+    var x = t ? String(t.partes[i] || '').trim() : '';
+    if (!x && !info.nomesPartes[i]) continue;
+    var corpo = !x ? '' : info.verso
+      ? x.split('\n').filter(temTxt).map(function(v){ return '<span class="v">' + esc(v.trim()) + '</span>'; }).join('')
+      : esc(x);
+    h += '<span class="lbl">' + esc(nomeParte(info, i)) + '</span>' +
+      (x ? '<p>' + corpo + '</p>' : '<p class="vazio">' + (info.verso ? 'Ainda não escreveu esta estrofe.' : 'Ainda não escreveu este parágrafo.') + '</p>');
+  }
+  return h || '<p class="vazio">Ainda não escreveu nada nesta atividade.</p>';
+}
+function secaoHTML(a, sec, carregando){
+  var i = sec.info, t = sec.t, st = statusAtiv(sec.p, i, true);
+  var temTexto = !!(t && (t.partes.some(temTxt) || temTxt(t.titulo)));
+  var nl = carregando ? 0 : linhasTexto(t);
+  var idH = 'at-' + i.id;
+  var h = '<section class="ativ-sec" data-ativ="' + esc(i.id) + '" aria-labelledby="' + esc(idH) + '">' +
+    '<div class="ativ-cab">' +
+      (a.coringa && i.serie ? '<p class="eyebrow">' + esc(nomeSerie(i.serie)) + '</p>' : '') +
+      '<h2 class="h3" id="' + esc(idH) + '">' + esc(i.rotulo) + (i.genero ? ' · ' + esc(i.genero) : '') + '</h2>' +
+      (i.tema ? '<p class="ativ-tema"><b>Tema:</b> ' + esc(i.tema) + '</p>' : '') +
+      '<p class="ativ-st">' +
+        (st.ok ? '<span class="sit ok">' + ICON.checkSm + 'Concluiu</span>' : '<span class="sit ' + (sec.p ? 'fase' : 'nao') + '">' + esc(st.txt) + '</span>') +
+        (sec.p ? barra(st.f, st.total, st.ok) : '') +
+        (nl ? '<span>' + nl + ' ' + (i.verso ? pl(nl, 'verso', 'versos') : pl(nl, 'linha', 'linhas')) + '</span>' : '') +
+        (t && t.xp ? '<span>' + t.xp + ' XP</span>' : '') +
+        (!i.noCatalogo ? '<span class="tag info">Não está mais no jogo</span>' : '') +
+      '</p>' +
+    '</div>';
+  if (!sec.p && !t) return h + '</section>';
+  return h +
+    '<article class="folha" aria-label="' + esc(nomeAtivLongo(i) + ' de ' + a.nome) + '">' +
+      '<div class="folha-h"><span class="t">' + esc(i.genero || i.rotulo) + '</span><span class="n">' + esc(a.nome) + ' · ' + esc(rotulo(a)) + '</span></div>' +
+      '<div class="folha-c' + (i.verso ? ' verso' : '') + '">' + (carregando ? '<p class="vazio">Carregando o texto…</p>' : partesHTML(sec)) + '</div>' +
+    '</article>' +
+    '<div class="row"><button class="btn sm" type="button" data-act="copiar-texto" data-ativ="' + esc(i.id) + '"' + (temTexto && !carregando ? '' : ' disabled') + '>' + ICON.copy + '<span>Copiar texto</span></button>' +
+      (!temTexto && !carregando ? '<span class="fine">Ainda não há texto para copiar.</span>' : '') + '</div>' +
+    '<div class="copybox" data-copybox="' + esc(i.id) + '" hidden>' +
+      '<label class="tip" for="copy-' + esc(i.id) + '">Não deu para copiar sozinho. Selecione todo o texto abaixo e copie:</label>' +
+      '<textarea class="in" id="copy-' + esc(i.id) + '" rows="8" readonly></textarea>' +
+      '<div class="row"><button class="btn sm" type="button" data-act="copiar-caixa">Tentar copiar de novo</button>' +
+      '<button class="btn ghost sm" type="button" data-act="fechar-caixa">Fechar</button></div>' +
+    '</div>' +
+  '</section>';
+}
+function textoAtividade(a, sec){
+  var i = sec.info;
+  return 'Nome: ' + a.nome + '\nTurma: ' + rotulo(a) + '\nAtividade: ' + nomeAtivLongo(i, a) + (i.tema ? '\nTema: ' + i.tema : '') +
+    '\n\n' + (corpoTexto(sec.t) || '(Ainda sem texto.)');
+}
+function xpTotal(a){
+  return a.textos && a.textos.length ? a.textos.reduce(function(n, t){ return n + t.xp; }, 0) : a.xp;
 }
 function renderAluno(a, opcoes){
   opcoes = opcoes || {};
@@ -922,45 +2065,53 @@ function renderAluno(a, opcoes){
     el.innerHTML = '<div class="card"><p class="carregando"><span class="pulso" aria-hidden="true"></span>Carregando o aluno…</p></div>';
     return;
   }
-  var f = Math.min(a.fases, N_FASES);
+  var carregando = !!opcoes.carregando || !a.textos;
   var rot = rotulo(a);
   var nivel = textoNivel(a.nivel), etapa = textoEtapa(a.etapa);
   var tg = etiquetas(a);
-  var tem = a.paras && a.paras.some(function(p){ return String(p || '').trim(); });
+  var secs = secoesAluno(a);
+  var itens = itensProgresso(a);
+  var feitas = itens.filter(function(it){ return it.p && it.p.concluiu; }).length;
+  var xp = xpTotal(a);
 
   var avisos = '';
-  if (a.bloqueado) avisos += '<p class="msg erro longa"><b>Bloqueado.</b> Errou a senha muitas vezes e pode tentar de novo em até 15 minutos. Para liberar agora, apague a senha do aluno.</p>';
-  if (a.semSenha) avisos += '<p class="msg info longa"><b>Sem senha.</b> Na próxima vez que entrar, o aluno cria uma senha nova de 4 números. O progresso e a redação continuam salvos.</p>';
+  if (a.bloqueado) avisos += '<p class="msg erro longa"><b>Bloqueado.</b> Errou a senha muitas vezes e pode tentar de novo em até 15 minutos. Para liberar agora, apague a senha do aluno e entregue a senha nova.</p>';
+  if (a.semSenha) avisos += '<p class="msg info longa"><b>Sem senha.</b> Na próxima vez que entrar, o aluno cria uma senha nova de 6 números. O progresso e os textos continuam salvos.</p>';
+  var naLista = situacaoNaLista(a);
+  if (naLista === 'fora') avisos += '<p class="msg erro longa"><b>Fora da lista.</b> O nome deste aluno não está na lista da ' + esc(rot) + ', por isso ele não consegue entrar no jogo. O progresso e os textos continuam guardados. Para liberar, coloque o nome na lista em Turmas e alunos.</p>';
+  else if (naLista === 'outra') avisos += '<p class="msg erro longa"><b>Turma antiga.</b> Este cadastro é de “' + esc(a.turma || a.turmaKey) + '”, que não é uma das séries das listas. O aluno não consegue entrar com ele. O progresso e os textos continuam guardados.</p>';
+
+  var indice = secs.length > 1
+    ? '<div class="indice" role="group" aria-label="Ir para a atividade">' + secs.map(function(sec){
+        var st = statusAtiv(sec.p, sec.info);
+        return '<button type="button" class="chip" data-act="ir-ativ" data-ativ="' + esc(sec.info.id) + '">' + (st.ok ? ICON.checkSm : '') +
+          '<span class="t">' + esc(nomeAtiv(sec.info)) + (a.coringa && sec.info.serie ? ' · ' + esc(sec.info.serie) + 'ª' : '') + '</span></button>';
+      }).join('') + '</div>'
+    : '';
 
   el.innerHTML =
     '<div class="det-cab">' +
-      '<p class="eyebrow">' + esc(nomeTurma(rot)) + '</p>' +
+      '<p class="eyebrow">' + esc(a.coringa ? ROTULO_TESTE : nomeTurma(rot)) + '</p>' +
       '<h1 id="aluno-titulo" class="quebra" tabindex="-1">' + esc(a.nome) + '</h1>' +
       (tg ? '<div class="tags">' + tg + '</div>' : '') +
-      '<p class="resumo-curto so-celular"><b>' + f + '/' + N_FASES + '</b> fases · <b>' + a.xp + '</b> XP · <b>' + a.linhas + '</b> ' +
-        pl(a.linhas, 'linha', 'linhas') + ' · ' + esc(relativo(a.atualizadoEm)) + '</p>' +
+      '<p class="resumo-curto so-celular">' + (itens.length ? '<b>' + feitas + '</b> de <b>' + itens.length + '</b> ' + pl(itens.length, 'atividade concluída', 'atividades concluídas') + ' · ' : '') +
+        '<b>' + xp + '</b> XP · ' + esc(relativo(a.atualizadoEm)) + '</p>' +
+      (a.coringa ? '<p class="msg info longa"><b>Perfil de teste do professor.</b> Entra escolhendo qualquer série e vê as atividades de todas as séries. Não conta nas turmas.</p>' : '') +
       '<button class="pular so-celular" type="button" data-act="ir-acoes">' + ICON.key + '<span>Senha e cadastro do aluno</span></button>' +
+      indice +
     '</div>' +
     '<div class="det">' +
-      '<div class="stack" style="gap:16px">' +
-        '<article class="folha" aria-label="Redação de ' + esc(a.nome) + '">' +
-          '<div class="folha-h"><span class="t">Redação · ENEM treineiro</span><span class="n">' + esc(a.nome) + ' · ' + esc(rot) + '</span></div>' +
-          '<div class="folha-c">' + paragrafosHTML(a, opcoes.carregando) + '</div>' +
-        '</article>' +
-        '<div class="row"><button class="btn primary" type="button" data-act="copiar-redacao"' + (tem && !opcoes.carregando ? '' : ' disabled') + '>' + ICON.copy + '<span>Copiar redação</span></button>' +
-          (!tem && !opcoes.carregando ? '<span class="fine">Ainda não há texto para copiar.</span>' : '') + '</div>' +
-        '<div class="copybox" id="copybox-aluno" hidden>' +
-          '<label class="tip" for="copy-aluno">Não deu para copiar sozinho. Selecione todo o texto abaixo e copie:</label>' +
-          '<textarea class="in" id="copy-aluno" rows="8" readonly></textarea>' +
-          '<div class="row"><button class="btn sm" type="button" data-act="copiar-caixa">Tentar copiar de novo</button>' +
-          '<button class="btn ghost sm" type="button" data-act="fechar-caixa">Fechar</button></div>' +
-        '</div>' +
+      '<div class="stack" style="gap:20px">' +
+        (secs.length
+          ? secs.map(function(sec){ return secaoHTML(a, sec, carregando); }).join('')
+          : '<div class="card vazio-box"><h2 class="h3">' + (a.coringa ? 'Nenhuma atividade começada.' : 'Ainda não começou nenhuma atividade.') + '</h2>' +
+            '<p class="tip">' + (CATALOGO.length || a.coringa ? 'Quando o aluno abrir uma atividade no jogo, o texto aparece aqui.' : 'Não deu para carregar as atividades do jogo. Atualize a página.') + '</p></div>') +
       '</div>' +
       '<aside class="det-lado stack" aria-label="Dados do aluno">' +
         '<dl class="fatos">' +
-          '<div class="fato largo"><dt>Fases</dt><dd>' + f + ' de ' + N_FASES + (a.concluiu ? ' · concluiu' : '') + barra(f, a.concluiu) + '</dd></div>' +
-          '<div class="fato"><dt>XP</dt><dd>' + a.xp + '</dd></div>' +
-          '<div class="fato"><dt>Linhas</dt><dd>' + a.linhas + '</dd></div>' +
+          '<div class="fato largo"><dt>Atividades</dt><dd>' + progressoHTML(a) + '</dd></div>' +
+          '<div class="fato"><dt>XP</dt><dd>' + xp + '</dd></div>' +
+          '<div class="fato"><dt>Concluídas</dt><dd>' + feitas + ' de ' + itens.length + '</dd></div>' +
           (nivel ? '<div class="fato largo"><dt>Nível</dt><dd>' + esc(nivel) + '</dd></div>' : '') +
           (etapa ? '<div class="fato largo"><dt>Onde parou</dt><dd>' + esc(etapa) + '</dd></div>' : '') +
           '<div class="fato largo"><dt>Última atividade</dt><dd>' + esc(relativo(a.atualizadoEm)) + (a.atualizadoEm ? '<small>' + esc(dataHora(a.atualizadoEm)) + '</small>' : '') + '</dd></div>' +
@@ -970,10 +2121,10 @@ function renderAluno(a, opcoes){
         '<section class="card acoes-aluno" aria-labelledby="acoes-t">' +
           '<h2 class="h3" id="acoes-t" tabindex="-1">Senha e cadastro</h2>' +
           '<div class="acao">' +
-            '<p class="fine">Esqueceu a senha ou ficou bloqueado? Apague a senha. O aluno cria uma nova ao entrar, e o progresso continua salvo.</p>' +
+            '<p class="fine">Esqueceu a senha ou ficou bloqueado? Apague a senha. Vai aparecer uma senha nova de 6 números para você entregar ao aluno. O progresso continua salvo.</p>' +
             '<button class="btn sm" type="button" data-act="pedir-redefinir"' + (opcoes.carregando ? ' disabled' : '') + '>' + ICON.key + '<span>Apagar senha do aluno</span></button>' +
             '<div class="confirma" id="conf-redefinir" role="group" aria-labelledby="conf-redefinir-t" hidden>' +
-              '<p id="conf-redefinir-t" tabindex="-1"><b>Apagar a senha de ' + esc(a.nome) + '?</b> O aluno entra com o mesmo nome e turma e cria uma senha nova de 4 números. O progresso e a redação continuam salvos.</p>' +
+              '<p id="conf-redefinir-t" tabindex="-1"><b>Apagar a senha de ' + esc(a.nome) + '?</b> A senha antiga para de valer e aparece aqui uma senha nova de 6 números para você entregar ao aluno. O progresso e os textos continuam salvos.</p>' +
               '<div class="row"><button class="btn primary sm" type="button" data-act="redefinir">Sim, apagar a senha</button>' +
               '<button class="btn sm" type="button" data-act="cancelar">Cancelar</button></div>' +
             '</div>' +
@@ -981,10 +2132,10 @@ function renderAluno(a, opcoes){
           '</div>' +
           '<hr>' +
           '<div class="acao">' +
-            '<p class="fine">Excluir apaga o aluno, o progresso e a redação para sempre.</p>' +
+            '<p class="fine">Excluir apaga o aluno, o progresso e os textos para sempre.</p>' +
             '<button class="btn danger sm" type="button" data-act="pedir-excluir"' + (opcoes.carregando ? ' disabled' : '') + '>' + ICON.trash + '<span>Excluir aluno</span></button>' +
             '<div class="confirma perigo" id="conf-excluir" role="group" aria-labelledby="conf-excluir-t" hidden>' +
-              '<p id="conf-excluir-t" tabindex="-1"><b>Excluir ' + esc(a.nome) + ' para sempre?</b> O progresso e a redação vão sumir e não dá para desfazer. Se o aluno entrar de novo, ele começa do zero.</p>' +
+              '<p id="conf-excluir-t" tabindex="-1"><b>Excluir ' + esc(a.nome) + ' para sempre?</b> O progresso e os textos vão sumir e não dá para desfazer. Se o aluno entrar de novo, ele começa do zero.</p>' +
               '<div class="row"><button class="btn danger cheio sm" type="button" data-act="excluir">Sim, excluir para sempre</button>' +
               '<button class="btn sm" type="button" data-act="cancelar">Cancelar</button></div>' +
             '</div>' +
@@ -1003,8 +2154,8 @@ function renderAlunoErro(msg, sumiu){
     (sumiu ? '' : '<button class="btn sm" type="button" data-act="tentar-aluno">Tentar de novo</button>') + '</div></div>';
 }
 function detalheOcupado(){
-  var c1 = $('#conf-redefinir'), c2 = $('#conf-excluir'), cb = $('#copybox-aluno');
-  return (c1 && !c1.hidden) || (c2 && !c2.hidden) || (cb && !cb.hidden) || !!$('#aluno-conteudo [aria-busy="true"]');
+  var c1 = $('#conf-redefinir'), c2 = $('#conf-excluir'), okr = $('#ok-redefinir');
+  return (c1 && !c1.hidden) || (c2 && !c2.hidden) || !!$('#aluno-conteudo .copybox:not([hidden])') || (okr && !okr.hidden) || !!$('#aluno-conteudo [aria-busy="true"]');
 }
 function carregarAluno(id, opcoes){
   opcoes = opcoes || {};
@@ -1012,10 +2163,11 @@ function carregarAluno(id, opcoes){
   return api('/professor/aluno?id=' + encodeURIComponent(id)).then(function(r){
     if (seq !== seqAluno || view !== 'aluno' || alunoAberto !== id) return;
     var a = limparAluno(r.aluno);
-    detalhes.set(a.id, {atualizadoEm: a.atualizadoEm, paras: a.paras});
+    if (!a.textos) a.textos = [];
+    detalhes.set(a.id, {atualizadoEm: a.atualizadoEm, textos: a.textos});
     var mudou = JSON.stringify(a) !== JSON.stringify(alunoDados);
     var i = alunos.findIndex(function(x){ return x.id === a.id; });
-    if (i >= 0) { var s = Object.assign({}, a); s.paras = null; alunos[i] = s; }
+    if (i >= 0) { var s = Object.assign({}, a); s.paras = null; s.textos = null; alunos[i] = s; }
     if (opcoes.silencioso && (!mudou || detalheOcupado())) return;
     alunoDados = a;
     var at = document.activeElement;
@@ -1047,7 +2199,9 @@ function mostrarAluno(id){
   window.scrollTo(0, 0);
   var resumo = alunos.find(function(a){ return a.id === id; });
   if (resumo) {
-    renderAluno(Object.assign({}, resumo, {paras: null}), {carregando: true});
+    /* já abriu antes e nada mudou: mostra os textos guardados enquanto confere */
+    var d = detalhes.get(id), igual = d && d.textos && d.atualizadoEm === resumo.atualizadoEm;
+    renderAluno(Object.assign({}, resumo, {paras: null, textos: igual ? d.textos : null}), {carregando: !igual});
     focarTitulo('#aluno-titulo');
   } else renderAluno(null);
   carregarAluno(id, {focar: !resumo});
@@ -1071,17 +2225,20 @@ function redefinirSenha(botao){
   var a = alunoDados; if (!a) return;
   var soltar = ocupar(botao, 'Apagando…');
   $('#erro-aluno').hidden = true;
-  api('/professor/redefinir', {metodo: 'POST', corpo: {id: a.id}}).then(function(){
+  api('/professor/redefinir', {metodo: 'POST', corpo: {id: a.id}}).then(function(r){
     if (alunoDados !== a) return;
-    a.semSenha = true; a.bloqueado = false;
+    var pin = r && typeof r.pin === 'string' && /^\d{6}$/.test(r.pin) ? r.pin : '';
+    a.semSenha = !pin; a.bloqueado = false;
     var i = alunos.findIndex(function(x){ return x.id === a.id; });
-    if (i >= 0) { alunos[i].semSenha = true; alunos[i].bloqueado = false; }
+    if (i >= 0) { alunos[i].semSenha = a.semSenha; alunos[i].bloqueado = false; }
     renderAluno(a);
     var ok = $('#ok-redefinir');
-    ok.innerHTML = 'Pronto! A senha de <b>' + esc(a.nome) + '</b> foi apagada. Na próxima vez, o aluno entra com o mesmo nome e turma e cria uma senha nova.';
+    ok.innerHTML = pin
+      ? 'Pronto! A senha antiga de <b>' + esc(a.nome) + '</b> não vale mais. A senha nova é:<br><span class="pin-novo" id="pin-novo">' + pin + '</span><br>Entregue ao aluno e peça para anotar no caderno. Ele entra com a mesma série, o mesmo nome e esta senha.'
+      : 'Pronto! A senha de <b>' + esc(a.nome) + '</b> foi apagada. Na próxima vez, o aluno entra com a mesma série e o mesmo nome e cria uma senha nova.';
     ok.hidden = false;
     var b = $('[data-act="pedir-redefinir"]'); if (b) b.focus({preventScroll: true});
-    toast('Senha apagada.');
+    toast(pin ? 'Senha nova criada.' : 'Senha apagada.');
   }, function(e){
     if (e.codigo === 'sessao') return;
     soltar();
@@ -1143,25 +2300,19 @@ function copiarDaCaixa(caixa){
     else manual();
   } catch (e) { manual(); }
 }
-function juntarParas(paras){
-  return (paras || []).map(function(p){ return String(p || '').trim(); }).filter(Boolean).join('\n\n');
-}
-function textoRedacao(a){
-  var corpo = juntarParas(a.paras);
-  return 'Nome: ' + a.nome + '\nTurma: ' + rotulo(a) + '\n\n' + (corpo || '(Ainda sem redação.)');
-}
-
-/* ---------- planilha e redações da turma ---------- */
-function parasDe(a){
-  if (!a.temRedacao) return ['', '', '', ''];
+/* ---------- planilha e textos da turma ---------- */
+/* Textos do aluno guardados do detalhe (null = ainda não buscou). Sem texto em nada: lista vazia. */
+function textosGuardados(a){
+  if (!a.temRedacao) return [];
   var d = detalhes.get(a.id);
-  return d && d.paras ? d.paras : ['', '', '', ''];
+  return d && d.textos ? d.textos : [];
 }
+function secoesExport(a){ return secoesAluno(Object.assign({}, a, {textos: textosGuardados(a)})); }
 function buscarRedacoes(lista, aoAvancar){
   var falta = lista.filter(function(a){
     if (!a.temRedacao) return false;
     var d = detalhes.get(a.id);
-    return !d || !d.paras || d.atualizadoEm !== a.atualizadoEm;
+    return !d || !d.textos || d.atualizadoEm !== a.atualizadoEm;
   });
   if (!falta.length) return Promise.resolve();
   var feitos = 0, i = 0, total = falta.length;
@@ -1171,9 +2322,9 @@ function buscarRedacoes(lista, aoAvancar){
     var a = falta[i++];
     return api('/professor/aluno?id=' + encodeURIComponent(a.id)).then(function(r){
       var x = limparAluno(r.aluno);
-      detalhes.set(x.id, {atualizadoEm: a.atualizadoEm, paras: x.paras});
+      detalhes.set(x.id, {atualizadoEm: a.atualizadoEm, textos: x.textos || []});
     }, function(e){
-      if (e.status === 404) { detalhes.set(a.id, {atualizadoEm: a.atualizadoEm, paras: ['', '', '', '']}); return; }
+      if (e.status === 404) { detalhes.set(a.id, {atualizadoEm: a.atualizadoEm, textos: []}); return; }
       throw e;
     }).then(function(){ feitos++; aoAvancar(feitos, total); return proximo(); });
   }
@@ -1188,24 +2339,40 @@ function celulaCsv(v){
   if (/^[=+\-@\t\r]/.test(s) || /^\s+[=+\-@]/.test(s)) s = "'" + s;
   return '"' + s.replace(/"/g, '""') + '"';
 }
+/* "3 de 6" (fases concluídas). Escrito por extenso para o Excel não achar que é data. */
+function fasesCsv(sec){
+  if (!sec.p) return 'Não começou';
+  var st = statusAtiv(sec.p, sec.info);
+  return st.total ? (st.ok ? st.total : Math.min(sec.p.fases, st.total)) + ' de ' + st.total : String(sec.p.fases);
+}
+/* Uma linha por aluno e atividade (as da série dele e as que começou). */
 function gerarCsv(lista){
-  var linhas = [['Nome', 'Turma', 'Fases', 'XP', 'Linhas', 'Última atividade', 'Redação']];
+  var linhas = [['Nome', 'Turma', 'Atividade', 'Fases', 'XP', 'Linhas', 'Última atividade', 'Texto']];
   lista.forEach(function(a){
-    linhas.push([a.nome, rotulo(a), Math.min(a.fases, N_FASES), a.xp, a.linhas, dataHoraCsv(a.atualizadoEm), juntarParas(parasDe(a))]);
+    var secs = secoesExport(a);
+    if (!secs.length) { linhas.push([a.nome, rotulo(a), '', 'Não começou', a.xp, '', dataHoraCsv(a.atualizadoEm), '']); return; }
+    secs.forEach(function(sec){
+      linhas.push([a.nome, rotulo(a), nomeAtivLongo(sec.info, a), fasesCsv(sec), sec.t ? sec.t.xp : '', linhasTexto(sec.t) || '',
+        dataHoraCsv(a.atualizadoEm), corpoTexto(sec.t)]);
+    });
   });
-  return '\uFEFF' + linhas.map(function(l){ return l.map(celulaCsv).join(';'); }).join('\r\n') + '\r\n';
+  return '﻿' + linhas.map(function(l){ return l.map(celulaCsv).join(';'); }).join('\r\n') + '\r\n';
 }
 function textoTodas(lista){
   var com = [], sem = [];
-  lista.forEach(function(a){ (juntarParas(parasDe(a)) ? com : sem).push(a); });
-  var titulo = 'Redações · ' + (filtroTurma ? nomeTurma(rotulos.get(filtroTurma) || filtroTurma) : 'Todas as turmas');
-  var partes = [titulo];
-  com.forEach(function(a){
-    partes.push('------------------------------',
-      a.nome + ' · ' + rotulo(a) + ' · ' + Math.min(a.fases, N_FASES) + '/' + N_FASES + ' fases',
-      '', juntarParas(parasDe(a)), '');
+  lista.forEach(function(a){
+    var secs = secoesExport(a).filter(function(sec){ return !!corpoTexto(sec.t); });
+    (secs.length ? com : sem).push({a: a, secs: secs});
   });
-  if (sem.length) partes.push('------------------------------', 'Ainda sem redação: ' + sem.map(function(a){ return a.nome; }).join(', ') + '.');
+  var partes = ['Textos · ' + nomeFiltro()];
+  com.forEach(function(x){
+    partes.push('------------------------------', x.a.nome + ' · ' + rotulo(x.a));
+    x.secs.forEach(function(sec){
+      partes.push('', '[' + nomeAtivLongo(sec.info, x.a) + ' · ' + statusAtiv(sec.p, sec.info).txt + ']', corpoTexto(sec.t));
+    });
+    partes.push('');
+  });
+  if (sem.length) partes.push('------------------------------', 'Ainda sem texto: ' + sem.map(function(x){ return x.a.nome; }).join(', ') + '.');
   return {texto: partes.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n', com: com.length};
 }
 function hojeArquivo(){ var d = new Date(); return d.getFullYear() + '-' + dois(d.getMonth() + 1) + '-' + dois(d.getDate()); }
@@ -1227,17 +2394,17 @@ function exportar(tipo){
   var st = $('#export-status');
   st.textContent = '';
   if (tipo === 'copiar') $('#copybox-todas').hidden = true;
-  buscarRedacoes(lista, function(f, t){ st.textContent = 'Buscando as redações… ' + f + ' de ' + t; }).then(function(){
+  buscarRedacoes(lista, function(f, t){ st.textContent = 'Buscando os textos… ' + f + ' de ' + t; }).then(function(){
     st.textContent = '';
     if (tipo === 'csv') {
-      var arq = 'missao-redacao-' + (filtroTurma || 'todas') + (busca.trim() ? '-busca' : '') + '-' + hojeArquivo() + '.csv';
+      var arq = 'missao-redacao-' + (filtroTurma === OUTRAS ? 'outras' : filtroTurma === TESTE ? 'perfil-de-teste' : filtroTurma ? 'serie-' + filtroTurma : 'todas') + (busca.trim() ? '-busca' : '') + '-' + hojeArquivo() + '.csv';
       baixar(arq, gerarCsv(lista), 'text/csv;charset=utf-8');
       toast('Planilha baixada: ' + lista.length + ' ' + pl(lista.length, 'aluno', 'alunos') + '.');
       return;
     }
     var r = textoTodas(lista);
-    if (!r.com) { st.textContent = 'Nenhum aluno desta lista escreveu a redação ainda.'; return; }
-    return copiar(r.texto, $('#copybox-todas'), r.com + ' ' + pl(r.com, 'redação copiada', 'redações copiadas') + '! Agora é só colar.');
+    if (!r.com) { st.textContent = 'Nenhum aluno desta lista escreveu um texto ainda.'; return; }
+    return copiar(r.texto, $('#copybox-todas'), 'Textos de ' + r.com + ' ' + pl(r.com, 'aluno copiados', 'alunos copiados') + '! Agora é só colar.');
   }, function(e){
     st.textContent = e.codigo === 'sessao' ? '' : e.message;
   }).then(function(){
@@ -1301,18 +2468,68 @@ document.addEventListener('click', function(ev){
     renderLista();
     return;
   }
-  var item = alvo.closest('#lista [data-id]');
+  var item = alvo.closest('#lista [data-id], #turmas-conteudo [data-id]');
   if (item) {
     var sel = window.getSelection && String(window.getSelection());
     if (sel && item.tagName === 'TR' && !alvo.closest('button')) return; /* deixa selecionar texto da tabela */
     abrirAluno(item.getAttribute('data-id'));
     return;
   }
+  var sc = alvo.closest('#turmas-conteudo [data-serie]');
+  if (sc) {
+    if (filtroSerie !== sc.getAttribute('data-serie')) { filtroSerie = sc.getAttribute('data-serie'); ls.set(LS_SERIE, filtroSerie); filtroSit = 'todos'; }
+    renderTurmas();
+    return;
+  }
+  var st = alvo.closest('#turmas-conteudo [data-sit]');
+  if (st) { filtroSit = st.getAttribute('data-sit') || 'todos'; renderTurmas(); return; }
+  var ac = alvo.closest('#turmas-conteudo [data-ativ-chip]');
+  if (ac) { filtroAtiv.set(filtroSerie, ac.getAttribute('data-ativ-chip')); guardarAtivs(); renderTurmas(); return; }
   var b = alvo.closest('[data-act]');
   if (!b || b.disabled) return;
   var act = b.getAttribute('data-act');
+  var uid = Number(b.getAttribute('data-uid')) || 0;
   switch (act) {
     case 'inicio': if (token) { if (view === 'lista') { window.scrollTo(0, 0); focarTitulo('#lista-titulo'); } else navegar(''); } break;
+    case 'aba': {
+      var aba = b.getAttribute('data-aba') || '';
+      if (aba === 'turmas') { if (view !== 'turmas') navegar('turmas'); }
+      else if (view !== 'lista') navegar('');
+      break;
+    }
+    case 'ver-outras': filtroTurma = OUTRAS; ls.set(LS_TURMA, OUTRAS); busca = ''; $('#busca').value = ''; navegar(''); break;
+    case 'editar-listas': if (view !== 'editar') navegar('listas'); break;
+    case 'adicionar-serie': {
+      if (!rascunho) break;
+      var nova = {uid: ++uidSerie, label: '', texto: '', removida: false};
+      rascunho.lista.push(nova);
+      renderEditor();
+      var campoNovo = $('#ed-l-' + nova.uid);
+      if (campoNovo) { campoNovo.focus({preventScroll: true}); try { campoNovo.closest('.ed-serie').scrollIntoView({block: 'center'}); } catch (e) {} }
+      break;
+    }
+    case 'tirar-serie': {
+      var s = itemRascunho(uid);
+      if (!s) break;
+      if (!limparRotulo(s.label) && !String(s.texto || '').trim()) rascunho.lista = rascunho.lista.filter(function(x){ return x !== s; });
+      else s.removida = true;
+      renderEditor();
+      var volta = $('[data-act="desfazer-tirar"][data-uid="' + uid + '"]') || $('#b-adicionar-serie');
+      if (volta) volta.focus();
+      break;
+    }
+    case 'desfazer-tirar': {
+      var s2 = itemRascunho(uid);
+      if (!s2) break;
+      s2.removida = false;
+      renderEditor();
+      var l2 = $('#ed-l-' + uid); if (l2) l2.focus();
+      break;
+    }
+    case 'pedir-descartar': fecharConfirmaListas(); abrirConfirma('#conf-descartar'); break;
+    case 'descartar': rascunho = null; renderEditor(); toast('Mudanças descartadas.'); focarTitulo('#editar-titulo'); window.scrollTo(0, 0); break;
+    case 'salvar-listas': pedirSalvarListas(b); break;
+    case 'confirmar-listas': if (pendenteListas) enviarListas(pendenteListas); break;
     case 'sair': sair(); break;
     case 'senha': if (view !== 'senha') navegar('senha'); break;
     case 'voltar': voltar(); break;
@@ -1321,7 +2538,18 @@ document.addEventListener('click', function(ev){
     case 'csv': exportar('csv'); break;
     case 'copiar-todas': exportar('copiar'); break;
     case 'copiar-link': copiar(location.origin + '/', $('#copybox-todas'), 'Link copiado!'); break;
-    case 'copiar-redacao': if (alunoDados) copiar(textoRedacao(alunoDados), $('#copybox-aluno'), 'Redação copiada!'); break;
+    case 'copiar-texto': {
+      var idA = b.getAttribute('data-ativ'), secA = null;
+      if (alunoDados) secoesAluno(alunoDados).forEach(function(x){ if (x.info.id === idA) secA = x; });
+      var caixa = secA && $('#aluno-conteudo [data-copybox="' + cssId(idA) + '"]');
+      if (secA && caixa) copiar(textoAtividade(alunoDados, secA), caixa, 'Texto copiado!');
+      break;
+    }
+    case 'ir-ativ': {
+      var sec = $('#aluno-conteudo .ativ-sec[data-ativ="' + cssId(b.getAttribute('data-ativ') || '') + '"]');
+      if (sec) { sec.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'}); focarTitulo('#at-' + cssId(b.getAttribute('data-ativ') || '')); }
+      break;
+    }
     case 'copiar-caixa': copiarDaCaixa(b.closest('.copybox')); break;
     case 'fechar-caixa': b.closest('.copybox').hidden = true; break;
     case 'ir-acoes': {
@@ -1336,24 +2564,27 @@ document.addEventListener('click', function(ev){
     case 'pedir-excluir':
       $('#conf-redefinir').hidden = true;
       abrirConfirma('#conf-excluir'); break;
-    case 'cancelar': {
-      var c = b.closest('.confirma'); c.hidden = true;
-      var volta = $(c.id === 'conf-excluir' ? '[data-act="pedir-excluir"]' : '[data-act="pedir-redefinir"]');
-      if (volta) volta.focus();
-      break;
-    }
+    case 'cancelar': fecharConfirma(b.closest('.confirma')); break;
     case 'redefinir': redefinirSenha(b); break;
     case 'excluir': excluirAluno(b); break;
   }
 });
+/* botão que recebe o foco quando uma confirmação fecha */
+var VOLTA_CONFIRMA = {
+  'conf-excluir': '[data-act="pedir-excluir"]', 'conf-redefinir': '[data-act="pedir-redefinir"]',
+  'conf-listas': '#b-salvar-listas', 'conf-descartar': '#b-descartar'
+};
+function fecharConfirma(c){
+  if (!c) return;
+  c.hidden = true;
+  if (c.id === 'conf-listas') pendenteListas = null;
+  var volta = VOLTA_CONFIRMA[c.id] && $(VOLTA_CONFIRMA[c.id]);
+  if (volta) volta.focus();
+}
 document.addEventListener('keydown', function(ev){
   if (ev.key !== 'Escape') return;
   var c = ev.target.closest && ev.target.closest('.confirma');
-  if (c && !c.hidden) {
-    c.hidden = true;
-    var volta = $(c.id === 'conf-excluir' ? '[data-act="pedir-excluir"]' : '[data-act="pedir-redefinir"]');
-    if (volta) volta.focus();
-  }
+  if (c && !c.hidden) fecharConfirma(c);
 });
 
 /* ---------- atualização automática ---------- */
@@ -1364,7 +2595,7 @@ function atualizarTudo(){
 }
 setInterval(function(){
   if (document.visibilityState === 'visible') atualizarTudo();
-  else if (view === 'lista') renderStatus();
+  else if (view === 'lista' || view === 'turmas') renderStatus();
 }, INTERVALO);
 document.addEventListener('visibilitychange', function(){
   if (document.visibilityState === 'visible' && Date.now() - atualizadoAs >= INTERVALO) atualizarTudo();

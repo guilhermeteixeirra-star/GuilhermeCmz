@@ -2,6 +2,10 @@
   publish = "public"
   command = "echo sem build"
 
+[build.environment]
+  # @netlify/blobs 11 precisa do Node 22.12 ou mais novo (build e funções).
+  NODE_VERSION = "22"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"

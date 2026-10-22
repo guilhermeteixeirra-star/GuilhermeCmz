@@ -1,23 +1,65 @@
 // Servidor local para testar o site sem o Netlify.
-// Uso: node dev/server.mjs [porta]   (porta padrão 8888)
+// Uso: node dev/server.mjs [porta] [--turmas arquivo.json]   (porta padrão 8888)
 // - serve os arquivos de public/
 // - manda /api/* para a API (src/core.mjs) com os dados só na memória
 //   (ao fechar o servidor, tudo some).
+// - lista de alunos padrão: a variável de ambiente TURMAS_ALUNOS (como no Netlify) ou o arquivo
+//   de --turmas (mesmo formato: [{"label":"1ª Série","alunos":["NOME SOBRENOME", ...]}, ...]).
+//   A lista NÃO fica no repositório (ele é público).
+// - perfil de teste do professor: ALUNOS_CORINGA e CORINGA_SENHA vêm de process.env (como no Netlify).
 
 import http from "node:http";
 import path from "node:path";
-import { createReadStream } from "node:fs";
+import { createReadStream, readFileSync } from "node:fs";
 import { stat } from "node:fs/promises";
 import { Readable } from "node:stream";
 import { fileURLToPath } from "node:url";
-import { createApi } from "../src/core.mjs";
+import { createApi, lerTurmasJson, lerCoringas, lerSenhaCoringa } from "../src/core.mjs";
 import { MemoryStore } from "./memory-store.mjs";
 
 const RAIZ = path.resolve(fileURLToPath(new URL("../public/", import.meta.url)));
-const porta = Number(process.argv[2] || process.env.PORT || 8888);
+const USO = "Uso: node dev/server.mjs [porta] [--turmas arquivo.json]";
+
+function lerArgumentos(argv) {
+  const r = { porta: undefined, turmas: undefined };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === "--turmas") {
+      r.turmas = argv[++i];
+      if (!r.turmas) sair(`Faltou o arquivo depois de --turmas.\n${USO}`);
+    } else if (a.startsWith("--turmas=")) {
+      r.turmas = a.slice("--turmas=".length);
+    } else if (/^\d+$/.test(a) && r.porta === undefined) {
+      r.porta = Number(a);
+    } else {
+      sair(`Argumento desconhecido: ${a}\n${USO}`);
+    }
+  }
+  return r;
+}
+
+function sair(msg) {
+  console.error(msg);
+  process.exit(2);
+}
+
+const args = lerArgumentos(process.argv.slice(2));
+const porta = Number(args.porta || process.env.PORT || 8888);
+
+let textoTurmas = process.env.TURMAS_ALUNOS;
+let origemTurmas = "variável TURMAS_ALUNOS";
+if (args.turmas) {
+  try {
+    textoTurmas = readFileSync(path.resolve(args.turmas), "utf8");
+    origemTurmas = `arquivo ${args.turmas}`;
+  } catch (e) {
+    sair(`Não deu para ler a lista de alunos (${args.turmas}): ${e.message}`);
+  }
+}
 
 const store = new MemoryStore();
-const api = createApi({ store });
+const env = { get: (k) => (k === "TURMAS_ALUNOS" ? textoTurmas : process.env[k]) };
+const api = createApi({ store, env });
 
 const TIPOS = {
   ".html": "text/html; charset=utf-8",
@@ -145,6 +187,23 @@ servidor.listen(porta, () => {
   console.log(`Missão Redação (local): http://localhost:${porta}/`);
   console.log(`Painel do professor:    http://localhost:${porta}/professor/`);
   console.log("Os dados ficam só na memória e somem ao fechar o servidor.");
+  // Só os totais: os nomes dos alunos não aparecem no terminal.
+  const turmas = lerTurmasJson(textoTurmas);
+  if (turmas.length) {
+    const total = turmas.reduce((n, s) => n + s.alunos.length, 0);
+    console.log(`Lista de alunos (${origemTurmas}): ${turmas.length} séries, ${total} nomes.`);
+  } else if (textoTurmas && textoTurmas.trim()) {
+    console.log(`Atenção: a lista de alunos (${origemTurmas}) é inválida. Nenhum aluno consegue entrar.`);
+  } else {
+    console.log("Atenção: sem lista de alunos (use TURMAS_ALUNOS ou --turmas arquivo.json). Nenhum aluno consegue entrar.");
+  }
+  const coringas = lerCoringas(process.env.ALUNOS_CORINGA);
+  const senhaCoringa = lerSenhaCoringa(process.env.CORINGA_SENHA).estado;
+  console.log(
+    `Perfil de teste: ${coringas.length} ${coringas.length === 1 ? "nome" : "nomes"}` +
+      (process.env.ALUNOS_CORINGA === undefined ? " (padrão)" : " (ALUNOS_CORINGA)") +
+      (senhaCoringa === "ok" ? "; senha inicial: CORINGA_SENHA." : senhaCoringa === "invalida" ? "; CORINGA_SENHA INVÁLIDA (o perfil não é criado)." : "; senha inicial: a do 1º acesso."),
+  );
 });
 
 for (const sinal of ["SIGINT", "SIGTERM"]) {

@@ -1,5 +1,5 @@
 {
   "private": true,
   "type": "module",
-  "main": "api.test.mjs"
+  "main": "todos.mjs"
 }
