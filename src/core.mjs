@@ -68,7 +68,7 @@ const MSG = {
   turmas: "A lista de alunos veio com problema.",
   sessaoAluno: "Sua entrada expirou. Entre de novo com seu nome e senha.",
   sessaoProfessor: "Sua entrada expirou. Entre de novo com a senha do professor.",
-  senhaProfessor: "Senha errada.",
+  senhaProfessor: "Senha errada. Confira as letras maiúsculas e minúsculas. A senha do painel não é a senha de 6 números do jogo.",
   senhaVazia: "Escreva a senha.",
   senhaAtual: "A senha atual está errada.",
   senhaNova: "A senha nova precisa ter de 6 a 60 caracteres.",

@@ -744,7 +744,7 @@ describe("professor", () => {
 
     // Senha errada.
     r = await amb.chamar("POST", "/api/professor/entrar", { senha: senha + "x" });
-    assert.deepEqual([r.status, r.json.erro, r.json.msg], [401, "senha", "Senha errada."]);
+    assert.deepEqual([r.status, r.json.erro, r.json.msg], [401, "senha", "Senha errada. Confira as letras maiúsculas e minúsculas. A senha do painel não é a senha de 6 números do jogo."]);
 
     // Depois de trocar, a senha inicial deixa de valer.
     const tk = (await amb.chamar("POST", "/api/professor/entrar", { senha })).json.token;

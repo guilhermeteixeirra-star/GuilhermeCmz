@@ -471,8 +471,9 @@ textarea.ed-nomes{min-height:15rem;font-size:1rem;line-height:1.55}
       <form id="f-login" novalidate>
         <input class="sr" type="text" name="username" autocomplete="username" value="professor" tabindex="-1" aria-hidden="true" readonly>
         <label class="field" for="senha">Senha do professor
-          <input class="in" id="senha" name="password" type="password" autocomplete="current-password" maxlength="200" required>
+          <input class="in" id="senha" name="password" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="200" required aria-describedby="senha-dica">
         </label>
+        <p class="fine" id="senha-dica">É a senha do painel do professor (com letras e números). Não é a senha de 6 números que se usa para entrar no jogo.</p>
         <label class="marcar"><input type="checkbox" data-mostrar="senha"> Mostrar a senha</label>
         <p class="msg erro" id="login-erro" role="alert" hidden></p>
         <button class="btn primary" type="submit" id="b-entrar">Entrar</button>
