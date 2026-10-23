@@ -52,6 +52,7 @@ const CHAVE_TURMAS = "config/turmas"; // lista de alunos editada no painel (vale
 const VARIAVEL_TURMAS = "TURMAS_ALUNOS"; // lista de alunos padrão (variável de ambiente do Netlify)
 const VARIAVEL_CORINGAS = "ALUNOS_CORINGA"; // nomes do perfil de teste (sem a variável: CORINGA_PADRAO)
 const VARIAVEL_CORINGA_SENHA = "CORINGA_SENHA"; // "<saltHex>:<hashHex>" da senha inicial do perfil de teste (dev/hash-pin.mjs)
+const VARIAVEL_NOVA_SENHA_PROFESSOR = "PROFESSOR_NOVA_SENHA"; // "<saltHex>:<hashHex>" (dev/hash-pin.mjs --painel): redefine a senha do painel, uma vez
 const PREFIXO_ALUNOS = "alunos/";
 const CHAVE_ALUNO_RE = /^alunos\/[a-z0-9-]+\/[a-z0-9-]+$/;
 
@@ -340,6 +341,17 @@ export async function hashPin(pin, saltHex = nodeCrypto.randomBytes(16).toString
   const p = normalizarPin(pin);
   if (!p) throw new Error(`O PIN precisa ter exatamente ${DIGITOS_PIN} números.`);
   return { salt: saltHex, hash: await scryptHex(p, saltHex) };
+}
+
+/**
+ * Hash da senha do PAINEL (mesmo cálculo de "Trocar senha": scryptHex da senha sem espaços nas pontas).
+ * Usado por dev/hash-pin.mjs --painel para gerar a variável PROFESSOR_NOVA_SENHA ("<saltHex>:<hashHex>").
+ */
+export async function hashSenha(senha, saltHex = nodeCrypto.randomBytes(16).toString("hex")) {
+  const s = typeof senha === "string" ? senha.trim() : "";
+  const n = Array.from(s).length;
+  if (n < 6 || n > 60) throw new Error("A senha do painel precisa ter de 6 a 60 caracteres.");
+  return { salt: saltHex, hash: await scryptHex(s, saltHex) };
 }
 
 function hmacHex(segredo, msg) {
@@ -955,7 +967,30 @@ export function createApi({ store, env = globalThis.process?.env, now = () => Da
     return igualHex(m[2], hmacHex(await segredo(), `d|${m[1]}`));
   }
 
+  /**
+   * Professor esqueceu a senha do painel: PROFESSOR_NOVA_SENHA ("<saltHex>:<hashHex>", de dev/hash-pin.mjs --painel)
+   * vale UMA vez por valor. Na próxima entrada no painel, a senha passa a ser essa (as sessões abertas caem).
+   * O registro guarda uma marca do valor usado: depois, "Trocar senha" funciona normalmente e a variável
+   * não volta a valer, até receber outro valor.
+   */
+  async function aplicarNovaSenhaProfessor() {
+    const s = lerSenhaCoringa(ambiente(VARIAVEL_NOVA_SENHA_PROFESSOR));
+    if (s.estado === "invalida") console.error(`[missao-redacao] ${VARIAVEL_NOVA_SENHA_PROFESSOR} fora do formato <saltHex>:<hashHex> (use dev/hash-pin.mjs --painel).`);
+    if (s.estado !== "ok") return;
+    const marca = nodeCrypto.createHash("sha256").update(`${s.salt}:${s.hash}`).digest("hex");
+    await atualizar(
+      CHAVE_PROFESSOR,
+      (p) => {
+        if (objetoSimples(p) && p.redefinidaCom === marca) return null; // este valor já foi usado
+        const versao = (objetoSimples(p) && Number.isInteger(p.versao) ? p.versao : 0) + 1;
+        return { salt: s.salt, hash: s.hash, versao, redefinidaCom: marca };
+      },
+      { criar: true },
+    );
+  }
+
   async function senhaProfessorConfere(senha) {
+    await aplicarNovaSenhaProfessor();
     const prof = await store.get(CHAVE_PROFESSOR);
     const ref = objetoSimples(prof) && typeof prof.salt === "string" && typeof prof.hash === "string" ? prof : SETUP;
     if (typeof senha !== "string" || !senha || senha.length > 200) return false;
@@ -1306,7 +1341,8 @@ export function createApi({ store, env = globalThis.process?.env, now = () => Da
       CHAVE_PROFESSOR,
       (p) => {
         versao = (objetoSimples(p) && Number.isInteger(p.versao) ? p.versao : 0) + 1;
-        return { salt, hash, versao };
+        // a marca de PROFESSOR_NOVA_SENHA continua: a variável já usada não desfaz a troca
+        return { salt, hash, versao, ...(objetoSimples(p) && typeof p.redefinidaCom === "string" ? { redefinidaCom: p.redefinidaCom } : {}) };
       },
       { criar: true },
     );

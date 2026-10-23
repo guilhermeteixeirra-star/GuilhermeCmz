@@ -9,6 +9,7 @@ Cada série tem as suas atividades (poema, crônica, redação do ENEM…).
   - **Turmas e alunos:** a lista da chamada de cada série. Escolha a atividade (Texto 1, Texto 2…) para ver quem ainda não começou, quem está em andamento e quem concluiu. Também dá para editar as listas.
   - **Aluno:** uma parte para cada atividade, com o texto como numa folha (os versos do poema aparecem um por linha) e o botão **Copiar texto**.
 - **Aluno esqueceu a senha ou ficou bloqueado?** No painel, abra o aluno e toque em **Apagar senha do aluno**. Aparece uma senha nova de 6 números: entregue ao aluno. O progresso e os textos continuam salvos.
+- **Professor esqueceu a senha do painel?** No computador, na pasta do projeto, rode `node dev/hash-pin.mjs --painel`, digite a senha nova (ela não aparece na tela) e cole a linha que ele mostra numa variável do Netlify chamada `PROFESSOR_NOVA_SENHA`. Faça um novo deploy e entre no painel com a senha nova. A variável vale uma vez só: depois disso, **Trocar senha** funciona normalmente (pode até apagar a variável).
 - **Lista de alunos:** nunca fica neste repositório (ele é público). Vem da lista salva no painel ou, se ela não existir, da variável de ambiente `TURMAS_ALUNOS` do Netlify, no formato `[{"label":"1ª Série","alunos":["NOME SOBRENOME", ...]}, ...]`.
 
 ## Atividades de cada série
@@ -58,7 +59,9 @@ O professor pode entrar no jogo como se fosse um aluno, com o próprio nome, e v
 Netlify → **Add new project** → **Import an existing project** → GitHub → repositório `GuilhermeCmz` →
 branch **`missao-redacao`** → **Deploy**. Não precisa mudar mais nada: as configurações estão em `netlify.toml`.
 Variáveis de ambiente (Site configuration → Environment variables): `TURMAS_ALUNOS` (lista de alunos),
-`CORINGA_SENHA` (senha inicial do perfil de teste) e, se quiser, `ALUNOS_CORINGA`.
+`CORINGA_SENHA` (senha inicial do perfil de teste) e, se quiser, `ALUNOS_CORINGA` e `PROFESSOR_NOVA_SENHA`.
+Crie as variáveis **sem escolher escopo** ("All scopes"): no plano gratuito do Netlify, uma variável com escopo
+restrito (por exemplo, só "Functions") pode não ser salva.
 
 ## Testar no computador
 

@@ -19,6 +19,7 @@ import {
   lerCoringas,
   lerSenhaCoringa,
   hashPin,
+  hashSenha,
 } from "../src/core.mjs";
 import { MemoryStore } from "../dev/memory-store.mjs";
 
@@ -2596,6 +2597,83 @@ describe("perfil de teste (coringa)", () => {
       }
     } finally {
       console.error = erroOriginal;
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Senha do painel esquecida: PROFESSOR_NOVA_SENHA redefine a senha uma vez por valor.
+
+describe("senha do painel esquecida (PROFESSOR_NOVA_SENHA)", () => {
+  const valorDe = async (senha) => {
+    const { salt, hash } = await hashSenha(senha);
+    return `${salt}:${hash}`;
+  };
+  const entrarProf = (amb, senha) => amb.chamar("POST", "/api/professor/entrar", { senha });
+
+  test("redefine a senha trocada (e esquecida), derruba as sessões antigas e vale uma vez só", async () => {
+    const store = new MemoryStore();
+    // Professor tinha trocado a senha e tem uma sessão aberta.
+    const antes = ambiente({ store });
+    await semearProfessor(store, "senha-esquecida-1", 3);
+    const tkAntigo = (await entrarProf(antes, "senha-esquecida-1")).json.token;
+    assert.equal((await antes.chamar("GET", "/api/professor/alunos", undefined, { token: tkAntigo })).status, 200);
+
+    // Variável configurada com a senha nova.
+    const amb = ambiente({ store, envExtra: { PROFESSOR_NOVA_SENHA: await valorDe("senha-recuperada") } });
+    assert.equal((await entrarProf(amb, "senha-esquecida-1")).status, 401, "a senha esquecida deixa de valer");
+    let r = await entrarProf(amb, "  senha-recuperada  ");
+    assert.equal(r.status, 200, r.texto);
+    assert.equal((await amb.chamar("GET", "/api/professor/alunos", undefined, { token: tkAntigo })).status, 401, "sessão antiga cai");
+    const reg = await store.get("config/professor");
+    assert.equal(reg.versao, 4);
+    assert.match(reg.redefinidaCom, /^[0-9a-f]{64}$/);
+
+    // Depois, "Trocar senha" funciona e a variável (ainda configurada) não desfaz a troca.
+    r = await amb.chamar("POST", "/api/professor/senha", { atual: "senha-recuperada", nova: "minha-senha-nova" }, { token: r.json.token });
+    assert.equal(r.status, 200, r.texto);
+    assert.equal((await store.get("config/professor")).redefinidaCom, reg.redefinidaCom, "a marca continua depois da troca");
+    assert.equal((await entrarProf(amb, "senha-recuperada")).status, 401);
+    assert.equal((await entrarProf(amb, "minha-senha-nova")).status, 200);
+    assert.equal((await entrarProf(amb, "minha-senha-nova")).status, 200, "continua valendo nas entradas seguintes");
+
+    // Outro valor na variável: redefine de novo (uma vez).
+    const amb2 = ambiente({ store, envExtra: { PROFESSOR_NOVA_SENHA: await valorDe("segunda-recuperacao") } });
+    assert.equal((await entrarProf(amb2, "minha-senha-nova")).status, 401);
+    assert.equal((await entrarProf(amb2, "segunda-recuperacao")).status, 200);
+  });
+
+  test("sem senha trocada antes (senha inicial do código): a variável também vale", async () => {
+    const amb = ambiente({ envExtra: { PROFESSOR_NOVA_SENHA: await valorDe("senha-recuperada") } });
+    assert.equal((await entrarProf(amb, "senha-recuperada")).status, 200);
+    assert.equal((await amb.store.get("config/professor")).versao, 1);
+  });
+
+  test("valor fora do formato ou vazio: ignorado (a senha de antes continua)", async () => {
+    for (const v of ["", "   ", "abc", "1234:5678", (await valorDe("x-senha-1")).toUpperCase() + "x"]) {
+      const store = new MemoryStore();
+      await semearProfessor(store);
+      const amb = ambiente({ store, envExtra: { PROFESSOR_NOVA_SENHA: v } });
+      assert.equal((await entrarProf(amb, SENHA_TESTE)).status, 200, JSON.stringify(v));
+    }
+  });
+
+  test("dev/hash-pin.mjs --painel gera um valor que a API aceita (senha pela entrada padrão)", async () => {
+    const { spawnSync } = await import("node:child_process");
+    const script = fileURLToPath(new URL("../dev/hash-pin.mjs", import.meta.url));
+    const p = spawnSync(process.execPath, [script, "--painel"], { input: "Painel-Novo 9\n", encoding: "utf8" });
+    assert.equal(p.status, 0, p.stderr);
+    const valor = p.stdout.trim();
+    assert.match(valor, /^[0-9a-f]{32}:[0-9a-f]{64}$/);
+    assert.ok(!p.stdout.includes("Painel-Novo") && !p.stderr.includes("Painel-Novo"), "não mostra a senha");
+    const amb = ambiente({ envExtra: { PROFESSOR_NOVA_SENHA: valor } });
+    assert.equal((await entrarProf(amb, "painel-novo 9")).status, 401, "maiúsculas contam");
+    assert.equal((await entrarProf(amb, "Painel-Novo 9")).status, 200);
+    // curta demais, ou a senha na linha de comando: não gera nada.
+    for (const [args, input] of [[["--painel"], "12345\n"], [["--painel", "Painel-Novo"], ""], [["--outra"], "123456\n"]]) {
+      const q = spawnSync(process.execPath, [script, ...args], { input, encoding: "utf8" });
+      assert.notEqual(q.status, 0, JSON.stringify(args));
+      assert.equal(q.stdout, "");
     }
   });
 });
