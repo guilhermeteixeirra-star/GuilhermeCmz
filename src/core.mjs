@@ -344,6 +344,24 @@ export async function hashPin(pin, saltHex = nodeCrypto.randomBytes(16).toString
 }
 
 /**
+ * Variações da senha do painel que aparecem quando ela é copiada de uma mensagem (aplicativo de conversa,
+ * e-mail): caracteres invisíveis, travessão no lugar do hífen, aspas ou crases em volta, letras em formato
+ * especial. A senha como foi digitada vem primeiro; a versão limpa só é tentada se for diferente.
+ */
+export function variacoesSenha(senha) {
+  const lista = [senha];
+  const limpa = senha
+    .normalize("NFKC")
+    .replace(/[\u200B-\u200D\u2060\uFEFF\u00AD]/g, "")
+    .replace(/[\u2010-\u2015\u2212]/g, "-")
+    .trim()
+    .replace(/^[`'"“”‘’«»]+|[`'"“”‘’«»]+$/g, "")
+    .trim();
+  if (limpa && limpa !== senha) lista.push(limpa);
+  return lista;
+}
+
+/**
  * Hash da senha do PAINEL (mesmo cálculo de "Trocar senha": scryptHex da senha sem espaços nas pontas).
  * Usado por dev/hash-pin.mjs --painel para gerar a variável PROFESSOR_NOVA_SENHA ("<saltHex>:<hashHex>").
  */
@@ -994,7 +1012,32 @@ export function createApi({ store, env = globalThis.process?.env, now = () => Da
     const prof = await store.get(CHAVE_PROFESSOR);
     const ref = objetoSimples(prof) && typeof prof.salt === "string" && typeof prof.hash === "string" ? prof : SETUP;
     if (typeof senha !== "string" || !senha || senha.length > 200) return false;
-    return igualHex(await scryptHex(senha, ref.salt), ref.hash);
+    for (const s of variacoesSenha(senha)) {
+      if (igualHex(await scryptHex(s, ref.salt), ref.hash)) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Para o registro do Netlify quando a senha do painel não confere: de onde vem a senha guardada e como
+   * está a variável PROFESSOR_NOVA_SENHA. Nunca escreve a senha nem o hash.
+   */
+  async function diagnosticoSenhaProfessor(senha) {
+    const prof = await store.get(CHAVE_PROFESSOR);
+    const nova = lerSenhaCoringa(ambiente(VARIAVEL_NOVA_SENHA_PROFESSOR));
+    const marcaNova = nova.estado === "ok" ? nodeCrypto.createHash("sha256").update(`${nova.salt}:${nova.hash}`).digest("hex") : null;
+    let guardada = "a senha inicial do código";
+    if (objetoSimples(prof) && typeof prof.hash === "string") {
+      if (prof.redefinidaCom && nova.estado === "ok" && prof.hash === nova.hash) guardada = "a da variável PROFESSOR_NOVA_SENHA";
+      else if (prof.redefinidaCom) guardada = "trocada no painel depois de uma redefinição";
+      else guardada = "trocada no painel";
+      guardada += `, versão ${Number(prof.versao) || 0}`;
+    }
+    const variavel = nova.estado === "ok" ? (objetoSimples(prof) && prof.redefinidaCom === marcaNova ? "configurada e já aplicada" : "configurada, ainda não aplicada") : nova.estado === "invalida" ? "fora do formato" : "ausente";
+    const n = Array.from(senha).length;
+    const invisiveis = /[\u200B-\u200D\u2060\uFEFF\u00AD]/.test(senha) ? ", com caracteres invisíveis" : "";
+    const foraAscii = /[^\x20-\x7e]/.test(senha) ? ", com caracteres fora do teclado comum" : "";
+    return `senha digitada com ${n} caracteres${invisiveis}${foraAscii}; senha guardada: ${guardada}; PROFESSOR_NOVA_SENHA: ${variavel}`;
   }
 
   // ---- rotas do aluno -----------------------------------------------------
@@ -1239,6 +1282,11 @@ export function createApi({ store, env = globalThis.process?.env, now = () => Da
         token: await tokenProfessor(await versaoProfessor()),
         dispositivo: balde === "disp" ? corpo.dispositivo : await novoDispositivo(),
       });
+    }
+    try {
+      console.log(`[missao-redacao] painel: senha errada (${await diagnosticoSenhaProfessor(senha)})`);
+    } catch {
+      /* o registro é só ajuda: não atrapalha a resposta */
     }
     if (reserva.ultima) return bloqueadoProfessor(minutosRestantes(agora + BLOQUEIO_MS, agora));
     return erro(401, "senha", MSG.senhaProfessor);

@@ -20,6 +20,7 @@ import {
   lerSenhaCoringa,
   hashPin,
   hashSenha,
+  variacoesSenha,
 } from "../src/core.mjs";
 import { MemoryStore } from "../dev/memory-store.mjs";
 
@@ -2675,5 +2676,38 @@ describe("senha do painel esquecida (PROFESSOR_NOVA_SENHA)", () => {
       assert.notEqual(q.status, 0, JSON.stringify(args));
       assert.equal(q.stdout, "");
     }
+  });
+});
+
+describe("senha do painel copiada de uma mensagem", () => {
+  test("variacoesSenha limpa invisíveis, travessões, aspas e crases", () => {
+    assert.deepEqual(variacoesSenha("prof-3abc-xyz9"), ["prof-3abc-xyz9"]);
+    assert.deepEqual(variacoesSenha("prof\u20133abc\u2014xyz9")[1], "prof-3abc-xyz9");
+    assert.deepEqual(variacoesSenha("`prof-3abc-xyz9`")[1], "prof-3abc-xyz9");
+    assert.deepEqual(variacoesSenha("prof-3abc\u200B-xyz9\uFEFF")[1], "prof-3abc-xyz9");
+    assert.deepEqual(variacoesSenha("\u201Cprof-3abc-xyz9\u201D")[1], "prof-3abc-xyz9");
+  });
+
+  test("entra com a senha copiada com sujeira; senha errada continua errada; o registro não mostra a senha", async () => {
+    const store = new MemoryStore();
+    await semearProfessor(store, "prof-3abc-xyz9");
+    const amb = ambiente({ store });
+    const linhas = [];
+    const log = console.log;
+    console.log = (...a) => linhas.push(a.join(" "));
+    try {
+      for (const s of ["prof\u20133abc-xyz9", "`prof-3abc-xyz9`", "prof-3abc-xyz9\u200B", "\u00A0prof-3abc-xyz9 "]) {
+        assert.equal((await amb.chamar("POST", "/api/professor/entrar", { senha: s })).status, 200, JSON.stringify(s));
+      }
+      for (const s of ["Prof-3abc-xyz9", "prof-3abc-xyz", "prof 3abc xyz9", "secreta-errada"]) {
+        assert.equal((await amb.chamar("POST", "/api/professor/entrar", { senha: s })).status, 401, JSON.stringify(s));
+      }
+    } finally {
+      console.log = log;
+    }
+    const erros = linhas.filter((l) => l.includes("painel: senha errada"));
+    assert.equal(erros.length, 4);
+    assert.match(erros[0], /senha digitada com 14 caracteres; senha guardada: trocada no painel, versão 0; PROFESSOR_NOVA_SENHA: ausente/);
+    assert.ok(!linhas.join("\n").match(/prof-3abc|secreta-errada|Prof-3abc/), "o registro não pode ter a senha");
   });
 });
