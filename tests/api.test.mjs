@@ -204,43 +204,49 @@ describe("lista de alunos: procurar o nome", () => {
 
   test("igual exato", () => {
     assert.deepEqual(encontrarNaLista(lista, "MARIA SOUZA"), { nome: "MARIA SOUZA" });
-    // O exato ganha de quem também combina pela regra parcial.
     assert.deepEqual(encontrarNaLista(lista, "ANA SOUZA"), { nome: "ANA SOUZA" });
+    assert.deepEqual(encontrarNaLista(lista, "ANA PAULA RIBEIRO COSTA"), { nome: "ANA PAULA RIBEIRO COSTA" });
   });
 
-  test("parcial: primeiro nome + sobrenome(s) na mesma ordem", () => {
-    assert.deepEqual(encontrarNaLista(lista, "ANA COSTA"), { nome: "ANA PAULA RIBEIRO COSTA" });
-    assert.deepEqual(encontrarNaLista(lista, "ANA PAULA COSTA"), { nome: "ANA PAULA RIBEIRO COSTA" });
-    assert.deepEqual(encontrarNaLista(lista, "ANA LOPES"), { nome: "ANA BEATRIZ RIBEIRO LOPES" });
-    assert.deepEqual(encontrarNaLista(lista, "MARIA LIMA"), { nome: "MARIA EDUARDA APARECIDA DOS SANTOS OLIVEIRA DE SOUZA PEREIRA LIMA" });
+  test("nome pela metade não entra (nem quando só um aluno combina)", () => {
+    for (const d of ["ANA COSTA", "ANA PAULA COSTA", "ANA LOPES", "MARIA LIMA", "ANA RIBEIRO", "MARIA EDUARDA", "ANA PAULA RIBEIRO"]) {
+      assert.deepEqual(encontrarNaLista(lista, d), { erro: "nao-achei" }, d);
+    }
   });
 
-  test("parcial com mais de um aluno → repetido", () => {
-    assert.deepEqual(encontrarNaLista(lista, "ANA RIBEIRO"), { erro: "repetido" });
-    assert.deepEqual(encontrarNaLista(lista, "MARIA EDUARDA"), { erro: "repetido" });
+  test("as palavras de ligação (da, de, dos…) podem faltar; as outras, não", () => {
+    assert.deepEqual(encontrarNaLista(lista, "MARIA EDUARDA APARECIDA SANTOS OLIVEIRA SOUZA PEREIRA LIMA"), {
+      nome: "MARIA EDUARDA APARECIDA DOS SANTOS OLIVEIRA DE SOUZA PEREIRA LIMA",
+    });
+    assert.deepEqual(encontrarNaLista(lista, "MARIA EDUARDA APARECIDA SANTOS OLIVEIRA SOUZA LIMA"), { erro: "nao-achei" });
+    // Dois nomes da lista que ficam iguais sem as ligações: precisa escrever como na chamada.
+    const l = ["ANA DA SILVA", "ANA DE SILVA"];
+    assert.deepEqual(encontrarNaLista(l, "ANA SILVA"), { erro: "repetido" });
+    assert.deepEqual(encontrarNaLista(l, "ANA DE SILVA"), { nome: "ANA DE SILVA" });
   });
 
-  test("parcial: só o primeiro nome + DA/DE/DOS não é nome e sobrenome", () => {
+  test("só o primeiro nome + DA/DE/DOS não é nome e sobrenome", () => {
     const l = ["KELLY DE LIMA PRADO", "RUI DA SILVA", "LUIZ D AVILA NETO", "TIAGO DOS REIS", "ENZO E SILVA", "MARIA DAS DORES"];
     for (const d of ["KELLY DE", "RUI DA", "LUIZ D", "TIAGO DOS", "ENZO E", "MARIA DAS", "KELLY DE DE", "RUI DA DOS"]) {
       assert.deepEqual(encontrarNaLista(l, d), { erro: "sem-sobrenome" }, d);
     }
-    // Com um sobrenome de verdade, a ligação digitada pode vir junto ou ficar de fora.
+    // Nome completo: a ligação pode vir junto ou ficar de fora; nome pela metade não entra.
     for (const [d, nome] of [
-      ["KELLY DE LIMA", "KELLY DE LIMA PRADO"],
-      ["KELLY PRADO", "KELLY DE LIMA PRADO"],
+      ["KELLY DE LIMA PRADO", "KELLY DE LIMA PRADO"],
+      ["KELLY LIMA PRADO", "KELLY DE LIMA PRADO"],
       ["RUI DA SILVA", "RUI DA SILVA"],
       ["RUI SILVA", "RUI DA SILVA"],
-      ["LUIZ D AVILA", "LUIZ D AVILA NETO"],
-      ["TIAGO DOS REIS", "TIAGO DOS REIS"],
+      ["LUIZ AVILA NETO", "LUIZ D AVILA NETO"],
+      ["TIAGO REIS", "TIAGO DOS REIS"],
       ["MARIA DORES", "MARIA DAS DORES"],
     ]) {
       assert.deepEqual(encontrarNaLista(l, d), { nome }, d);
     }
+    for (const d of ["KELLY DE LIMA", "KELLY PRADO", "LUIZ D AVILA"]) assert.deepEqual(encontrarNaLista(l, d), { erro: "nao-achei" }, d);
     // O exato continua valendo primeiro (mesmo um nome da lista que só tem ligação depois do primeiro nome).
     assert.deepEqual(encontrarNaLista(["NOME DE", "NOME DE TAL"], "NOME DE"), { nome: "NOME DE" });
-    // Ligação diferente da lista não acha (a regra parcial não adivinha DA no lugar de DE).
-    assert.deepEqual(encontrarNaLista(l, "KELLY DA LIMA"), { erro: "nao-achei" });
+    // Ligação diferente da da lista também serve (só as outras palavras contam).
+    assert.deepEqual(encontrarNaLista(l, "KELLY DA LIMA PRADO"), { nome: "KELLY DE LIMA PRADO" });
   });
 
   test("não acha: primeira palavra diferente, ordem trocada, palavra pela metade, palavra a mais", () => {
@@ -422,30 +428,32 @@ describe("aluno: entrar com a lista", () => {
     assert.equal((await amb.store.list("alunos/")).length, 1);
   });
 
-  test("nome parcial (primeiro nome + sobrenome) acha o nome completo da lista", async () => {
+  test("só o nome completo entra (sem acento, minúsculo e sem DA/DE/DOS também); pela metade → 404", async () => {
     const amb = ambiente();
-    const r = await amb.entrar("ana costa", "2", "123456");
+    let r = await amb.entrar("ana costa", "2", "123456");
+    assert.deepEqual([r.status, r.json.erro], [404, "nome"]);
+    assert.equal((await amb.store.list("alunos/")).length, 0);
+    r = await amb.entrar("ana paula ribeiro costa", "2", "123456");
     assert.equal(r.status, 200);
     assert.deepEqual(r.json.aluno, { id: "2/ana-paula-ribeiro-costa", nome: "ANA PAULA RIBEIRO COSTA", turma: "2ª Série" });
-    // Depois, com o nome completo, é o mesmo cadastro.
-    const c = await amb.entrar("Ana Paula Ribeiro Costa", "2", "123456");
-    assert.deepEqual([c.status, c.json.novo, c.json.aluno.id], [200, false, "2/ana-paula-ribeiro-costa"]);
+    r = await amb.entrar("Maria Eduarda Aparecida Santos Oliveira Souza Pereira Lima", "2", "654321");
+    assert.deepEqual([r.status, r.json.aluno.id], [200, "2/maria-eduarda-aparecida-dos-santos-oliveira-de-souza-pereira-lima"]);
   });
 
   test("primeiro nome + DA/DE/DOS → 400 nome; nada é cadastrado; com sobrenome entra", async () => {
     const amb = ambiente({ turmas: [{ label: "1ª Série", alunos: ["Kelly de Lima Prado", "Rui da Silva", "Tiago dos Reis"] }] });
     for (const nome of ["kelly de", "Kelly  De ", "rui da", "tiago dos", "Tiago d'"]) {
       const r = await amb.entrar(nome, "1", "123456");
-      assert.deepEqual([r.status, r.json.erro, r.json.msg], [400, "nome", "Escreva seu nome e sobrenome."], nome);
+      assert.deepEqual([r.status, r.json.erro, r.json.msg], [400, "nome", "Escreva o seu nome completo, como na chamada."], nome);
     }
     assert.equal((await amb.store.list("alunos/")).length, 0);
-    const r = await amb.entrar("Kelly Prado", "1", "123456");
+    const r = await amb.entrar("Kelly Lima Prado", "1", "123456");
     assert.deepEqual([r.status, r.json.aluno.id], [200, "1/kelly-de-lima-prado"]);
   });
 
-  test("nome parcial de mais de um aluno → 409", async () => {
-    const amb = ambiente();
-    const r = await amb.entrar("Ana Ribeiro", "2", "123456");
+  test("dois nomes da lista iguais sem DA/DE/DOS → 409 (escrever como na chamada)", async () => {
+    const amb = ambiente({ turmas: [{ label: "2ª Série", alunos: ["Ana da Silva Teste", "Ana de Silva Teste"] }] });
+    const r = await amb.entrar("Ana Silva Teste", "2", "123456");
     assert.equal(r.status, 409);
     assert.deepEqual([r.json.ok, r.json.erro, r.json.msg], [
       false,
@@ -494,7 +502,7 @@ describe("aluno: entrar com a lista", () => {
     }
     for (const nome of ["Maria", "  Maria  ", "Maria 2", "", "--- ---", null, 7, "12 34"]) {
       const r = await amb.entrar(nome, "2", "123456");
-      assert.deepEqual([r.status, r.json.erro, r.json.msg], [400, "nome", "Escreva seu nome e sobrenome."], String(nome));
+      assert.deepEqual([r.status, r.json.erro, r.json.msg], [400, "nome", "Escreva o seu nome completo, como na chamada."], String(nome));
     }
     for (const pin of ["1234", "12345", "1234567", "abcdef", "", 12345, null]) {
       const r = await amb.entrar("Maria Souza", "2", pin);
@@ -1230,7 +1238,7 @@ describe("professor: lista de alunos por série", () => {
     r = await amb.entrar("Bruno Dias", "1", "123456");
     assert.deepEqual([r.status, r.json.erro], [400, "turma"]);
     // Série nova do painel funciona.
-    r = await amb.entrar("Outro Novo", "4", "123456");
+    r = await amb.entrar("Outro Novo Teste", "4", "123456");
     assert.deepEqual([r.status, r.json.aluno], [200, { id: "4/outro-novo-teste", nome: "OUTRO NOVO TESTE", turma: "4ª Série" }]);
   });
 
@@ -1239,7 +1247,7 @@ describe("professor: lista de alunos por série", () => {
     const pedro = await amb.entrar("Pedro Lima", "2", "111111");
     assert.equal(pedro.status, 200);
     const maria = await amb.entrar("Maria Souza", "2", "222222");
-    assert.equal((await amb.entrar("Aluna Nova", "2", "333333")).status, 404, "ainda não está na lista");
+    assert.equal((await amb.entrar("Aluna Nova da Silva", "2", "333333")).status, 404, "ainda não está na lista");
 
     // O professor tira o Pedro, põe a Aluna Nova e muda o nome da série (a chave continua "2").
     const r = await amb.chamar(
@@ -1250,8 +1258,8 @@ describe("professor: lista de alunos por série", () => {
     );
     assert.equal(r.status, 200, r.texto);
 
-    // Quem entrou na lista consegue entrar (com o nome parcial também).
-    let e = await amb.entrar("Aluna Nova", "2", "333333");
+    // Quem entrou na lista consegue entrar (com o nome completo; sem o "da" também).
+    let e = await amb.entrar("Aluna Nova Silva", "2", "333333");
     assert.deepEqual([e.status, e.json.novo, e.json.aluno], [200, true, { id: "2/aluna-nova-da-silva", nome: "ALUNA NOVA DA SILVA", turma: "2º Ano" }]);
 
     // Quem saiu da lista não entra mais (nem com a senha certa), mas o cadastro continua no painel.
@@ -1823,15 +1831,15 @@ describe("revisão: nomes e séries", () => {
         assert.deepEqual(encontrarNaLista(s.alunos, nome), { nome }, `${s.label} #${i}: nome completo`);
         assert.equal(nomeLista(nome.toLowerCase()), nome, `${s.label} #${i}: minúsculas`);
         const p = nome.split(" ");
-        const parcial = encontrarNaLista(s.alunos, `${p[0]} ${p[p.length - 1]}`);
-        assert.ok(parcial.nome === nome || parcial.erro === "repetido", `${s.label} #${i}: primeiro + último nome não acha outro aluno`);
-        // Qualquer pedaço do nome (primeiro nome + algumas das outras palavras, na ordem) acha este
-        // aluno, ou é repetido, ou é só primeiro nome + DA/DE/DOS (recusado): nunca outro aluno.
+        // Qualquer pedaço do nome (primeiro nome + algumas das outras palavras, na ordem), em QUALQUER
+        // série: ou é este aluno (só quando faltam apenas palavras de ligação), ou não entra. Nunca outro aluno.
         const resto = p.slice(1);
         for (let m = 1; m < 1 << resto.length; m++) {
           const pedaco = [p[0], ...resto.filter((_, j) => m & (1 << j))].join(" ");
-          const r = encontrarNaLista(s.alunos, pedaco);
-          assert.ok(r.nome === nome || r.erro === "repetido" || r.erro === "sem-sobrenome", `${s.label} #${i}: pedaço ${m} acha outro aluno`);
+          for (const outra of turmas) {
+            const r = encontrarNaLista(outra.alunos, pedaco);
+            assert.ok(!r.nome || r.nome === nome, `${s.label} #${i}: pedaço ${m} acha outro aluno na ${outra.label}`);
+          }
         }
       });
     }
@@ -2442,7 +2450,7 @@ describe("perfil de teste (coringa)", () => {
     r = await amb.entrar("Guilherme Camozzato Teixeira Junior", "1", "246802");
     assert.deepEqual([r.status, r.json.aluno.id, r.json.aluno.coringa], [200, "1/guilherme-camozzato-teixeira-junior", undefined]);
     r = await amb.entrar("Guilherme Junior", "1", "246802");
-    assert.equal(r.json.aluno.id, "1/guilherme-camozzato-teixeira-junior");
+    assert.deepEqual([r.status, r.json.erro], [404, "nome"], "nome pela metade não entra");
   });
 
   test("ALUNOS_CORINGA: lista própria; vazia ou quebrada → ninguém é coringa e nada quebra", async () => {

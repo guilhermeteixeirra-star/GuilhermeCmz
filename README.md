@@ -3,7 +3,7 @@
 Jogo para os alunos do Ensino Médio montarem, passo a passo, os textos pedidos pelo professor.
 Cada série tem as suas atividades (poema, crônica, redação do ENEM…).
 
-- **Alunos:** escolhem a série, escrevem o nome e sobrenome e uma senha de 6 números. Só entra quem está na lista da série. Depois de entrar, o aluno vê a **caixa de atividades** da série dele e escolhe uma. O progresso fica salvo na nuvem e ele continua de qualquer celular.
+- **Alunos:** escolhem a série, escrevem o **nome completo, como na chamada** (maiúsculas, acentos e "da/de/dos" não fazem diferença; nome pela metade não entra) e uma senha de 6 números. Só entra quem está na lista da série. Depois de entrar, o aluno vê a **caixa de atividades** da série dele e escolhe uma. O progresso fica salvo na nuvem e ele continua de qualquer celular.
 - **Professor:** acessa `/professor` com a senha do professor.
   - **Progresso:** cada aluno com o resumo de cada atividade (por exemplo, "Texto 1: Concluiu · Texto 2: Fase 2 de 6").
   - **Turmas e alunos:** a lista da chamada de cada série. Escolha a atividade (Texto 1, Texto 2…) para ver quem ainda não começou, quem está em andamento e quem concluiu. Também dá para editar as listas.

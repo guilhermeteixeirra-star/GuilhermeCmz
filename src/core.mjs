@@ -61,7 +61,7 @@ const MSG = {
   metodo: "Método não permitido.",
   json: "Não deu para ler os dados enviados. Tente de novo.",
   grande: "Os dados são grandes demais para salvar.",
-  nome: "Escreva seu nome e sobrenome.",
+  nome: "Escreva o seu nome completo, como na chamada.",
   nomeRepetido: "Tem mais de um aluno com esse nome nesta série. Escreva o nome completo, como na chamada.",
   turma: "Escolha a sua série.",
   pin: `A senha tem que ter ${DIGITOS_PIN} números.`,
@@ -129,25 +129,22 @@ export function chaveNome(canonico) {
 // Palavras de ligação: sozinhas depois do primeiro nome, não são sobrenome ("KELLY DE" é só o primeiro nome).
 const LIGACOES = new Set(["D", "DA", "DAS", "DE", "DI", "DO", "DOS", "DU", "E"]);
 
+/** O nome sem as palavras de ligação ("JOAO PEDRO DA SILVA" → "JOAO PEDRO SILVA"). */
+const semLigacoes = (nome) => nome.split(" ").filter((p) => !LIGACOES.has(p)).join(" ");
+
 /**
- * Procura o nome digitado (já em nomeLista) na lista de uma série.
- * 1º igual exato; 2º mesma 1ª palavra e as outras palavras digitadas aparecem, na mesma ordem,
- * entre as palavras seguintes do nome da lista ("ANA COSTA" acha "ANA PAULA RIBEIRO COSTA").
- * A regra parcial precisa de pelo menos um sobrenome que não seja palavra de ligação:
- * "RUI DA" não acha "RUI DA SILVA" (seria entrar só com o primeiro nome).
- * → {nome} | {erro:"repetido"} (mais de um) | {erro:"nao-achei"} | {erro:"sem-sobrenome"}
+ * Procura o nome digitado (já em nomeLista) na lista de uma série. O nome tem que ser o COMPLETO, como na
+ * chamada: todas as palavras, na mesma ordem. Maiúsculas, acentos e espaços já não contam (nomeLista), e
+ * as palavras de ligação podem faltar ("JOAO PEDRO SILVA SANTOS" acha "JOAO PEDRO DA SILVA SANTOS").
+ * Nome pela metade não entra: assim ninguém cai na conta de um colega de nome parecido.
+ * → {nome} | {erro:"repetido"} (dois nomes da lista iguais sem as ligações) | {erro:"nao-achei"} | {erro:"sem-sobrenome"}
  */
 export function encontrarNaLista(alunos, digitado) {
   if (alunos.includes(digitado)) return { nome: digitado };
-  const [primeira, ...resto] = digitado.split(" ");
+  const [, ...resto] = digitado.split(" ");
   if (!resto.some((p) => !LIGACOES.has(p))) return { erro: "sem-sobrenome" };
-  const achados = alunos.filter((nome) => {
-    const [p, ...seguintes] = nome.split(" ");
-    if (p !== primeira) return false;
-    let i = 0;
-    for (const palavra of seguintes) if (i < resto.length && palavra === resto[i]) i++;
-    return i === resto.length;
-  });
+  const alvo = semLigacoes(digitado);
+  const achados = alunos.filter((nome) => semLigacoes(nome) === alvo);
   if (achados.length === 1) return { nome: achados[0] };
   return { erro: achados.length > 1 ? "repetido" : "nao-achei" };
 }

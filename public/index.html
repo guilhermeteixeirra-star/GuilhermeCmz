@@ -616,7 +616,7 @@ async function entrar(){
   LF.nome = nome;
   if(!LF.turma) return loginErro('Escolha a sua série.');
   const palavras = nome.split(/\s+/).filter(w => /[A-Za-zÀ-ÿ]/.test(w));
-  if(palavras.length < 2) return loginErro('Escreva seu nome e sobrenome.');
+  if(palavras.length < 2) return loginErro('Escreva o seu nome completo, como na chamada.');
   if(!/^\d{6}$/.test(pin)) return loginErro('A senha tem que ter 6 números.');
   const b = $('#btn-entrar'); if(b){ b.disabled = true; b.textContent = 'Entrando…'; }
   const r = await api('/api/entrar', {turma: LF.turma, nome, pin});
@@ -926,7 +926,7 @@ function entrarHTML(){
     <h3>Entrar no jogo</h3>
     ${loginMsg ? `<p class="erro" role="alert">${esc(loginMsg)}</p>` : ''}
     <div class="field"><span>1. Toque na sua série</span>${series}</div>
-    <label class="field" for="in-nome">2. Seu nome completo<input class="in nome-up" id="in-nome" data-lf="nome" autocomplete="name" autocapitalize="characters" spellcheck="false" value="${esc(LF.nome)}" placeholder="EX.: ANA JULIA DA SILVA"></label>
+    <label class="field" for="in-nome">2. Seu nome completo, como na chamada<input class="in nome-up" id="in-nome" data-lf="nome" autocomplete="name" autocapitalize="characters" spellcheck="false" value="${esc(LF.nome)}" placeholder="EX.: ANA JULIA DA SILVA"></label>
     <label class="field" for="in-pin">3. Senha de 6 números<input class="in pin" id="in-pin" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="000000"></label>
     <p class="tip">Primeira vez? Invente agora uma senha de 6 números e anote no caderno. Você vai usar a mesma senha para continuar depois, em qualquer celular.</p>
     <div class="row"><button class="btn primary" id="btn-entrar" data-act="entrar">Entrar ${ICON.right}</button></div>
