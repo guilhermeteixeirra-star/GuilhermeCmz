@@ -11,6 +11,9 @@ Cada série tem as suas atividades (poema, crônica, redação do ENEM…).
 - **Aluno esqueceu a senha ou ficou bloqueado?** No painel, abra o aluno e toque em **Apagar senha do aluno**. Aparece uma senha nova de 6 números: entregue ao aluno. O progresso e os textos continuam salvos.
 - **Professor esqueceu a senha do painel?** No computador, na pasta do projeto, rode `node dev/hash-pin.mjs --painel`, digite a senha nova (ela não aparece na tela) e cole a linha que ele mostra numa variável do Netlify chamada `PROFESSOR_NOVA_SENHA`. Faça um novo deploy e entre no painel com a senha nova. A variável vale uma vez só: depois disso, **Trocar senha** funciona normalmente (pode até apagar a variável).
 - **Lista de alunos:** nunca fica neste repositório (ele é público). Vem da lista salva no painel ou, se ela não existir, da variável de ambiente `TURMAS_ALUNOS` do Netlify, no formato `[{"label":"1ª Série","alunos":["NOME SOBRENOME", ...]}, ...]`.
+  Para corrigir um nome, o mais simples é o painel (**Turmas e alunos → Editar listas**): vale na hora. Se mudar a
+  variável `TURMAS_ALUNOS` no Netlify, ela só passa a valer depois de um novo deploy (Deploys → Trigger deploy).
+  O aluno entra com o nome **exatamente como está na lista** (só maiúsculas, acentos e "da/de/dos" não importam).
 
 ## Atividades de cada série
 
