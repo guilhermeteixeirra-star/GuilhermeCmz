@@ -1294,9 +1294,9 @@ function checks(){
     {id:'paras',ok:ps.every(Boolean),t:'Tem 4 parágrafos',d:'Introdução, 2 argumentos e conclusão.'},
     {id:'tam',ok:lines >= 8 && lines <= 30,t:'Tamanho certo',d:lines < 8 ? 'Está curto. No ENEM, redação com 7 linhas ou menos vale zero.' : lines > 30 ? 'Passou de 30 linhas. Corte o que estiver repetido.' : `Cerca de ${lines} linhas. O ENEM aceita de 8 a 30.`},
     {id:'tema',ok:!!(ck.temaRegex && ck.temaRegex.test(ps[0] || '')),t:'A introdução fala do tema',d:ck.temaDica || 'Use palavras do tema já no 1º parágrafo.'},
-    {id:'rep',ok:!!(ck.repRegex && ck.repRegex.test(all)),t:'Usa repertório',d:'Um dado, uma lei ou uma frase famosa.'},
+    {id:'rep',ok:!!(ck.repRegex && ck.repRegex.test(all)),t:'Usa repertório',d:(C && C.info && C.info.repertorioTipos) || 'Um dado, uma lei ou uma frase famosa.'},
     {id:'arg',ok:!!(ps[1] && ps[2]),t:'Tem 2 argumentos',d:'Um motivo em cada parágrafo do meio.'},
-    {id:'con',ok:con.length >= 4,t:'Usa palavras de ligação',d:`Você usou ${con.length}${con.length ? ': ' + con.slice(0,6).join(', ') : ''}. Use pelo menos 4 diferentes.`},
+    {id:'con',ok:con.length >= 4,t:'Usa palavras de ligação',d:`Você usou ${con.length}${con.length ? ': ' + con.join(', ') : ''}. Use pelo menos 4 diferentes.`},
     {id:'prop',ok:!!(propSentence() && blockText('c_detalhe') && ps[3]),t:'Solução com 5 elementos',d:'Quem, o quê, como, para quê e um detalhe.'},
     {id:'formal',ok:!ab.length && !acho,t:'Linguagem formal',d:ab.length ? `Troque as abreviações: ${[...new Set(ab)].join(', ')}.` : acho ? 'Tire o “eu acho”.' : 'Sem abreviações de internet e sem “eu acho”.'}
   ];
