@@ -226,6 +226,8 @@ function validarDissert(p, a) {
   if (!Array.isArray(a.acoes) || a.acoes.length < 3 || a.acoes.some((x) => !ehTexto(x.t) || !Array.isArray(x.det) || x.det.length !== 2)) p.push("acoes: {t, det:[2 frases]}");
   for (const k of ["detGeral", "meios", "fins"]) if (!Array.isArray(a[k]) || a[k].length < 2 || a[k].some((x) => !ehTexto(x))) p.push(`${k}: lista de frases`);
   if (!ehTexto(a.causasPergunta)) p.push("causasPergunta vazio");
+  if (a.ponteDicas != null && (typeof a.ponteDicas !== "object" || Object.entries(a.ponteDicas).some(([k, v]) => !["contraste", "dado"].includes(k) || !ehTexto(v)))) p.push("ponteDicas: {contraste?, dado?} com textos");
+  if (a.aberturaDica != null && !ehTexto(a.aberturaDica)) p.push("aberturaDica: texto");
   if (!Array.isArray(a.teses) || a.teses.length !== 3) p.push("teses: 3 funções");
   if (typeof a.retomadas !== "function") p.push("retomadas: função");
   const cs = a.causas || [];

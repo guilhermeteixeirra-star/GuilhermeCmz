@@ -26,6 +26,8 @@ Cada atividade é um arquivo em `public/atividades/`. A série, a ordem na caixa
 | 2ª | `cronica-olhar.js` | Texto 2 | Crônica lírica ("O olhar") |
 | 3ª | `justica-climatica.js` | Texto 1 | Dissertativo-argumentativo |
 | 3ª | `inseguranca-alimentar.js` | Texto 2 | Dissertativo-argumentativo |
+| 3ª | `ambicao-etica.js` | Texto 3 | Dissertativo-argumentativo ("O Hobbit": ambição e ética) |
+| 3ª | `apostas-online.js` | Texto 4 | Dissertativo-argumentativo (apostas on-line e endividamento) |
 
 ### Como acrescentar uma atividade nova
 
